@@ -1,0 +1,44 @@
+{
+  "_description": "Accessible spacing tokens. Touch targets, focus ring offsets, and interactive element sizing follow WCAG 2.5.5 and WCAG 2.5.8.",
+
+  "spacing": {
+    "_note": "Base unit: 4px (0.25rem). All values in rem.",
+    "0":    { "value": "0" },
+    "px":   { "value": "1px" },
+    "0.5":  { "value": "0.125rem", "px": "2px" },
+    "1":    { "value": "0.25rem",  "px": "4px" },
+    "1.5":  { "value": "0.375rem", "px": "6px" },
+    "2":    { "value": "0.5rem",   "px": "8px" },
+    "2.5":  { "value": "0.625rem", "px": "10px" },
+    "3":    { "value": "0.75rem",  "px": "12px" },
+    "4":    { "value": "1rem",     "px": "16px" },
+    "5":    { "value": "1.25rem",  "px": "20px" },
+    "6":    { "value": "1.5rem",   "px": "24px" },
+    "8":    { "value": "2rem",     "px": "32px" },
+    "10":   { "value": "2.5rem",   "px": "40px" },
+    "12":   { "value": "3rem",     "px": "48px" },
+    "16":   { "value": "4rem",     "px": "64px" },
+    "20":   { "value": "5rem",     "px": "80px" }
+  },
+
+  "touch-target": {
+    "_note": "WCAG 2.5.5 (AAA) requires 44x44px minimum. WCAG 2.5.8 (AA, WCAG 2.2) requires 24x24px minimum.",
+    "minimum-aa":  { "value": "1.5rem",  "px": "24px", "wcag": "2.5.8 AA (WCAG 2.2)",  "note": "Absolute minimum for interactive targets" },
+    "recommended": { "value": "2.75rem", "px": "44px", "wcag": "2.5.5 AAA",             "note": "Recommended for all tap/click targets" },
+    "comfortable": { "value": "3rem",    "px": "48px", "wcag": "2.5.5 AAA",             "note": "Comfortable for mobile — accounts for finger variance" }
+  },
+
+  "focus-ring": {
+    "_note": "WCAG 2.4.11 (AA, WCAG 2.2): focus indicator must have area >= perimeter of unfocused component × 2px, and contrast >= 3:1.",
+    "width":   { "value": "2px",  "note": "Minimum focus ring width" },
+    "offset":  { "value": "2px",  "note": "Offset from element edge — prevents ring from being clipped by overflow:hidden" },
+    "radius":  { "value": "4px",  "note": "Slightly rounded ring to visually match the element" }
+  },
+
+  "content-width": {
+    "_note": "WCAG 1.4.8 (AAA): no more than 80 characters per line. At 1rem = 16px, ~65ch ≈ 650px for proportional fonts.",
+    "prose":      { "value": "65ch",   "note": "Optimal reading width — 65 characters per line" },
+    "prose-wide": { "value": "75ch",   "note": "Wide reading width — for data-heavy content" },
+    "narrow":     { "value": "45ch",   "note": "Narrow column — sidebars, annotations" }
+  }
+}

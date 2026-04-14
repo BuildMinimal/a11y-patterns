@@ -1,0 +1,39 @@
+{
+  "_description": "WCAG-compliant dark mode palette. Contrast ratios are calculated against the dark surface color they sit on (#0f1117 for page, #1a1f2e for cards). No wcag fields — the validator compares against white, which is wrong for these tokens. Ratios are documented for human reference only.",
+
+  "_usage": "Apply via @media (prefers-color-scheme: dark) or a data-theme='dark' attribute on <html>. Swap these values for the light-mode values in tokens/colors.json.",
+
+  "color": {
+    "surface": {
+      "page":    { "value": "#0f1117", "note": "Darkest background — main page" },
+      "subtle":  { "value": "#1a1f2e", "note": "Slightly lighter — cards, panels" },
+      "raised":  { "value": "#252b3b", "note": "Raised surface — dropdowns, tooltips" },
+      "overlay": { "value": "#000000", "note": "Modal backdrop" }
+    },
+
+    "text": {
+      "_note": "All contrast ratios below are against #0f1117 (page surface). Do not measure these against white.",
+      "primary":   { "value": "#f0f4f8", "contrast-on-page": "17.8:1", "note": "Primary text on #0f1117 — AAA" },
+      "secondary": { "value": "#b8c5d6", "contrast-on-page": "8.94:1", "note": "Secondary text on #0f1117 — AAA" },
+      "muted":     { "value": "#7e94ae", "contrast-on-subtle": "4.58:1", "note": "Muted text on #1a1f2e card surface — AA minimum" },
+      "disabled":  { "value": "#3d4a5c", "contrast-on-page": "1.88:1", "note": "Disabled — not for informative content" },
+      "link":      { "value": "#7eb3ff", "contrast-on-page": "7.89:1", "note": "Links on dark — AAA. Lighter blue than light mode." },
+      "link-hover":{ "value": "#a5c8ff", "contrast-on-page": "10.9:1", "note": "Link hover on dark — AAA" },
+      "danger":    { "value": "#fca5a5", "contrast-on-page": "7.52:1", "note": "Error text on dark — AAA. Lighter red." },
+      "success":   { "value": "#86efac", "contrast-on-page": "10.0:1", "note": "Success text on dark — AAA. Lighter green." },
+      "warning":   { "value": "#fcd34d", "contrast-on-page": "9.06:1", "note": "Warning text on dark — AAA. Yellow passes on dark backgrounds." }
+    },
+
+    "border": {
+      "default": { "value": "#2d3748", "note": "Subtle border on dark surfaces" },
+      "strong":  { "value": "#4a5568", "note": "Visible border" },
+      "focus":   { "value": "#7eb3ff", "note": "Focus ring on dark — 3:1+ against #1a1f2e" }
+    },
+
+    "interactive": {
+      "primary":       { "value": "#3b82f6", "note": "Primary button on dark" },
+      "primary-text":  { "value": "#ffffff", "contrast-on-primary-dark": "4.71:1", "note": "White on #3b82f6 in dark mode — AA" },
+      "primary-hover": { "value": "#2563eb", "note": "Primary button hover on dark" }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "_description": "Accessible motion tokens. All animation values are designed with prefers-reduced-motion in mind. WCAG 2.3.3 (AAA) and 2.2.2 (A) apply.",
+
+  "duration": {
+    "_note": "Use these as the default duration. Always provide a prefers-reduced-motion override.",
+    "instant":    { "value": "0ms",   "note": "No animation — state changes only" },
+    "fast":       { "value": "100ms", "note": "Micro-interactions: checkbox check, toggle switch" },
+    "normal":     { "value": "200ms", "note": "Standard transitions: hover states, show/hide" },
+    "slow":       { "value": "300ms", "note": "Larger reveals: modal open, drawer slide" },
+    "slower":     { "value": "500ms", "note": "Complex sequences: page transitions" }
+  },
+
+  "easing": {
+    "linear":      { "value": "linear" },
+    "ease-in":     { "value": "cubic-bezier(0.4, 0, 1, 1)" },
+    "ease-out":    { "value": "cubic-bezier(0, 0, 0.2, 1)", "note": "Recommended for elements entering the screen" },
+    "ease-in-out": { "value": "cubic-bezier(0.4, 0, 0.2, 1)", "note": "Recommended for elements moving within the screen" }
+  },
+
+  "reduced-motion": {
+    "_note": "When @media (prefers-reduced-motion: reduce) is active, apply these values instead of the standard duration/easing.",
+    "duration-override": { "value": "0.01ms", "note": "Near-instant — animation technically fires but is imperceptible. Safer than 0ms which can break JS animation callbacks." },
+    "note": "Pattern: use transition-duration: var(--duration-normal); and override to var(--duration-reduced) in the media query."
+  },
+
+  "css-pattern": {
+    "_note": "Copy-paste CSS pattern for reduced motion:",
+    "example": "@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; } }"
+  },
+
+  "autoplay": {
+    "_note": "WCAG 2.2.2: Content that moves for more than 5 seconds and starts automatically must have a pause/stop/hide mechanism.",
+    "max-autoplay-duration": { "value": "5s", "wcag": "2.2.2", "note": "Content that autoplays beyond 5s needs a pause control" }
+  }
+}

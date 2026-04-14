@@ -1,0 +1,45 @@
+name: WCAG Spec Update
+description: Report that a WCAG criterion referenced in a pattern has changed or been superseded
+title: "[WCAG Update] "
+labels: ["type: docs", "status: needs-review"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template when a WCAG criterion that a pattern references has been updated,
+        clarified, or superseded — for example, a WCAG 2.1 criterion now has a stronger
+        version in WCAG 2.2, or guidance has changed.
+
+  - type: input
+    id: pattern
+    attributes:
+      label: Affected pattern(s)
+      description: Pattern path(s), comma-separated if multiple
+      placeholder: "patterns/05-focus-management/modal-dialog-focus-trap"
+    validations:
+      required: true
+
+  - type: input
+    id: criterion
+    attributes:
+      label: WCAG criterion
+      placeholder: "e.g. 2.4.11 Focus Appearance (WCAG 2.2)"
+    validations:
+      required: true
+
+  - type: textarea
+    id: change
+    attributes:
+      label: What changed?
+      description: Describe the change in the spec and how it affects this pattern's correctness.
+    validations:
+      required: true
+
+  - type: input
+    id: reference
+    attributes:
+      label: Source / reference URL
+      description: Link to the W3C spec change, errata, or understanding document
+    validations:
+      required: true

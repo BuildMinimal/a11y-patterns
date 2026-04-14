@@ -1,0 +1,31 @@
+{
+  "name": "a11y-patterns",
+  "version": "0.1.0",
+  "description": "Copy-paste accessible UI patterns with annotated before/after code, WCAG context, and automated axe tests.",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "new-pattern": "node scripts/new-pattern.js",
+    "validate-tokens": "node scripts/validate-tokens.js"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.9.1",
+    "@clack/prompts": "^0.7.0",
+    "axe-core": "^4.9.1",
+    "playwright": "^1.44.1",
+    "vitest": "^1.6.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "accessibility",
+    "a11y",
+    "wcag",
+    "patterns",
+    "aria",
+    "screen-reader"
+  ],
+  "license": "MIT"
+}

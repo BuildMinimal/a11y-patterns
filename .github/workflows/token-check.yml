@@ -1,0 +1,47 @@
+name: Token Contrast Check
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tokens/**'
+      - 'patterns/**/tokens.json'
+      - 'scripts/validate-tokens.js'
+  pull_request:
+    paths:
+      - 'tokens/**'
+      - 'patterns/**/tokens.json'
+      - 'scripts/validate-tokens.js'
+
+jobs:
+  validate-tokens:
+    name: Validate token contrast ratios
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Validate token contrast ratios
+        run: npm run validate-tokens
+
+      - name: Post failure comment on PR
+        if: failure() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '❌ **Token contrast check failed.** A token documented as `"wcag": "AA"` or `"wcag": "AAA"` does not meet its claimed contrast ratio. Run `npm run validate-tokens` locally to see which tokens are failing.'
+            })

@@ -1,0 +1,59 @@
+name: Bug Report
+description: Report incorrect code, a broken test, or a WCAG mistake in an existing pattern
+title: "[Bug] "
+labels: ["type: bug", "status: needs-review"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template to report incorrect code in an existing pattern.
+        This includes: code that doesn't actually fix the violation it claims to, broken HTML, incorrect WCAG references, or tests that pass when they shouldn't.
+
+  - type: input
+    id: pattern
+    attributes:
+      label: Pattern path
+      description: The folder path of the affected pattern
+      placeholder: "patterns/01-color-contrast/text-on-solid-bg"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: bug-type
+    attributes:
+      label: Type of issue
+      options:
+        - "after/ still has an axe violation"
+        - "before/ passes axe (it should fail)"
+        - "Incorrect WCAG criterion referenced"
+        - "Broken HTML or CSS"
+        - "React port has an accessibility issue"
+        - "Vue port has an accessibility issue"
+        - "Token contrast ratio is wrong"
+        - "Test is testing the wrong rule"
+        - "Other"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What's wrong?
+      description: Be specific. Include the exact line(s), rule name(s), and what the correct behavior should be.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: How to reproduce
+      description: Steps to confirm the bug. E.g., "Run `npm test patterns/01-color-contrast/text-on-solid-bg` and observe that the after/ test fails."
+    validations:
+      required: true
+
+  - type: textarea
+    id: fix
+    attributes:
+      label: Proposed fix (optional)
+      description: If you know what the fix is, describe it here. Even better — open a PR.

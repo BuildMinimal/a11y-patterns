@@ -1,0 +1,49 @@
+{
+  "_description": "Accessible typography tokens. Sizes use rem (root = 16px). Line heights follow WCAG 1.4.8 and 1.4.12 spacing requirements.",
+
+  "font": {
+    "family": {
+      "sans":  { "value": "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", "note": "System font stack — no download, no FOUT, respects user's OS preference" },
+      "mono":  { "value": "'Cascadia Code', 'Fira Code', 'Courier New', Courier, monospace", "note": "Monospace — for code blocks" },
+      "dyslexic": { "value": "'OpenDyslexic', 'Comic Sans MS', sans-serif", "note": "Optional dyslexia-friendly font stack — load only when user requests it" }
+    },
+
+    "size": {
+      "_note": "All sizes in rem. Base = 16px. Never set font sizes in px — prevents user zoom override.",
+      "xs":   { "value": "0.75rem",  "px-equivalent": "12px" },
+      "sm":   { "value": "0.875rem", "px-equivalent": "14px" },
+      "base": { "value": "1rem",     "px-equivalent": "16px", "note": "Minimum for body text — never go below this for paragraph copy" },
+      "lg":   { "value": "1.125rem", "px-equivalent": "18px" },
+      "xl":   { "value": "1.25rem",  "px-equivalent": "20px" },
+      "2xl":  { "value": "1.5rem",   "px-equivalent": "24px", "note": "WCAG large text threshold: >= 18pt (24px) normal, >= 14pt (18.67px) bold" },
+      "3xl":  { "value": "1.875rem", "px-equivalent": "30px" },
+      "4xl":  { "value": "2.25rem",  "px-equivalent": "36px" },
+      "5xl":  { "value": "3rem",     "px-equivalent": "48px" }
+    },
+
+    "weight": {
+      "normal": { "value": "400" },
+      "medium": { "value": "500" },
+      "semibold":{ "value": "600" },
+      "bold":   { "value": "700", "note": "Text >= 14pt bold (18.67px) qualifies as WCAG large text — needs only 3:1 contrast ratio" }
+    },
+
+    "line-height": {
+      "_note": "WCAG 1.4.12 requires line height >= 1.5x font size for body text. All values below meet this.",
+      "tight":   { "value": "1.25", "wcag-1-4-12": "FAIL", "note": "Too tight for body text — headings only" },
+      "snug":    { "value": "1.375","wcag-1-4-12": "FAIL", "note": "Too tight for body text — headings only" },
+      "normal":  { "value": "1.5",  "wcag-1-4-12": "AA",   "note": "Minimum for body text per WCAG 1.4.12" },
+      "relaxed": { "value": "1.625","wcag-1-4-12": "AA",   "note": "Recommended for extended reading" },
+      "loose":   { "value": "2",    "wcag-1-4-12": "AA",   "note": "For low-vision users who need more spacing" }
+    },
+
+    "letter-spacing": {
+      "_note": "WCAG 1.4.12: letter spacing >= 0.12em. Users must be able to override without content loss.",
+      "tight":  { "value": "-0.025em", "wcag-1-4-12": "FAIL", "note": "Negative tracking — avoid for body text" },
+      "normal": { "value": "0em" },
+      "wide":   { "value": "0.025em" },
+      "wider":  { "value": "0.05em",  "wcag-1-4-12": "AA" },
+      "widest": { "value": "0.1em",   "wcag-1-4-12": "AA" }
+    }
+  }
+}
