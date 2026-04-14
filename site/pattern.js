@@ -14,8 +14,7 @@ async function loadPatterns() {
     const response = await fetch('./patterns-data.json');
     if (!response.ok) throw new Error('Failed to load patterns');
     patterns = await response.json();
-  } catch (error) {
-    console.error('Error loading patterns:', error);
+  } catch {
     patterns = getFallbackPatterns();
   }
   
@@ -194,7 +193,7 @@ function renderPattern() {
         <div class="frame-container frame-container--before">
           <div class="frame-container__header">
             <span class="frame-container__title frame-container__title--before">
-              <span>✗</span> Before
+              <span class="material-symbols-outlined" aria-hidden="true">close</span> Before
             </span>
             <span class="frame-container__status frame-container__status--fail">FAILS axe</span>
           </div>
@@ -208,7 +207,7 @@ function renderPattern() {
         <div class="frame-container frame-container--after">
           <div class="frame-container__header">
             <span class="frame-container__title frame-container__title--after">
-              <span>✓</span> After
+              <span class="material-symbols-outlined" aria-hidden="true">check</span> After
             </span>
             <span class="frame-container__status frame-container__status--pass">PASSES axe</span>
           </div>
@@ -258,7 +257,7 @@ function renderNotFound() {
   const content = document.getElementById('pattern-content');
   content.innerHTML = `
     <div class="empty-state">
-      <div class="empty-state__icon">😕</div>
+      <div class="empty-state__icon"><span class="material-symbols-outlined">search_off</span></div>
       <h2>Pattern not found</h2>
       <p>The pattern you're looking for doesn't exist or has been moved.</p>
       <a href="index.html" class="pattern-card__link">Back to all patterns</a>
@@ -324,7 +323,7 @@ function createCodeBlock(title, code) {
       <div class="code-block__header">
         <span class="code-block__title">${title}</span>
         <button class="code-block__copy" type="button">
-          <span>📋</span> Copy
+          <span class="material-symbols-outlined" aria-hidden="true">content_copy</span> Copy
         </button>
       </div>
       <div class="code-block__content">
@@ -352,15 +351,14 @@ function initCopyButtons() {
       try {
         await navigator.clipboard.writeText(code);
         button.classList.add('code-block__copy--copied');
-        button.innerHTML = '<span>✓</span> Copied!';
+        button.innerHTML = '<span class="material-symbols-outlined" aria-hidden="true">check</span> Copied!';
         
         setTimeout(() => {
           button.classList.remove('code-block__copy--copied');
-          button.innerHTML = '<span>📋</span> Copy';
+          button.innerHTML = '<span class="material-symbols-outlined" aria-hidden="true">content_copy</span> Copy';
         }, 2000);
-      } catch (error) {
-        console.error('Failed to copy:', error);
-        button.innerHTML = '<span>✗</span> Failed';
+      } catch {
+        button.innerHTML = '<span class="material-symbols-outlined" aria-hidden="true">close</span> Failed';
       }
     });
   });

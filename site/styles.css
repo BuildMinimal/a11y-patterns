@@ -64,6 +64,15 @@ body {
 
 .site-title__icon {
   font-size: 2.5rem;
+  line-height: 1;
+}
+
+/* Material Symbols base */
+.material-symbols-outlined {
+  font-size: 1.25em;
+  line-height: 1;
+  vertical-align: middle;
+  user-select: none;
 }
 
 .site-tagline {
@@ -235,9 +244,6 @@ body {
   background-color: var(--color-primary-hover);
 }
 
-.pattern-card__link::after {
-  content: '→';
-}
 
 /* Empty State */
 .empty-state {
@@ -248,8 +254,11 @@ body {
 }
 
 .empty-state__icon {
-  font-size: 3rem;
   margin-bottom: var(--spacing-md);
+}
+
+.empty-state__icon .material-symbols-outlined {
+  font-size: 3rem;
 }
 
 /* Site Footer */

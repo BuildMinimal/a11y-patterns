@@ -17,8 +17,7 @@ async function loadPatterns() {
     const response = await fetch('./patterns-data.json');
     if (!response.ok) throw new Error('Failed to load patterns');
     patterns = await response.json();
-  } catch (error) {
-    console.error('Error loading patterns:', error);
+  } catch {
     // Fallback patterns for development
     patterns = getFallbackPatterns();
   }
@@ -122,7 +121,7 @@ function renderPatterns() {
   if (filteredPatterns.length === 0) {
     grid.innerHTML = `
       <div class="empty-state">
-        <div class="empty-state__icon">🔍</div>
+        <div class="empty-state__icon"><span class="material-symbols-outlined">manage_search</span></div>
         <h3>No patterns found</h3>
         <p>Try adjusting your filters to see more results.</p>
       </div>
@@ -143,7 +142,7 @@ function renderPatterns() {
       <p class="pattern-card__description">${pattern.description}</p>
       <div class="pattern-card__footer">
         <span class="pattern-card__criterion">${pattern.wcagCriteria}</span>
-        <a href="pattern.html?id=${pattern.id}" class="pattern-card__link">View Pattern</a>
+        <a href="pattern.html?id=${pattern.id}" class="pattern-card__link">View Pattern <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></a>
       </div>
     `;
     grid.appendChild(card);

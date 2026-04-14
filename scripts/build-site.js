@@ -57,15 +57,23 @@ function extractDescription(readmePath) {
 // Extract key rules from README
 function extractKeyRules(readmePath) {
   try {
-    const readme = fs.readFileSync(readmePath, 'utf-8');
+    // Normalize CRLF → LF so all splitting works on Windows
+    const readme = fs.readFileSync(readmePath, 'utf-8').replace(/\r\n/g, '\n');
     const match = readme.match(/## Key rules\s*\n([\s\S]*?)(?=\n##|\n---|$)/);
     if (match) {
       const rulesText = match[1].trim();
-      const rules = rulesText.split(/\n\d+\.\s+/).filter(r => r.trim());
-      return rules.map(r => r.replace(/^\*\*/, '').replace(/\*\*/g, '').trim());
+      // Rules are separated by blank lines; each block starts with **N.
+      const ruleBlocks = rulesText.split(/\n\n+/).filter(b => /^\*\*\d+\./.test(b.trim()));
+      return ruleBlocks.map(block =>
+        block
+          .replace(/\*\*/g, '')         // strip bold markers
+          .replace(/^\d+\.\s+/, '')     // strip leading "N. " number prefix
+          .replace(/\s+/g, ' ')         // collapse whitespace/newlines
+          .trim()
+      );
     }
     return [];
-  } catch (error) {
+  } catch {
     return [];
   }
 }
