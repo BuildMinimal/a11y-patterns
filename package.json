@@ -7,7 +7,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "new-pattern": "node scripts/new-pattern.js",
-    "validate-tokens": "node scripts/validate-tokens.js"
+    "validate-tokens": "node scripts/validate-tokens.js",
+    "build": "node scripts/build-site.js"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.9.1",

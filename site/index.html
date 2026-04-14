@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A11y Patterns - Copy-Paste Accessible UI Patterns</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1 class="site-title">
+        <span class="site-title__icon">♿</span>
+        A11y Patterns
+      </h1>
+      <p class="site-tagline">Copy-paste accessible UI patterns. Before/after code. Real WCAG context. No framework lock-in.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="filters">
+      <h2 class="filters__title">Filter Patterns</h2>
+      <div class="filters__group">
+        <label class="filter-label">
+          <span class="filter-label__text">Category</span>
+          <select id="category-filter" class="filter-select">
+            <option value="">All Categories</option>
+            <option value="01-color-contrast">Color Contrast</option>
+            <option value="02-missing-alt-text">Missing Alt Text</option>
+            <option value="03-form-labels">Form Labels</option>
+            <option value="04-empty-links-buttons">Empty Links & Buttons</option>
+            <option value="05-focus-management">Focus Management</option>
+            <option value="06-keyboard-navigation">Keyboard Navigation</option>
+          </select>
+        </label>
+        <label class="filter-label">
+          <span class="filter-label__text">WCAG Level</span>
+          <select id="wcag-filter" class="filter-select">
+            <option value="">All Levels</option>
+            <option value="A">Level A</option>
+            <option value="AA">Level AA</option>
+            <option value="AAA">Level AAA</option>
+          </select>
+        </label>
+      </div>
+      <div class="filters__results">
+        <span id="results-count">Loading patterns...</span>
+      </div>
+    </section>
+
+    <section id="patterns-grid" class="patterns-grid">
+      <!-- Patterns will be loaded here by JavaScript -->
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p class="site-footer__text">
+        Every pattern is tested with axe — <code>before/</code> must fail, <code>after/</code> must pass.
+      </p>
+      <p class="site-footer__text">
+        <a href="https://github.com/BuildMinimal/a11y-patterns" target="_blank" rel="noopener">View on GitHub</a>
+      </p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
