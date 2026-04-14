@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Focus Indicator Contrast — After (Fixed)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!--
+    Fixed version with proper focus indicator contrast:
+    - Focus rings: #1d4ed8 on #ffffff = 6.70:1 — AA
+    - All interactive elements use :focus-visible for keyboard-only focus indicators
+  -->
+  <main>
+    <div class="card">
+      <h1 class="card__title">Contact Form</h1>
+      <p class="card__description">
+        A form with focus indicators that meet WCAG contrast requirements.
+      </p>
+
+      <form class="form" aria-label="Contact form">
+        <div class="field">
+          <label class="field__label" for="name">Full Name</label>
+          <input
+            class="field__input"
+            type="text"
+            id="name"
+            name="name"
+            autocomplete="name"
+          >
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="email">Email Address</label>
+          <input
+            class="field__input"
+            type="email"
+            id="email"
+            name="email"
+            autocomplete="email"
+          >
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="message">Message</label>
+          <textarea
+            class="field__textarea"
+            id="message"
+            name="message"
+            rows="4"
+          ></textarea>
+        </div>
+
+        <div class="field field--checkbox">
+          <input
+            class="field__checkbox"
+            type="checkbox"
+            id="subscribe"
+            name="subscribe"
+          >
+          <label class="field__checkbox-label" for="subscribe">
+            Subscribe to newsletter
+          </label>
+        </div>
+
+        <div class="form__actions">
+          <button type="submit" class="btn btn--primary">Send Message</button>
+          <button type="button" class="btn btn--secondary">Cancel</button>
+        </div>
+      </form>
+
+      <div class="card__links">
+        <a href="#" class="link">Privacy Policy</a>
+        <a href="#" class="link">Terms of Service</a>
+        <a href="#" class="link">Help Center</a>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

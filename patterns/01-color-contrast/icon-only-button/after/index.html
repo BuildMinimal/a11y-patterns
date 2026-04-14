@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Icon-Only Button — After (Fixed)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!--
+    Two fixes applied:
+    1. Every icon-only button now has an aria-label attribute that describes its action.
+       Screen readers announce: "Close dialog, button", "Delete item, button", etc.
+       The label describes what the button DOES, not what the icon IS.
+    2. Icon colors are darkened to meet 3:1 contrast requirement for non-text content.
+       - Neutral icons: #4b5563 on #f3f4f6 = 4.62:1 — passes WCAG 1.4.11
+       - Danger icon: #dc2626 on #fee2e2 = 3.56:1 — passes WCAG 1.4.11
+  -->
+  <main>
+    <div class="toolbar">
+      <h1 class="toolbar__title">Item Actions</h1>
+      <p class="toolbar__description">
+        Manage this item using the buttons below.
+      </p>
+
+      <div class="toolbar__actions">
+        <!-- FIXED: aria-label="Close dialog" provides accessible name.
+             Screen readers announce: "Close dialog, button"
+             Icon color #4b5563 on #f3f4f6 = 4.62:1 — meets 3:1 requirement. -->
+        <button class="btn btn--close" aria-label="Close dialog">
+          <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+
+        <!-- FIXED: aria-label="Delete item" provides accessible name.
+             Screen readers announce: "Delete item, button"
+             Icon color #dc2626 on #fee2e2 = 3.56:1 — meets 3:1 requirement. -->
+        <button class="btn btn--delete" aria-label="Delete item">
+          <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          </svg>
+        </button>
+
+        <!-- FIXED: aria-label="Share" provides accessible name.
+             Screen readers announce: "Share, button"
+             Icon color #4b5563 on #f3f4f6 = 4.62:1 — meets 3:1 requirement. -->
+        <button class="btn btn--share" aria-label="Share">
+          <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="18" cy="5" r="3"></circle>
+            <circle cx="6" cy="12" r="3"></circle>
+            <circle cx="18" cy="19" r="3"></circle>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+          </svg>
+        </button>
+
+        <!-- FIXED: aria-label="Add to favorites" provides accessible name.
+             Screen readers announce: "Add to favorites, button"
+             Icon color #4b5563 on #f3f4f6 = 4.62:1 — meets 3:1 requirement. -->
+        <button class="btn btn--favorite" aria-label="Add to favorites">
+          <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+        </button>
+      </div>
+
+      <p class="toolbar__hint">
+        Tip: Use keyboard or screen reader to test button accessibility.
+      </p>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,95 @@
+/* before/styles.css
+ *
+ * This file intentionally contains color contrast failures.
+ * The ::placeholder color (#aaaaaa on white = 2.32:1) fails WCAG 1.4.3.
+ * The helper text color (#aaaaaa on white = 2.32:1) also fails.
+ * Do NOT add explanatory comments here — the pattern README and after/styles.css do that.
+ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: #f8fafc;
+  color: #1a1a1a;
+  padding: 2rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.form {
+  max-width: 480px;
+  width: 100%;
+  padding: 2rem;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+
+.form__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+}
+
+.form__description {
+  font-size: 0.9375rem;
+  color: #4a5568;
+  margin-bottom: 1.75rem;
+  line-height: 1.6;
+}
+
+.field {
+  margin-bottom: 1.25rem;
+}
+
+.field__input {
+  width: 100%;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.9375rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background-color: #ffffff;
+  color: #1a1a1a;
+  font-family: inherit;
+}
+
+.field__textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* FAIL: #aaaaaa on #ffffff = 2.32:1 — needs 4.5:1 for placeholder text */
+.field__input::placeholder {
+  color: #aaaaaa;
+}
+
+/* FAIL: #aaaaaa on #ffffff = 2.32:1 — needs 4.5:1 */
+.form__helper {
+  font-size: 0.8125rem;
+  color: #aaaaaa;
+  margin-bottom: 1.5rem;
+}
+
+.btn--primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  background-color: #1d4ed8;
+  color: #ffffff;
+  border: 2px solid #1d4ed8;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+}

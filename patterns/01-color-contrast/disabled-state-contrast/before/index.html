@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Disabled State Contrast — Before (Broken)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <form class="form" aria-label="Account settings">
+      <h1 class="form__title">Account Settings</h1>
+      <p class="form__description">
+        Update your profile information. Fields marked as read-only cannot be changed.
+      </p>
+
+      <div class="field">
+        <label class="field__label" for="email">Email address</label>
+        <input
+          class="field__input"
+          type="email"
+          id="email"
+          name="email"
+          value="sarah.chen@example.com"
+        >
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="username">Username</label>
+        <!-- Pseudo-disabled: CSS class only, no disabled attribute, no aria-disabled.
+             This simulates how some codebases create a "locked" appearance purely
+             through CSS — without the native disabled semantics or ARIA markup.
+             axe checks contrast on these elements because nothing marks them inactive. -->
+        <input
+          class="field__input field__input--disabled"
+          type="text"
+          id="username"
+          name="username"
+          value="sarah_chen_42"
+        >
+        <span class="field__hint">Usernames cannot be changed after account creation.</span>
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="plan">Current plan</label>
+        <input
+          class="field__input field__input--disabled"
+          type="text"
+          id="plan"
+          name="plan"
+          value="Pro — $12/month"
+        >
+        <span class="field__hint">Manage your plan in the Billing section.</span>
+      </div>
+
+      <div class="form__actions">
+        <button type="submit" class="btn btn--primary">Save changes</button>
+        <!-- Pseudo-disabled: CSS class only, no disabled attribute -->
+        <button
+          type="button"
+          class="btn btn--secondary btn--disabled"
+        >
+          Request data export
+        </button>
+      </div>
+    </form>
+  </main>
+</body>
+</html>

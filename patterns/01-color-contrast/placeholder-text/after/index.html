@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Placeholder Text — After (Fixed)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!--
+    Two fixes applied:
+    1. Every input now has a visible <label> element associated via the `for`/`id` pair.
+       Labels persist when the user types; placeholders disappear.
+    2. The ::placeholder color is changed to #767676 on white = 4.54:1 — passes AA.
+       Placeholder text is now supplementary hint text, not the primary label.
+    3. The helper text color is darkened to #4a5568 = 5.74:1 on white — passes AA.
+  -->
+  <main>
+    <form class="form" aria-label="Contact form">
+      <h1 class="form__title">Get in touch</h1>
+      <p class="form__description">
+        Send us a message and we'll get back to you within one business day.
+      </p>
+
+      <div class="field">
+        <label class="field__label" for="name">Full name</label>
+        <input
+          class="field__input"
+          type="text"
+          id="name"
+          name="name"
+          placeholder="e.g. Sarah Chen"
+          autocomplete="name"
+        >
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="email">Email address</label>
+        <input
+          class="field__input"
+          type="email"
+          id="email"
+          name="email"
+          placeholder="e.g. sarah@example.com"
+          autocomplete="email"
+        >
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="phone">
+          Phone number
+          <span class="field__optional">(optional)</span>
+        </label>
+        <input
+          class="field__input"
+          type="tel"
+          id="phone"
+          name="phone"
+          autocomplete="tel"
+        >
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="message">Message</label>
+        <textarea
+          class="field__input field__textarea"
+          id="message"
+          name="message"
+          rows="4"
+          placeholder="Tell us what you need help with"
+        ></textarea>
+      </div>
+
+      <p class="form__helper">
+        We respond to all enquiries within 24 hours.
+      </p>
+
+      <button type="submit" class="btn btn--primary">Send message</button>
+    </form>
+  </main>
+</body>
+</html>

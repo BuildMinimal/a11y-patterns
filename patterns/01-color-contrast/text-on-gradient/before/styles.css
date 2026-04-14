@@ -1,0 +1,101 @@
+/* before/styles.css
+ *
+ * This file intentionally contains color contrast failures.
+ * The gradient runs from dark blue to a very light sky blue. White text that
+ * passes at the dark end fails badly at the light end — and the CTA button
+ * uses the light end color as its solid background with white text.
+ * Do NOT add explanatory comments here — the pattern README and after/styles.css do that.
+ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: #f8fafc;
+  padding: 2rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.hero {
+  max-width: 700px;
+  width: 100%;
+  /* Gradient from dark navy → very light sky blue.
+     White text works at the left/dark end but fails at the right/light end. */
+  background: linear-gradient(135deg, #1e3a8a 0%, #7dd3fc 100%);
+  border-radius: 12px;
+  padding: 4rem 3rem;
+  color: #ffffff;
+}
+
+.hero__content {
+  max-width: 520px;
+}
+
+/* FAIL: #ffffff on the light half of the gradient ≈ #7dd3fc = 1.75:1 — needs 4.5:1 */
+.hero__eyebrow {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.hero__heading {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.hero__subtext {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: #ffffff;
+  margin-bottom: 2rem;
+}
+
+.hero__actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  line-height: 1;
+  border: 2px solid transparent;
+}
+
+/* FAIL: #ffffff on #7dd3fc = 1.75:1 — needs 4.5:1.
+   This is the light end of the gradient used as a solid background.
+   axe detects this solid background-color and flags the contrast failure. */
+.btn--primary {
+  background-color: #7dd3fc;
+  color: #ffffff;
+  border-color: #7dd3fc;
+}
+
+/* FAIL: #ffffff on #93c5fd = 1.80:1 — the ghost button has a semi-visible
+   background pulled from the light part of the gradient palette. */
+.btn--ghost {
+  background-color: #93c5fd;
+  color: #ffffff;
+  border-color: #ffffff;
+}

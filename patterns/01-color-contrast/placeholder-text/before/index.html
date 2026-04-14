@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Placeholder Text — Before (Broken)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <form class="form" aria-label="Contact form">
+      <h1 class="form__title">Get in touch</h1>
+      <p class="form__description">
+        Send us a message and we'll get back to you within one business day.
+      </p>
+
+      <!-- PROBLEM 1: Placeholder used as the only label.
+           When the user starts typing, the hint text disappears entirely.
+           Screen readers may announce the placeholder as the field's accessible name,
+           but once the field has a value, the name is gone. -->
+
+      <!-- PROBLEM 2: Placeholder color #aaaaaa on white = 2.32:1 — fails WCAG 1.4.3.
+           This is the most common placeholder mistake: using a light gray that looks
+           "tastefully muted" but is nearly invisible in any non-ideal viewing condition. -->
+      <div class="field">
+        <input
+          class="field__input"
+          type="text"
+          name="name"
+          placeholder="Your full name"
+          autocomplete="name"
+        >
+      </div>
+
+      <div class="field">
+        <input
+          class="field__input"
+          type="email"
+          name="email"
+          placeholder="Email address"
+          autocomplete="email"
+        >
+      </div>
+
+      <div class="field">
+        <input
+          class="field__input"
+          type="tel"
+          name="phone"
+          placeholder="Phone number (optional)"
+          autocomplete="tel"
+        >
+      </div>
+
+      <div class="field">
+        <textarea
+          class="field__input field__textarea"
+          name="message"
+          rows="4"
+          placeholder="Your message"
+        ></textarea>
+      </div>
+
+      <!-- Helper text that's also too light to read -->
+      <p class="form__helper">
+        We respond to all enquiries within 24 hours.
+      </p>
+
+      <button type="submit" class="btn btn--primary">Send message</button>
+    </form>
+  </main>
+</body>
+</html>

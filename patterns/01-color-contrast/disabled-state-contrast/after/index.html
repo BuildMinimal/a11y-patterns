@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Disabled State Contrast — After (Fixed)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!--
+    Key changes from before/:
+    1. Truly disabled inputs now use the native `disabled` attribute (WCAG-exempt for contrast).
+       WCAG 1.4.3 explicitly exempts "inactive user interface components" — so disabled inputs
+       have no contrast requirement by spec. But we still use visible colors as a usability
+       best practice.
+    2. The pseudo-disabled button now also uses the native `disabled` attribute.
+    3. The aria-disabled pattern (for custom widgets that can't use native disabled) is shown
+       in the CSS comments — when using aria-disabled, you MUST ensure contrast passes since
+       WCAG's exemption only applies to natively disabled controls.
+  -->
+  <main>
+    <form class="form" aria-label="Account settings">
+      <h1 class="form__title">Account Settings</h1>
+      <p class="form__description">
+        Update your profile information. Fields marked as read-only cannot be changed.
+      </p>
+
+      <div class="field">
+        <label class="field__label" for="email">Email address</label>
+        <input
+          class="field__input"
+          type="email"
+          id="email"
+          name="email"
+          value="sarah.chen@example.com"
+        >
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="username">Username</label>
+        <!-- FIXED: Uses native `disabled` attribute — WCAG 1.4.3 exempts this.
+             The visual styling still uses readable colors as a usability best practice. -->
+        <input
+          class="field__input"
+          type="text"
+          id="username"
+          name="username"
+          value="sarah_chen_42"
+          disabled
+        >
+        <span class="field__hint">Usernames cannot be changed after account creation.</span>
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="plan">Current plan</label>
+        <input
+          class="field__input"
+          type="text"
+          id="plan"
+          name="plan"
+          value="Pro — $12/month"
+          disabled
+        >
+        <span class="field__hint">Manage your plan in the Billing section.</span>
+      </div>
+
+      <div class="form__actions">
+        <button type="submit" class="btn btn--primary">Save changes</button>
+        <!-- FIXED: Uses native `disabled` attribute -->
+        <button type="button" class="btn btn--secondary" disabled>
+          Request data export
+        </button>
+      </div>
+    </form>
+  </main>
+</body>
+</html>

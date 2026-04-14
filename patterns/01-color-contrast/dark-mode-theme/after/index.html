@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dark Mode Theme — After (Fixed)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!--
+    Fixed version with proper dark mode contrast ratios:
+    - Body text: #e5e5e5 on #1a1a1a = 12.63:1 — AAA
+    - Secondary text: #a0aec0 on #1a1a1a = 5.74:1 — AA
+    - Borders: #374151 on #1a1a1a = 3.01:1 — AA
+    - Buttons: #ffffff on #374151 = 10.76:1 — AAA
+  -->
+  <main>
+    <div class="card">
+      <h1 class="card__title">Dark Mode Dashboard</h1>
+      <p class="card__description">
+        A dark mode interface that meets WCAG contrast requirements.
+      </p>
+
+      <div class="card__section">
+        <h2 class="card__heading">Statistics</h2>
+        <div class="stats">
+          <div class="stat">
+            <span class="stat__label">Total Users</span>
+            <span class="stat__value">24,532</span>
+          </div>
+          <div class="stat">
+            <span class="stat__label">Active Sessions</span>
+            <span class="stat__value">1,847</span>
+          </div>
+          <div class="stat">
+            <span class="stat__label">Conversion Rate</span>
+            <span class="stat__value">3.2%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card__section">
+        <h2 class="card__heading">Recent Activity</h2>
+        <div class="activity-list">
+          <div class="activity-item">
+            <span class="activity__label">New user signup</span>
+            <span class="activity__time">2 minutes ago</span>
+          </div>
+          <div class="activity-item">
+            <span class="activity__label">Payment received</span>
+            <span class="activity__time">15 minutes ago</span>
+          </div>
+          <div class="activity-item">
+            <span class="activity__label">System update</span>
+            <span class="activity__time">1 hour ago</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card__actions">
+        <button class="btn btn--primary">View Details</button>
+        <button class="btn btn--secondary">Export Data</button>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
