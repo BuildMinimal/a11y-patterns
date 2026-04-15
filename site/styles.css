@@ -15,6 +15,8 @@
 
 /* CSS Variables */
 :root {
+  color-scheme: light;
+
   /* === Colors === */
   /* Backgrounds */
   --color-background: #fafafa;
@@ -135,6 +137,8 @@
    ============================================ */
 @media (prefers-color-scheme: dark) {
   :root {
+    color-scheme: dark;
+
     /* Backgrounds */
     --color-background: #0a0a0a;
     --color-surface: #141414;
@@ -691,7 +695,9 @@ body {
   line-height: var(--leading-relaxed);
 }
 
-.site-footer__text code,  .pattern-card__description code{
+.site-footer__text code,
+.pattern-card__description code,
+.key-rules__item code{
   font-family: var(--font-family-mono);
   font-size: var(--text-xs);
   background-color: var(--color-surface-subtle);

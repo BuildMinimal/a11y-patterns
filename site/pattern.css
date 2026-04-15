@@ -170,12 +170,22 @@
 
 .frame-container__status--fail {
   background-color: var(--color-error-subtle);
-  color: #7f1d1d;
+  color: #991b1b;
 }
 
 .frame-container__status--pass {
   background-color: var(--color-success-subtle);
   color: #065f46;
+}
+
+@media (prefers-color-scheme: dark) {
+  .frame-container__status--fail {
+    color: #fca5a5;
+  }
+
+  .frame-container__status--pass {
+    color: #6ee7b7;
+  }
 }
 
 .frame-container__iframe {
@@ -329,7 +339,9 @@
   line-height: var(--leading-normal);
 }
 
-.site-footer__text code {
+.site-footer__text code,
+.pattern-description__content code,
+.key-rules__item code {
   background-color: var(--color-surface-subtle);
   padding: var(--space-1) var(--space-2);
   border-radius: var(--radius-sm);
