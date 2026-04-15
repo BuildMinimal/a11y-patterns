@@ -1,3 +1,10 @@
+---
+title: "Required Fields — Form Labels"
+wcag: "1.3.1 Info and Relationships, 1.4.1 Use of Color — Level A"
+wcag-shorthand: "1.3.1, 1.4.1"
+wcag-level: "A"
+---
+
 # Pattern: Required Fields — Form Labels
 
 **Category:** Form Labels

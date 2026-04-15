@@ -1,3 +1,10 @@
+---
+title: "Checkbox Radio Labels — Form Labels"
+wcag: "1.3.1 Info and Relationships — Level A"
+wcag-shorthand: "1.3.1"
+wcag-level: "A"
+---
+
 # Pattern: Checkbox Radio Labels — Form Labels
 
 **Category:** Form Labels

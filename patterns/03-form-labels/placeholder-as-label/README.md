@@ -1,3 +1,10 @@
+---
+title: "Placeholder as Label — Form Labels"
+wcag: "1.3.1 Info and Relationships, 3.3.2 Labels or Instructions — Level A"
+wcag-shorthand: "1.3.1, 3.3.2"
+wcag-level: "A"
+---
+
 # Pattern: Placeholder as Label — Form Labels
 
 **Category:** Form Labels

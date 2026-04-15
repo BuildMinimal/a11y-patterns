@@ -1,3 +1,10 @@
+---
+title: "Focus Indicator Contrast — Color Contrast"
+wcag: "2.4.11 Focus Appearance — Level AA"
+wcag-shorthand: "2.4.11"
+wcag-level: "AA"
+---
+
 # Pattern: Focus Indicator Contrast — Color Contrast
 
 **Category:** Color Contrast

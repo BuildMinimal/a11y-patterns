@@ -1,3 +1,10 @@
+---
+title: "Placeholder Text — Color Contrast"
+wcag: "1.4.3 Contrast Minimum — Level AA"
+wcag-shorthand: "1.4.3"
+wcag-level: "AA"
+---
+
 # Pattern: Placeholder Text — Color Contrast
 
 **Category:** Color Contrast
@@ -46,11 +53,11 @@ The `before/` version shows a contact form with placeholder-only labeling and a 
 
 **Specific failures in `before/styles.css`:**
 
-| Element | Color | Contrast on White | Result |
-|---------|-------|-------------------|--------|
-| `::placeholder` | `#aaaaaa` | 2.32:1 | FAIL — needs 4.5:1 |
-| `.form__helper` text | `#aaaaaa` | 2.32:1 | FAIL |
-| All inputs | (no `<label>`) | — | FAIL — 1.3.1 / 3.3.2 |
+| Element              | Color          | Contrast on White | Result               |
+| -------------------- | -------------- | ----------------- | -------------------- |
+| `::placeholder`      | `#aaaaaa`      | 2.32:1            | FAIL — needs 4.5:1   |
+| `.form__helper` text | `#aaaaaa`      | 2.32:1            | FAIL                 |
+| All inputs           | (no `<label>`) | —                 | FAIL — 1.3.1 / 3.3.2 |
 
 ---
 
@@ -64,11 +71,11 @@ The `before/` version shows a contact form with placeholder-only labeling and a 
 
 **Result in `after/`:**
 
-| Element | Was | Now | Contrast | Result |
-|---------|-----|-----|----------|--------|
-| `::placeholder` | `#aaaaaa` | `#767676` | 4.54:1 | AA |
-| `.form__helper` | `#aaaaaa` | `#4a5568` | 5.74:1 | AA |
-| Field labels | (none) | `#374151` | 8.59:1 | AAA |
+| Element         | Was       | Now       | Contrast | Result |
+| --------------- | --------- | --------- | -------- | ------ |
+| `::placeholder` | `#aaaaaa` | `#767676` | 4.54:1   | AA     |
+| `.form__helper` | `#aaaaaa` | `#4a5568` | 5.74:1   | AA     |
+| Field labels    | (none)    | `#374151` | 8.59:1   | AAA    |
 
 ---
 
@@ -90,12 +97,12 @@ If your placeholder is `#767676` (4.54:1), use at least `#374151` for typed valu
 
 ## Design tokens
 
-| Token | Value | Usage | Contrast |
-|-------|-------|-------|----------|
-| `color.placeholder` | `#767676` | `::placeholder` color | 4.54:1 on white (AA) |
-| `color.text.primary` | `#1a1a1a` | Typed text in inputs | 18.1:1 on white (AAA) |
-| `color.text.label` | `#374151` | Field labels | 8.59:1 on white (AAA) |
-| `color.text.secondary` | `#4a5568` | Helper text | 5.74:1 on white (AA) |
+| Token                  | Value     | Usage                 | Contrast              |
+| ---------------------- | --------- | --------------------- | --------------------- |
+| `color.placeholder`    | `#767676` | `::placeholder` color | 4.54:1 on white (AA)  |
+| `color.text.primary`   | `#1a1a1a` | Typed text in inputs  | 18.1:1 on white (AAA) |
+| `color.text.label`     | `#374151` | Field labels          | 8.59:1 on white (AAA) |
+| `color.text.secondary` | `#4a5568` | Helper text           | 5.74:1 on white (AA)  |
 
 ---
 
@@ -106,6 +113,7 @@ npm test -- patterns/01-color-contrast/placeholder-text
 ```
 
 Expected test output:
+
 ```
 ✓ before/ has color-contrast violations
 ✓ after/ has no color-contrast violations

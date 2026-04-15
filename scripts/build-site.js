@@ -2,52 +2,11 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { marked } from 'marked';
+import matter from 'gray-matter';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.join(__dirname, '..');
-
-// Extract category name from README
-function extractCategoryName(readmePath) {
-  try {
-    const readme = fs.readFileSync(readmePath, 'utf-8');
-    const match = readme.match(/\*\*Category:\*\*\s*(.+)$/m);
-    if (match) {
-      return match[1].trim();
-    }
-    return '';
-  } catch (error) {
-    return '';
-  }
-}
-
-// Extract WCAG criteria from README
-function extractWcagCriteria(readmePath) {
-  try {
-    const readme = fs.readFileSync(readmePath, 'utf-8');
-    const match = readme.match(/\*\*WCAG:\*\*\s*(.+?)\s+—/);
-    if (match) {
-      return match[1].trim();
-    }
-    return '';
-  } catch (error) {
-    return '';
-  }
-}
-
-// Extract WCAG level from README
-function extractWcagLevel(readmePath) {
-  try {
-    const readme = fs.readFileSync(readmePath, 'utf-8');
-    const match = readme.match(/WCAG:\s*([\d.]+)\s+—\s+Level\s+(A{1,3})/i);
-    if (match) {
-      return match[2];
-    }
-    return 'AA'; // Default
-  } catch (error) {
-    return 'AA';
-  }
-}
 
 // Extract description from README
 function extractDescription(readmePath) {
@@ -130,25 +89,36 @@ function scanPatterns() {
       // Skip if README doesn't exist
       if (!fs.existsSync(readmePath)) continue;
 
+      // Read frontmatter from README using gray-matter
+      let frontmatter = {};
+      let title = patternId.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+      try {
+        const readmeContent = fs.readFileSync(readmePath, 'utf-8');
+        const parsed = matter(readmeContent);
+        frontmatter = parsed.data;
+        
+        // Get title from frontmatter or fallback to first heading
+        if (frontmatter.title) {
+          title = frontmatter.title;
+        } else {
+          const titleMatch = readmeContent.match(/^#\s+Pattern:\s+(.+)$/m);
+          if (titleMatch) {
+            title = titleMatch[1].trim();
+          }
+        }
+      } catch (error) {
+        // Use generated title if parsing fails
+      }
+
       // Extract pattern info from README
-      const categoryName = extractCategoryName(readmePath);
-      const wcagLevel = extractWcagLevel(readmePath);
-      const wcagCriteria = extractWcagCriteria(readmePath);
       const description = extractDescription(readmePath);
       const keyRules = extractKeyRules(readmePath);
       const whyItMatters = extractWhyItMatters(readmePath);
-
-      // Get title from README (first heading)
-      let title = patternId.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-      try {
-        const readme = fs.readFileSync(readmePath, 'utf-8');
-        const titleMatch = readme.match(/^#\s+Pattern:\s+(.+)$/m);
-        if (titleMatch) {
-          title = titleMatch[1].trim();
-        }
-      } catch (error) {
-        // Use generated title
-      }
+      
+      // Get WCAG values from frontmatter
+      const wcag = frontmatter.wcag || '';
+      const wcagShorthand = frontmatter['wcag-shorthand'] || '';
+      const wcagLevel = frontmatter['wcag-level'] || 'AA';
 
       // Embed code files so pattern.js doesn't need to fetch them
       const codeFilePaths = {
@@ -166,11 +136,12 @@ function scanPatterns() {
       patterns.push({
         id: patternId,
         category: category,
-        categoryName: categoryName || category.replace(/^\d+-/, '').replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+        categoryName: category.replace(/^\d+-/, '').replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
         title: title,
-        description: description || `${title} - ${categoryName || category}`,
+        description: description || `${title} - ${category.replace(/^\d+-/, '').replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}`,
+        wcag: wcag,
+        wcagShorthand: wcagShorthand,
         wcagLevel: wcagLevel,
-        wcagCriteria: wcagCriteria,
         path: `patterns/${category}/${patternId}`,
         keyRules: keyRules,
         whatItDemonstrates: description,

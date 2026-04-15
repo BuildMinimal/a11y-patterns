@@ -1,3 +1,10 @@
+---
+title: "Autocomplete Attributes — Form Labels"
+wcag: "1.3.5 Identify Input Purpose — Level AA"
+wcag-shorthand: "1.3.5"
+wcag-level: "AA"
+---
+
 # Pattern: Autocomplete Attributes — Form Labels
 
 **Category:** Form Labels

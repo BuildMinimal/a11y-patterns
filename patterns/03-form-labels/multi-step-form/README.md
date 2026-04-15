@@ -1,3 +1,10 @@
+---
+title: "Multi-Step Form — Form Labels"
+wcag: "2.4.3 Focus Order, 4.1.3 Status Messages — Level A"
+wcag-shorthand: "2.4.3, 4.1.3"
+wcag-level: "A"
+---
+
 # Pattern: Multi-Step Form — Form Labels
 
 **Category:** Form Labels

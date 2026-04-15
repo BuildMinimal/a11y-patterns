@@ -1,3 +1,10 @@
+---
+title: "Disabled State Contrast — Color Contrast"
+wcag: "1.4.3 Contrast Minimum — Level AA"
+wcag-shorthand: "1.4.3"
+wcag-level: "AA"
+---
+
 # Pattern: Disabled State Contrast — Color Contrast
 
 **Category:** Color Contrast
@@ -41,10 +48,10 @@ The `before/` version applies a `.field__input--disabled` and `.btn--disabled` C
 
 **Specific failures in `before/styles.css`:**
 
-| Element | Color | Background | Contrast | Result |
-|---------|-------|------------|----------|--------|
-| `.field__input--disabled` text | `#c0c0c0` | `#f3f4f6` | 1.66:1 | FAIL — needs 4.5:1 |
-| `.btn--disabled` text | `#c0c0c0` | `#f3f4f6` | 1.66:1 | FAIL |
+| Element                        | Color     | Background | Contrast | Result             |
+| ------------------------------ | --------- | ---------- | -------- | ------------------ |
+| `.field__input--disabled` text | `#c0c0c0` | `#f3f4f6`  | 1.66:1   | FAIL — needs 4.5:1 |
+| `.btn--disabled` text          | `#c0c0c0` | `#f3f4f6`  | 1.66:1   | FAIL               |
 
 ---
 
@@ -56,12 +63,12 @@ The visual styling is also improved: `#6b7280` on `#f3f4f6` = 3.39:1, which is b
 
 **What changes in `after/`:**
 
-| Change | Why |
-|--------|-----|
-| Added `disabled` attribute to inputs | Triggers WCAG's inactive-UI exemption |
-| Added `disabled` attribute to button | Same |
+| Change                                  | Why                                                             |
+| --------------------------------------- | --------------------------------------------------------------- |
+| Added `disabled` attribute to inputs    | Triggers WCAG's inactive-UI exemption                           |
+| Added `disabled` attribute to button    | Same                                                            |
 | Removed `.field__input--disabled` class | No longer needed — `:disabled` CSS pseudo-class handles styling |
-| Text color: `#c0c0c0` → `#6b7280` | More readable, even though spec-exempt |
+| Text color: `#c0c0c0` → `#6b7280`       | More readable, even though spec-exempt                          |
 
 ---
 
@@ -96,12 +103,12 @@ Targeting `input:disabled` and `button:disabled` in CSS means the visual styling
 
 ## Design tokens
 
-| Token | Value | Usage | Contrast |
-|-------|-------|-------|----------|
-| `color.disabled.text` | `#6b7280` | Disabled field text, disabled button text | 3.39:1 on `#f3f4f6` (WCAG-exempt) |
-| `color.disabled.background` | `#f3f4f6` | Disabled field/button background | — |
-| `color.text.primary` | `#1a1a1a` | Active input text | 18.1:1 on white (AAA) |
-| `color.interactive.primary-background` | `#1d4ed8` | Active primary button | — |
+| Token                                  | Value     | Usage                                     | Contrast                          |
+| -------------------------------------- | --------- | ----------------------------------------- | --------------------------------- |
+| `color.disabled.text`                  | `#6b7280` | Disabled field text, disabled button text | 3.39:1 on `#f3f4f6` (WCAG-exempt) |
+| `color.disabled.background`            | `#f3f4f6` | Disabled field/button background          | —                                 |
+| `color.text.primary`                   | `#1a1a1a` | Active input text                         | 18.1:1 on white (AAA)             |
+| `color.interactive.primary-background` | `#1d4ed8` | Active primary button                     | —                                 |
 
 ---
 
@@ -112,6 +119,7 @@ npm test -- patterns/01-color-contrast/disabled-state-contrast
 ```
 
 Expected test output:
+
 ```
 ✓ before/ has color-contrast violations
 ✓ after/ has no color-contrast violations

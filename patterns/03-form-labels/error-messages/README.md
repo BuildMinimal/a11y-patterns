@@ -1,3 +1,10 @@
+---
+title: "Error Messages — Form Labels"
+wcag: "3.3.1 Error Identification, 4.1.3 Status Messages — Level A"
+wcag-shorthand: "3.3.1, 4.1.3"
+wcag-level: "A"
+---
+
 # Pattern: Error Messages — Form Labels
 
 **Category:** Form Labels

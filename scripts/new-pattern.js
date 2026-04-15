@@ -292,8 +292,19 @@ test('after/ has no violations for the pattern being demonstrated', async () => 
 function readmeTemplate(displayName, slug, categoryLabel, criterionValue) {
   const criterion = WCAG_CRITERIA.find(c => c.value === criterionValue);
   const criterionLabel = criterion ? criterion.label : criterionValue;
+  
+  // Extract WCAG level from criterion label (e.g., "Level AA" -> "AA")
+  const levelMatch = criterionLabel.match(/Level\s+(A{1,3})/i);
+  const wcagLevel = levelMatch ? levelMatch[1] : 'AA';
 
-  return `# Pattern: ${displayName}
+  return `---
+title: "${displayName}"
+wcag: "${criterionLabel}"
+wcag-shorthand: "${criterionValue}"
+wcag-level: "${wcagLevel}"
+---
+
+# Pattern: ${displayName}
 
 **Category:** ${categoryLabel}
 **WCAG:** ${criterionLabel}

@@ -1,3 +1,10 @@
+---
+title: "Text on Gradient — Color Contrast"
+wcag: "1.4.3 Contrast Minimum — Level AA"
+wcag-shorthand: "1.4.3"
+wcag-level: "AA"
+---
+
 # Pattern: Text on Gradient — Color Contrast
 
 **Category:** Color Contrast
@@ -41,11 +48,11 @@ The CTA buttons use the light gradient colors as solid backgrounds with white te
 
 **Specific failures in `before/styles.css`:**
 
-| Element | Color | Contrast | Result |
-|---------|-------|----------|--------|
-| `.btn--primary` white text on `#7dd3fc` | `#ffffff` / `#7dd3fc` | 1.75:1 | FAIL — needs 4.5:1 |
-| `.btn--ghost` white text on `#93c5fd` | `#ffffff` / `#93c5fd` | 1.80:1 | FAIL |
-| All text on light gradient end | `#ffffff` / `#7dd3fc` | 1.75:1 | FAIL |
+| Element                                 | Color                 | Contrast | Result             |
+| --------------------------------------- | --------------------- | -------- | ------------------ |
+| `.btn--primary` white text on `#7dd3fc` | `#ffffff` / `#7dd3fc` | 1.75:1   | FAIL — needs 4.5:1 |
+| `.btn--ghost` white text on `#93c5fd`   | `#ffffff` / `#93c5fd` | 1.80:1   | FAIL               |
+| All text on light gradient end          | `#ffffff` / `#7dd3fc` | 1.75:1   | FAIL               |
 
 ---
 
@@ -55,10 +62,10 @@ The CTA buttons use the light gradient colors as solid backgrounds with white te
 
 The `after/` version changes the gradient from `#0f172a → #1e3a8a`. Every point along this gradient is dark enough for white text:
 
-| Gradient point | White text contrast | Result |
-|----------------|---------------------|--------|
-| `#0f172a` (start) | 19.5:1 | AAA |
-| `#1e3a8a` (end, lightest point) | 10.4:1 | AAA |
+| Gradient point                  | White text contrast | Result |
+| ------------------------------- | ------------------- | ------ |
+| `#0f172a` (start)               | 19.5:1              | AAA    |
+| `#1e3a8a` (end, lightest point) | 10.4:1              | AAA    |
 
 The primary CTA button is flipped: white background with dark navy text (`#0f172a`), creating strong contrast against the dark hero while also passing internal text contrast at 19.5:1.
 
@@ -86,12 +93,12 @@ axe's color-contrast rule uses an approximation for gradient backgrounds. It cat
 
 ## Design tokens
 
-| Token | Value | Usage | Contrast |
-|-------|-------|-------|----------|
-| `color.gradient.start` | `#0f172a` | Gradient dark end | White text 19.5:1 (AAA) |
-| `color.gradient.end` | `#1e3a8a` | Gradient light end | White text 10.4:1 (AAA) |
-| `color.button.primary-background` | `#ffffff` | Primary button on dark hero | — |
-| `color.button.primary-text` | `#0f172a` | Dark text on white button | 19.5:1 (AAA) |
+| Token                             | Value     | Usage                       | Contrast                |
+| --------------------------------- | --------- | --------------------------- | ----------------------- |
+| `color.gradient.start`            | `#0f172a` | Gradient dark end           | White text 19.5:1 (AAA) |
+| `color.gradient.end`              | `#1e3a8a` | Gradient light end          | White text 10.4:1 (AAA) |
+| `color.button.primary-background` | `#ffffff` | Primary button on dark hero | —                       |
+| `color.button.primary-text`       | `#0f172a` | Dark text on white button   | 19.5:1 (AAA)            |
 
 ---
 
@@ -106,6 +113,7 @@ npm run validate-tokens
 ```
 
 Expected test output:
+
 ```
 ✓ before/ has color-contrast violations
 ✓ after/ has no color-contrast violations

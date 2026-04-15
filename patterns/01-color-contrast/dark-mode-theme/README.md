@@ -1,3 +1,10 @@
+---
+title: "Dark Mode Theme — Color Contrast"
+wcag: "1.4.3 Contrast Minimum + 1.4.11 Non-Text Contrast — Level AA"
+wcag-shorthand: "1.4.3 + 1.4.11"
+wcag-level: "AA"
+---
+
 # Pattern: Dark Mode Theme — Color Contrast
 
 **Category:** Color Contrast

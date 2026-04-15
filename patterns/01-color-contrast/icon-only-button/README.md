@@ -1,3 +1,10 @@
+---
+title: "Icon-Only Button — Color Contrast"
+wcag: "1.4.11 Non-Text Contrast — Level AA"
+wcag-shorthand: "1.4.11"
+wcag-level: "AA"
+---
+
 # Pattern: Icon-Only Button — Color Contrast
 
 **Category:** Color Contrast
