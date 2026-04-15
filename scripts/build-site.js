@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { marked } from 'marked';
+import { parseInline } from 'marked';
 import matter from 'gray-matter';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -14,7 +14,7 @@ function extractDescription(readmePath) {
     const readme = fs.readFileSync(readmePath, 'utf-8');
     const match = readme.match(/## What this pattern demonstrates\s*\n\s*([\s\S]*?)(?=\n##|\n---)/);
     if (match) {
-      return marked.parse(match[1].trim());
+      return parseInline(match[1].trim());
     }
     return '';
   } catch (error) {
@@ -32,13 +32,14 @@ function extractKeyRules(readmePath) {
       const rulesText = match[1].trim();
       // Rules are separated by blank lines; each block starts with **N.
       const ruleBlocks = rulesText.split(/\n\n+/).filter(b => /^\*\*\d+\./.test(b.trim()));
-      return ruleBlocks.map(block =>
-        block
-          .replace(/\*\*/g, '')         // strip bold markers
-          .replace(/^\d+\.\s+/, '')     // strip leading "N. " number prefix
+      return ruleBlocks.map(block => {
+        const plain = block
+          .replace(/^\*\*\d+\.\s+/, '') // strip opening "**N. "
+          .replace(/\*\*\n/, '\n')      // strip closing ** at end of heading line
           .replace(/\s+/g, ' ')         // collapse whitespace/newlines
-          .trim()
-      );
+          .trim();
+        return parseInline(plain);
+      });
     }
     return [];
   } catch {
@@ -52,7 +53,7 @@ function extractWhyItMatters(readmePath) {
     const readme = fs.readFileSync(readmePath, 'utf-8');
     const match = readme.match(/## Why it matters\s*\n\s*([\s\S]*?)(?=\n##|\n---)/);
     if (match) {
-      return marked.parse(match[1].trim());
+      return parseInline(match[1].trim());
     }
     return '';
   } catch (error) {

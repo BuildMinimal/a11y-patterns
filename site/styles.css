@@ -691,7 +691,7 @@ body {
   line-height: var(--leading-relaxed);
 }
 
-.site-footer__text code {
+.site-footer__text code,  .pattern-card__description code{
   font-family: var(--font-family-mono);
   font-size: var(--text-xs);
   background-color: var(--color-surface-subtle);

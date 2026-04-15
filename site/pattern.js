@@ -175,7 +175,7 @@ function renderPattern() {
           WCAG ${currentPattern.wcagLevel}
         </span>
         <span class="pattern-header__badge pattern-header__badge--criterion">
-          ${currentPattern.wcagCriteria}
+          ${currentPattern.wcag}
         </span>
       </div>
     </header>

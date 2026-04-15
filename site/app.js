@@ -141,7 +141,7 @@ function renderPatterns() {
       <h3 class="pattern-card__title">${pattern.title}</h3>
       <p class="pattern-card__description">${pattern.description}</p>
       <div class="pattern-card__footer">
-        <span class="pattern-card__criterion">${pattern.wcagCriteria}</span>
+        <span class="pattern-card__criterion">${pattern.wcagShorthand}</span>
         <a href="pattern.html?id=${pattern.id}" class="pattern-card__link">View Pattern <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></a>
       </div>
     `;
