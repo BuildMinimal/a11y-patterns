@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { marked } from 'marked';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -54,7 +55,7 @@ function extractDescription(readmePath) {
     const readme = fs.readFileSync(readmePath, 'utf-8');
     const match = readme.match(/## What this pattern demonstrates\s*\n\s*([\s\S]*?)(?=\n##|\n---)/);
     if (match) {
-      return match[1].trim();
+      return marked.parse(match[1].trim());
     }
     return '';
   } catch (error) {
@@ -92,7 +93,7 @@ function extractWhyItMatters(readmePath) {
     const readme = fs.readFileSync(readmePath, 'utf-8');
     const match = readme.match(/## Why it matters\s*\n\s*([\s\S]*?)(?=\n##|\n---)/);
     if (match) {
-      return match[1].trim();
+      return marked.parse(match[1].trim());
     }
     return '';
   } catch (error) {
@@ -184,7 +185,7 @@ function scanPatterns() {
 
 // Build site
 function build() {
-  console.log('🏗️  Building A11y Patterns site...');
+  console.log('🏗️ Building A11y Patterns site...');
 
   // Create dist directory
   const distDir = path.join(rootDir, 'dist');

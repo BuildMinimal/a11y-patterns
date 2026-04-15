@@ -28,5 +28,8 @@
     "aria",
     "screen-reader"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "marked": "^18.0.0"
+  }
 }
