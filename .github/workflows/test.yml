@@ -4,14 +4,14 @@ on:
   push:
     branches: [main]
     paths:
-      - 'patterns/**'
-      - 'package.json'
-      - 'vitest.config.js'
+      - "patterns/**"
+      - "package.json"
+      - "vitest.config.js"
   pull_request:
     paths:
-      - 'patterns/**'
-      - 'package.json'
-      - 'vitest.config.js'
+      - "patterns/**"
+      - "package.json"
+      - "vitest.config.js"
 
 jobs:
   test:
@@ -25,8 +25,8 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "24"
+          cache: "npm"
 
       - name: Install dependencies
         run: npm install

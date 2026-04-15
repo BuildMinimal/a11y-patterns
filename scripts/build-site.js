@@ -188,11 +188,15 @@ function build() {
 
   // Copy site files
   const siteDir = path.join(rootDir, 'site');
-  const siteFiles = fs.readdirSync(siteDir);
-  for (const file of siteFiles) {
-    const src = path.join(siteDir, file);
-    const dest = path.join(distDir, file);
-    fs.copyFileSync(src, dest);
+  const siteFiles = fs.readdirSync(siteDir, { withFileTypes: true });
+  for (const entry of siteFiles) {
+    const src = path.join(siteDir, entry.name);
+    const dest = path.join(distDir, entry.name);
+    if (entry.isDirectory()) {
+      copyDirectory(src, dest);
+    } else {
+      fs.copyFileSync(src, dest);
+    }
   }
 
   // Create patterns directory in dist
