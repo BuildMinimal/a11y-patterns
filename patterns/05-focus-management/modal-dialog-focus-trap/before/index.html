@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modal Dialog Focus Trap — Before (Broken)</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main id="main-content">
+      <h1>Modal Dialog Focus Trap — Before</h1>
+      <p>This version demonstrates a modal without proper focus management.</p>
+
+      <div class="content">
+        <h2>Page Content</h2>
+        <p>
+          This is the main page content that should be obscured when the modal
+          is open.
+        </p>
+
+        <form>
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" />
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" />
+          </div>
+          <button type="submit">Submit Form</button>
+        </form>
+
+        <div class="actions">
+          <button id="open-modal-btn" class="btn btn--primary">
+            Open Modal
+          </button>
+          <a href="#" class="link">Another link</a>
+        </div>
+      </div>
+    </main>
+
+    <!-- BROKEN: This modal has no focus trap implementation -->
+    <div
+      id="modal"
+      class="modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+    >
+      <div class="modal__overlay"></div>
+      <div class="modal__content">
+        <h2 id="modal-title" class="modal__title">Delete Account</h2>
+        <p class="modal__description">
+          Are you sure you want to delete your account? This action cannot be
+          undone.
+        </p>
+        <div class="modal__actions">
+          <button id="modal-cancel" class="btn btn--secondary">Cancel</button>
+          <button id="modal-confirm" class="btn btn--danger">
+            Delete Account
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // BROKEN: This script opens the modal but does NOT implement focus trapping
+      // Issues:
+      // 1. No focus trapping — Tab can move focus to elements behind the modal
+      // 2. No focus restoration — Focus is not returned to the trigger when closed
+      // 3. No initial focus — Focus is not moved to the modal when opened
+      // 4. No Escape key handling — Escape does not close the modal
+
+      const openModalBtn = document.getElementById("open-modal-btn");
+      const modal = document.getElementById("modal");
+      const modalCancel = document.getElementById("modal-cancel");
+      const modalConfirm = document.getElementById("modal-confirm");
+      const mainContent = document.getElementById("main-content");
+
+      function openModal() {
+        modal.classList.add("modal--open");
+        // BROKEN: No focus trapping or initial focus management
+      }
+
+      function closeModal() {
+        modal.classList.remove("modal--open");
+        // BROKEN: No focus restoration to the trigger button
+      }
+
+      openModalBtn.addEventListener("click", openModal);
+      modalCancel.addEventListener("click", closeModal);
+      modalConfirm.addEventListener("click", closeModal);
+
+      // BROKEN: No Escape key handler
+    </script>
+  </body>
+</html>

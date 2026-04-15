@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toast Notifications — Before (Broken)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <h1>Toast Notifications — Before</h1>
+    <p>This version demonstrates a toast notification without proper screen reader announcements.</p>
+
+    <div class="content">
+      <h2>Notification Demo</h2>
+      <p>Click the buttons below to trigger different toast notifications.</p>
+
+      <div class="actions">
+        <button id="show-success" class="btn btn--success">Show Success Toast</button>
+        <button id="show-error" class="btn btn--danger">Show Error Toast</button>
+        <button id="show-warning" class="btn btn--warning">Show Warning Toast</button>
+        <button id="show-info" class="btn btn--info">Show Info Toast</button>
+      </div>
+
+      <div class="form">
+        <h3>Test Form</h3>
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" placeholder="Enter username">
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" placeholder="Enter email">
+        </div>
+        <button id="submit-form" class="btn btn--primary">Submit Form</button>
+      </div>
+    </div>
+
+    <!-- BROKEN: This toast has no aria-live region for screen reader announcements -->
+    <div id="toast-container" class="toast-container"></div>
+  </main>
+
+  <script>
+    // BROKEN: This script shows toasts but does NOT announce to screen readers
+    // Issues:
+    // 1. No aria-live region — Screen readers cannot announce the toast
+    // 2. No role="alert" — No semantic indication that this is an alert message
+    // 3. No aria-atomic="true" — Screen readers may not read the complete message
+    // 4. No auto-dismiss — Toast stays on screen indefinitely
+    // 5. No focus management — Toast may steal focus when appearing
+
+    const toastContainer = document.getElementById('toast-container');
+    const showSuccessBtn = document.getElementById('show-success');
+    const showErrorBtn = document.getElementById('show-error');
+    const showWarningBtn = document.getElementById('show-warning');
+    const showInfoBtn = document.getElementById('show-info');
+    const submitFormBtn = document.getElementById('submit-form');
+
+    function showToast(message, type = 'info') {
+      const toast = document.createElement('div');
+      toast.className = `toast toast--${type}`;
+      toast.textContent = message;
+
+      // BROKEN: No aria-live, role, or aria-atomic attributes
+      // BROKEN: No dismiss button
+
+      toastContainer.appendChild(toast);
+    }
+
+    showSuccessBtn.addEventListener('click', () => {
+      showToast('Changes saved successfully!', 'success');
+    });
+
+    showErrorBtn.addEventListener('click', () => {
+      showToast('Failed to save changes. Please try again.', 'error');
+    });
+
+    showWarningBtn.addEventListener('click', () => {
+      showToast('Your session will expire in 5 minutes.', 'warning');
+    });
+
+    showInfoBtn.addEventListener('click', () => {
+      showToast('New message received from John.', 'info');
+    });
+
+    submitFormBtn.addEventListener('click', () => {
+      showToast('Form submitted successfully!', 'success');
+    });
+
+    // BROKEN: No auto-dismiss functionality
+    // BROKEN: No manual dismiss functionality
+  </script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modal Dialog Focus Trap — After (Fixed)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main id="main-content">
+    <h1>Modal Dialog Focus Trap — After</h1>
+    <p>This version demonstrates a modal with proper focus management.</p>
+
+    <div class="content">
+      <h2>Page Content</h2>
+      <p>This is the main page content that should be obscured when the modal is open.</p>
+      
+      <form>
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name">
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email">
+        </div>
+        <button type="submit">Submit Form</button>
+      </form>
+
+      <div class="actions">
+        <button id="open-modal-btn" class="btn btn--primary">Open Modal</button>
+        <a href="#" class="link">Another link</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- FIXED: This modal has complete focus trap implementation -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-desc" hidden>
+    <div class="modal__overlay"></div>
+    <div class="modal__content" tabindex="-1">
+      <h2 id="modal-title" class="modal__title">Delete Account</h2>
+      <p id="modal-desc" class="modal__description">
+        Are you sure you want to delete your account? This action cannot be undone.
+      </p>
+      <div class="modal__actions">
+        <button id="modal-cancel" class="btn btn--secondary">Cancel</button>
+        <button id="modal-confirm" class="btn btn--danger">Delete Account</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // FIXED: Complete focus trap implementation
+    // 1. Focus trapping — Tab cycles within modal, Shift+Tab cycles backward
+    // 2. Focus restoration — Focus returns to trigger button on close
+    // 3. Initial focus — Focus moves to first focusable element on open
+    // 4. Escape key handling — Escape closes the modal
+    // 5. Background inert — Main content is hidden from screen readers
+
+    const openModalBtn = document.getElementById('open-modal-btn');
+    const modal = document.getElementById('modal');
+    const modalContent = modal.querySelector('.modal__content');
+    const modalCancel = document.getElementById('modal-cancel');
+    const modalConfirm = document.getElementById('modal-confirm');
+    const mainContent = document.getElementById('main-content');
+
+    // Store the element that opened the modal for focus restoration
+    let lastFocusedElement = null;
+
+    // Get all focusable elements within the modal
+    function getFocusableElements(container) {
+      const focusableSelectors = [
+        'button:not([disabled])',
+        '[href]',
+        'input:not([disabled])',
+        'select:not([disabled])',
+        'textarea:not([disabled])',
+        '[tabindex]:not([tabindex="-1"])',
+        '[contenteditable]'
+      ];
+      return Array.from(container.querySelectorAll(focusableSelectors.join(', ')));
+    }
+
+    // FIXED: Trap focus within the modal
+    function trapFocus(event) {
+      const focusableElements = getFocusableElements(modalContent);
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+
+      if (event.key === 'Tab') {
+        if (event.shiftKey) {
+          // Shift+Tab: if focus is on first element, move to last
+          if (document.activeElement === firstElement) {
+            event.preventDefault();
+            lastElement.focus();
+          }
+        } else {
+          // Tab: if focus is on last element, move to first
+          if (document.activeElement === lastElement) {
+            event.preventDefault();
+            firstElement.focus();
+          }
+        }
+      }
+    }
+
+    // FIXED: Open modal with proper focus management
+    function openModal() {
+      // Store the element that opened the modal
+      lastFocusedElement = document.activeElement;
+
+      // Show the modal
+      modal.hidden = false;
+      modal.classList.add('modal--open');
+
+      // Hide the main content from screen readers
+      mainContent.setAttribute('aria-hidden', 'true');
+
+      // FIXED: Move focus to the first focusable element in the modal
+      const focusableElements = getFocusableElements(modalContent);
+      if (focusableElements.length > 0) {
+        focusableElements[0].focus();
+      } else {
+        // If no focusable elements, focus the modal container
+        modalContent.focus();
+      }
+
+      // Add focus trap listener
+      modal.addEventListener('keydown', trapFocus);
+    }
+
+    // FIXED: Close modal with focus restoration
+    function closeModal() {
+      // Hide the modal
+      modal.hidden = true;
+      modal.classList.remove('modal--open');
+
+      // Restore the main content to screen readers
+      mainContent.removeAttribute('aria-hidden');
+
+      // Remove focus trap listener
+      modal.removeEventListener('keydown', trapFocus);
+
+      // FIXED: Return focus to the element that opened the modal
+      if (lastFocusedElement) {
+        lastFocusedElement.focus();
+      }
+    }
+
+    // FIXED: Handle Escape key to close modal
+    function handleEscape(event) {
+      if (event.key === 'Escape' && !modal.hidden) {
+        closeModal();
+      }
+    }
+
+    // Event listeners
+    openModalBtn.addEventListener('click', openModal);
+    modalCancel.addEventListener('click', closeModal);
+    modalConfirm.addEventListener('click', closeModal);
+    document.addEventListener('keydown', handleEscape);
+
+    // Close modal when clicking the overlay (outside the content)
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal.querySelector('.modal__overlay')) {
+        closeModal();
+      }
+    });
+  </script>
+</body>
+</html>

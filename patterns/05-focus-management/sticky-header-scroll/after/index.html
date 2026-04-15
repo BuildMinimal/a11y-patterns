@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sticky Header Scroll — After (Fixed)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- FIXED: This sticky header has scroll-margin-top to prevent focus loss -->
+  <header class="header">
+    <div class="header__content">
+      <h1 class="header__title">My Website</h1>
+      <nav class="header__nav">
+        <a href="#home" class="nav__link">Home</a>
+        <a href="#about" class="nav__link">About</a>
+        <a href="#services" class="nav__link">Services</a>
+        <a href="#contact" class="nav__link">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <h1>Sticky Header Scroll — After</h1>
+    <p>This version demonstrates a sticky header with proper scroll margin management.</p>
+
+    <div class="content">
+      <h2>Page Content</h2>
+      <p>Scroll down to see how the sticky header reserves space for content.</p>
+
+      <section id="home" class="section">
+        <h3>Home Section</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <a href="#" class="link">Read more</a>
+      </section>
+
+      <section id="about" class="section">
+        <h3>About Section</h3>
+        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <a href="#" class="link">Read more</a>
+      </section>
+
+      <section id="services" class="section">
+        <h3>Services Section</h3>
+        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+        <a href="#" class="link">Read more</a>
+      </section>
+
+      <section id="contact" class="section">
+        <h3>Contact Section</h3>
+        <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <a href="#" class="link">Read more</a>
+      </section>
+
+      <section id="more-content" class="section">
+        <h3>More Content Section</h3>
+        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+        <a href="#" class="link">Read more</a>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    // FIXED: Complete focus management implementation for sticky header
+    // 1. scroll-margin-top on main content — Reserves space for sticky header
+    // 2. Focus restoration — Focus is moved to visible element when covered
+    // 3. Scroll position monitoring — Detects when header covers content
+
+    const header = document.querySelector('.header');
+    const main = document.querySelector('main');
+    const navLinks = document.querySelectorAll('.nav__link');
+
+    // FIXED: Get the currently focused element
+    function getActiveElement() {
+      return document.activeElement;
+    }
+
+    // FIXED: Find the first visible element that can receive focus
+    function findFirstVisibleElement() {
+      const allFocusable = document.querySelectorAll(
+        'a[href], button:not([disabled]), input:not([disabled]), ' +
+        'select:not([disabled]), textarea:not([disabled]), ' +
+        '[tabindex]:not([tabindex="-1"])'
+      );
+
+      for (const element of allFocusable) {
+        const rect = element.getBoundingClientRect();
+        const isVisible = rect.top >= 0 && rect.left >= 0 &&
+                         rect.bottom <= window.innerHeight &&
+                         rect.right <= window.innerWidth;
+
+        if (isVisible) {
+          return element;
+        }
+      }
+
+      return null;
+    }
+
+    // FIXED: Check if header is covering a focused element
+    function checkHeaderCoverage() {
+      const activeElement = getActiveElement();
+      if (!activeElement) return;
+
+      const headerRect = header.getBoundingClientRect();
+      const elementRect = activeElement.getBoundingClientRect();
+
+      // Check if the focused element is below the header
+      const isCovered = elementRect.top >= headerRect.bottom;
+
+      if (isCovered) {
+        // FIXED: Move focus to the first visible element
+        const firstVisible = findFirstVisibleElement();
+        if (firstVisible) {
+          firstVisible.focus();
+        }
+      }
+    }
+
+    // FIXED: Check header coverage on scroll
+    function handleScroll() {
+      checkHeaderCoverage();
+    }
+
+    // FIXED: Handle focus changes
+    function handleFocusChange() {
+      // Small delay to ensure the element is actually focused
+      setTimeout(() => {
+        checkHeaderCoverage();
+      }, 50);
+    }
+
+    // Add event listeners
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    document.addEventListener('focusin', handleFocusChange);
+    document.addEventListener('focusout', handleFocusChange);
+
+    // Initial check on page load
+    window.addEventListener('load', () => {
+      setTimeout(checkHeaderCoverage, 100);
+    });
+  </script>
+</body>
+</html>

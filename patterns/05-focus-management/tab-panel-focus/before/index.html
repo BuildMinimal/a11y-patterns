@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tab Panel Focus — Before (Broken)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <h1>Tab Panel Focus — Before</h1>
+    <p>This version demonstrates a tab component without proper keyboard navigation.</p>
+
+    <div class="content">
+      <h2>Product Details</h2>
+      <p>Use the tabs below to view different product information.</p>
+
+      <!-- BROKEN: This tab component has no keyboard navigation implementation -->
+      <div class="tabs">
+        <div class="tabs__list">
+          <button class="tabs__tab tabs__tab--active" data-tab="description">Description</button>
+          <button class="tabs__tab" data-tab="specifications">Specifications</button>
+          <button class="tabs__tab" data-tab="reviews">Reviews</button>
+        </div>
+
+        <div class="tabs__panels">
+          <div class="tabs__panel tabs__panel--active" data-panel="description">
+            <h3>Product Description</h3>
+            <p>
+              This premium wireless keyboard features mechanical switches, RGB backlighting, and a
+              compact design perfect for both work and gaming. The durable aluminum frame ensures
+              longevity, while the hot-swappable switches allow for easy customization.
+            </p>
+            <p>
+              Includes a detachable USB-C cable, keycap puller, and switch removal tool.
+              Compatible with Windows, macOS, and Linux.
+            </p>
+          </div>
+
+          <div class="tabs__panel" data-panel="specifications">
+            <h3>Technical Specifications</h3>
+            <table>
+              <tr>
+                <th>Switch Type</th>
+                <td>Hot-swappable Mechanical</td>
+              </tr>
+              <tr>
+                <th>Connectivity</th>
+                <td>USB-C Wired / 2.4GHz Wireless / Bluetooth 5.0</td>
+              </tr>
+              <tr>
+                <th>Battery Life</th>
+                <td>Up to 72 hours (wireless)</td>
+              </tr>
+              <tr>
+                <th>Dimensions</th>
+                <td>14" x 5.5" x 1.5"</td>
+              </tr>
+              <tr>
+                <th>Weight</th>
+                <td>1.8 lbs</td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="tabs__panel" data-panel="reviews">
+            <h3>Customer Reviews</h3>
+            <div class="review">
+              <div class="review__header">
+                <span class="review__author">Alex M.</span>
+                <span class="review__rating">★★★★★</span>
+              </div>
+              <p class="review__text">
+                "Best keyboard I've ever owned. The wireless connection is rock-solid and the
+                battery life is incredible. Highly recommend!"
+              </p>
+            </div>
+            <div class="review">
+              <div class="review__header">
+                <span class="review__author">Sarah K.</span>
+                <span class="review__rating">★★★★☆</span>
+              </div>
+              <p class="review__text">
+                "Great keyboard for the price. The RGB lighting is subtle and professional.
+                Only giving 4 stars because I wish it came in more colors."
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // BROKEN: This script switches tabs but does NOT implement keyboard navigation
+    // Issues:
+    // 1. No Arrow key navigation — Arrow keys do not move focus between tabs
+    // 2. Tab moves to next tab instead of into panel — Tab should move focus into active panel
+    // 3. Missing ARIA attributes — No role="tablist", role="tab", role="tabpanel"
+    // 4. No aria-selected state — Screen readers cannot determine which tab is active
+    // 5. No aria-controls relationship — No link between tabs and their panels
+
+    const tabs = document.querySelectorAll('.tabs__tab');
+    const panels = document.querySelectorAll('.tabs__panel');
+
+    function switchTab(clickedTab) {
+      const targetPanel = clickedTab.dataset.tab;
+
+      // Remove active class from all tabs and panels
+      tabs.forEach(tab => tab.classList.remove('tabs__tab--active'));
+      panels.forEach(panel => panel.classList.remove('tabs__panel--active'));
+
+      // Add active class to clicked tab and corresponding panel
+      clickedTab.classList.add('tabs__tab--active');
+      const targetPanelElement = document.querySelector(`[data-panel="${targetPanel}"]`);
+      if (targetPanelElement) {
+        targetPanelElement.classList.add('tabs__panel--active');
+      }
+    }
+
+    // BROKEN: Click-only, no keyboard support
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => switchTab(tab));
+    });
+
+    // BROKEN: No keyboard event handlers for Arrow key navigation
+    // BROKEN: No focus management for Tab key
+  </script>
+</body>
+</html>

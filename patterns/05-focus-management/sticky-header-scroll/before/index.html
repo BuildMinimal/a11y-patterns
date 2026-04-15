@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sticky Header - Before (Focus Issues)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Sticky header without focus management -->
+  <header class="header">
+    <div class="header__content">
+      <h1 class="header__title">Accessible Docs</h1>
+      <nav class="header__nav">
+        <a href="#section-1" class="header__nav-link">Section 1</a>
+        <a href="#section-2" class="header__nav-link">Section 2</a>
+        <a href="#section-3" class="header__nav-link">Section 3</a>
+        <a href="#section-4" class="header__nav-link">Section 4</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="content">
+    <section id="section-1" class="content__section">
+      <h2 class="content__heading">Section 1: Introduction</h2>
+      <p class="content__text">
+        This is the first section of content. When you navigate through this content using keyboard navigation,
+        the sticky header may cover the focused element, making it difficult to see what you're interacting with.
+      </p>
+      <a href="#section-2" class="content__link">Continue to Section 2</a>
+    </section>
+
+    <section id="section-2" class="content__section">
+      <h2 class="content__heading">Section 2: The Problem</h2>
+      <p class="content__text">
+        Without proper focus management, when you tab through interactive elements that are positioned
+        near the top of the viewport, the sticky header can obscure them. This violates WCAG 2.4.7
+        (Focus Visible) by making focused elements not clearly visible.
+      </p>
+      <a href="#section-3" class="content__link">Continue to Section 3</a>
+    </section>
+
+    <section id="section-3" class="content__section">
+      <h2 class="content__heading">Section 3: Impact</h2>
+      <p class="content__text">
+        Keyboard users may become confused when they can't see the element that has focus. They might
+        think the page is broken or that focus has been lost. This creates a frustrating experience
+        and prevents users from effectively navigating the content.
+      </p>
+      <a href="#section-4" class="content__link">Continue to Section 4</a>
+    </section>
+
+    <section id="section-4" class="content__section">
+      <h2 class="content__heading">Section 4: Solution</h2>
+      <p class="content__text">
+        The solution involves using CSS scroll-margin-top or JavaScript to ensure that when an element
+        receives focus, the page scrolls enough to keep it visible below the sticky header. This ensures
+        all users can see and interact with focused elements.
+      </p>
+      <button class="content__button">Action Button</button>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2024 Accessibility Patterns</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Infinite Scroll Focus — Before (Broken)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <h1>Infinite Scroll Focus — Before</h1>
+    <p>This version demonstrates an infinite scroll without proper focus management.</p>
+
+    <div class="content">
+      <h2>News Feed</h2>
+      <p>Scroll down to load more articles. Focus may be lost when new content loads.</p>
+
+      <div id="feed-container" class="feed-container">
+        <article class="card">
+          <h3 class="card__title">Article 1</h3>
+          <p class="card__content">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua.
+          </p>
+          <button class="btn btn--primary">Read More</button>
+        </article>
+
+        <article class="card">
+          <h3 class="card__title">Article 2</h3>
+          <p class="card__content">
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat.
+          </p>
+          <button class="btn btn--primary">Read More</button>
+        </article>
+
+        <article class="card">
+          <h3 class="card__title">Article 3</h3>
+          <p class="card__content">
+            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+            eu fugiat nulla pariatur.
+          </p>
+          <button class="btn btn--primary">Read More</button>
+        </article>
+      </div>
+
+      <div id="loading-indicator" class="loading-indicator" hidden>
+        <span class="loading__spinner"></span>
+        <span class="loading__text">Loading more articles...</span>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // BROKEN: This script loads content but does NOT manage focus
+    // Issues:
+    // 1. No focus preservation — Focus is lost when new content loads above current position
+    // 2. No scroll position management — Content loading causes scroll position to jump
+    // 3. No announcement strategy — Screen readers may not announce new content appropriately
+    // 4. No loading state management — No visual indicator for loading
+
+    const feedContainer = document.getElementById('feed-container');
+    const loadingIndicator = document.getElementById('loading-indicator');
+
+    let isLoading = false;
+    let articleCount = 3;
+
+    function createArticle(index) {
+      const article = document.createElement('article');
+      article.className = 'card';
+      article.innerHTML = `
+        <h3 class="card__title">Article ${index + 1}</h3>
+        <p class="card__content">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+          incididunt ut labore et dolore magna aliqua.
+        </p>
+        <button class="btn btn--primary">Read More</button>
+      `;
+      return article;
+    }
+
+    function loadMoreArticles() {
+      if (isLoading) return;
+
+      isLoading = true;
+      loadingIndicator.hidden = false;
+
+      // Simulate network delay
+      setTimeout(() => {
+        for (let i = 0; i < 3; i++) {
+          const newArticle = createArticle(articleCount + i + 1);
+          feedContainer.appendChild(newArticle);
+        }
+        articleCount += 3;
+        isLoading = false;
+        loadingIndicator.hidden = true;
+
+        // BROKEN: No focus preservation when content loads above current position
+        // BROKEN: No scroll position management
+      }, 1000);
+    }
+
+    // BROKEN: Simple scroll detection without focus management
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+
+      // Load more when near bottom
+      if (scrollTop + windowHeight > documentHeight - 500) {
+        loadMoreArticles();
+      }
+    });
+  </script>
+</body>
+</html>

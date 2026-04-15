@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tab Panel Focus — After (Fixed)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <h1>Tab Panel Focus — After</h1>
+    <p>This version demonstrates a tab component with proper keyboard navigation.</p>
+
+    <div class="content">
+      <h2>Product Details</h2>
+      <p>Use the tabs below to view different product information.</p>
+
+      <!-- FIXED: This tab component has complete keyboard navigation implementation -->
+      <div class="tabs">
+        <div class="tabs__list" role="tablist" aria-label="Product information tabs">
+          <button
+            id="tab-description"
+            class="tabs__tab tabs__tab--active"
+            role="tab"
+            aria-selected="true"
+            aria-controls="panel-description"
+            tabindex="0"
+          >
+            Description
+          </button>
+          <button
+            id="tab-specifications"
+            class="tabs__tab"
+            role="tab"
+            aria-selected="false"
+            aria-controls="panel-specifications"
+            tabindex="-1"
+          >
+            Specifications
+          </button>
+          <button
+            id="tab-reviews"
+            class="tabs__tab"
+            role="tab"
+            aria-selected="false"
+            aria-controls="panel-reviews"
+            tabindex="-1"
+          >
+            Reviews
+          </button>
+        </div>
+
+        <div class="tabs__panels">
+          <div
+            id="panel-description"
+            class="tabs__panel tabs__panel--active"
+            role="tabpanel"
+            aria-labelledby="tab-description"
+            tabindex="0"
+          >
+            <h3>Product Description</h3>
+            <p>
+              This premium wireless keyboard features mechanical switches, RGB backlighting, and a
+              compact design perfect for both work and gaming. The durable aluminum frame ensures
+              longevity, while hot-swappable switches allow for easy customization.
+            </p>
+            <p>
+              Includes a detachable USB-C cable, keycap puller, and switch removal tool.
+              Compatible with Windows, macOS, and Linux.
+            </p>
+          </div>
+
+          <div
+            id="panel-specifications"
+            class="tabs__panel"
+            role="tabpanel"
+            aria-labelledby="tab-specifications"
+            tabindex="0"
+            hidden
+          >
+            <h3>Technical Specifications</h3>
+            <table>
+              <tr>
+                <th>Switch Type</th>
+                <td>Hot-swappable Mechanical</td>
+              </tr>
+              <tr>
+                <th>Connectivity</th>
+                <td>USB-C Wired / 2.4GHz Wireless / Bluetooth 5.0</td>
+              </tr>
+              <tr>
+                <th>Battery Life</th>
+                <td>Up to 72 hours (wireless)</td>
+              </tr>
+              <tr>
+                <th>Dimensions</th>
+                <td>14" x 5.5" x 1.5"</td>
+              </tr>
+              <tr>
+                <th>Weight</th>
+                <td>1.8 lbs</td>
+              </tr>
+            </table>
+          </div>
+
+          <div
+            id="panel-reviews"
+            class="tabs__panel"
+            role="tabpanel"
+            aria-labelledby="tab-reviews"
+            tabindex="0"
+            hidden
+          >
+            <h3>Customer Reviews</h3>
+            <div class="review">
+              <div class="review__header">
+                <span class="review__author">Alex M.</span>
+                <span class="review__rating">★★★★★</span>
+              </div>
+              <p class="review__text">
+                "Best keyboard I've ever owned. The wireless connection is rock-solid and the
+                battery life is incredible. Highly recommend!"
+              </p>
+            </div>
+            <div class="review">
+              <div class="review__header">
+                <span class="review__author">Sarah K.</span>
+                <span class="review__rating">★★★★☆</span>
+              </div>
+              <p class="review__text">
+                "Great keyboard for the price. The RGB lighting is subtle and professional.
+                Only giving 4 stars because I wish it came in more colors."
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // FIXED: Complete keyboard navigation implementation
+    // 1. Arrow key navigation — ArrowLeft/ArrowRight moves focus between tabs
+    // 2. Tab moves into panel — Tab moves focus from tab list into active panel
+    // 3. Proper ARIA attributes — role="tablist", role="tab", role="tabpanel"
+    // 4. aria-selected state — Indicates which tab is currently active
+    // 5. aria-controls relationship — Links tabs to their associated panels
+    // 6. aria-labelledby relationship — Links panels to their associated tabs
+
+    const tabs = document.querySelectorAll('.tabs__tab');
+    const panels = document.querySelectorAll('.tabs__panel');
+    const tabList = document.querySelector('.tabs__list');
+
+    let activeTab = tabs[0];
+    let activePanel = panels[0];
+
+    // FIXED: Switch to a specific tab
+    function switchTab(newTab) {
+      const newPanelId = newTab.getAttribute('aria-controls');
+      const newPanel = document.getElementById(newPanelId);
+
+      // Update aria-selected on tabs
+      tabs.forEach(tab => {
+        tab.setAttribute('aria-selected', 'false');
+        tab.setAttribute('tabindex', '-1');
+        tab.classList.remove('tabs__tab--active');
+      });
+      newTab.setAttribute('aria-selected', 'true');
+      newTab.setAttribute('tabindex', '0');
+      newTab.classList.add('tabs__tab--active');
+
+      // Update panel visibility
+      panels.forEach(panel => {
+        panel.classList.remove('tabs__panel--active');
+        panel.setAttribute('hidden', 'true');
+      });
+      newPanel.classList.add('tabs__panel--active');
+      newPanel.removeAttribute('hidden');
+
+      // Update active references
+      activeTab = newTab;
+      activePanel = newPanel;
+
+      // Focus the new tab
+      newTab.focus();
+    }
+
+    // FIXED: Handle keyboard navigation within the tab list
+    function handleTabListKeyDown(event) {
+      const currentIndex = Array.from(tabs).indexOf(activeTab);
+
+      switch (event.key) {
+        case 'ArrowRight':
+          event.preventDefault();
+          // Move to next tab, wrap to first if at end
+          const nextIndex = (currentIndex + 1) % tabs.length;
+          switchTab(tabs[nextIndex]);
+          break;
+
+        case 'ArrowLeft':
+          event.preventDefault();
+          // Move to previous tab, wrap to last if at start
+          const prevIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+          switchTab(tabs[prevIndex]);
+          break;
+
+        case 'Home':
+          event.preventDefault();
+          // Jump to first tab
+          switchTab(tabs[0]);
+          break;
+
+        case 'End':
+          event.preventDefault();
+          // Jump to last tab
+          switchTab(tabs[tabs.length - 1]);
+          break;
+
+        case 'Enter':
+        case ' ':
+          event.preventDefault();
+          // Activate the currently focused tab
+          const focusedTab = document.activeElement;
+          if (focusedTab && tabs.includes(focusedTab)) {
+            switchTab(focusedTab);
+          }
+          break;
+      }
+    }
+
+    // FIXED: Handle Tab key to move focus into panel
+    function handleTabKeyDown(event) {
+      if (event.key === 'Tab') {
+        // If Tab is pressed, focus will move into the active panel
+        // We don't prevent default here — we let the natural Tab behavior work
+        // The active panel has tabindex="0" so it can receive focus
+      }
+    }
+
+    // FIXED: Handle click events on tabs
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        switchTab(tab);
+      });
+    });
+
+    // FIXED: Add keyboard navigation to tab list
+    tabList.addEventListener('keydown', handleTabListKeyDown);
+
+    // FIXED: Add Tab key handler to tabs
+    tabs.forEach(tab => {
+      tab.addEventListener('keydown', handleTabKeyDown);
+    });
+  </script>
+</body>
+</html>

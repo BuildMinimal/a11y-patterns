@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dropdown Menu Focus — Before (Broken)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <h1>Dropdown Menu Focus — Before</h1>
+    <p>This version demonstrates a dropdown menu without proper keyboard navigation.</p>
+
+    <div class="content">
+      <h2>User Menu</h2>
+      <p>Click the button below to open the user menu.</p>
+
+      <!-- BROKEN: This dropdown has no keyboard navigation implementation -->
+      <div class="dropdown">
+        <button id="dropdown-trigger" class="dropdown__trigger">
+          <span>Account</span>
+          <svg class="dropdown__icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 11L3 6h10l-5 5z"/>
+          </svg>
+        </button>
+
+        <div id="dropdown-menu" class="dropdown__menu">
+          <a href="#profile" class="dropdown__item">Profile</a>
+          <a href="#settings" class="dropdown__item">Settings</a>
+          <a href="#notifications" class="dropdown__item">Notifications</a>
+          <hr class="dropdown__separator">
+          <a href="#logout" class="dropdown__item dropdown__item--danger">Sign out</a>
+        </div>
+      </div>
+
+      <div class="other-content">
+        <h3>Other Page Content</h3>
+        <p>This content is here to demonstrate that focus can escape the dropdown.</p>
+        <a href="#" class="link">Another link</a>
+        <button class="btn">Another button</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // BROKEN: This script opens the dropdown but does NOT implement keyboard navigation
+    // Issues:
+    // 1. No Arrow key navigation — Arrow keys do not move focus between menu items
+    // 2. No Enter/Space activation — Pressing Enter/Space does not activate items
+    // 3. No Escape key handling — Escape does not close the dropdown
+    // 4. No focus trapping — Tab can move focus out of the dropdown while open
+    // 5. Missing ARIA attributes — No aria-expanded, aria-haspopup, or menu roles
+
+    const dropdownTrigger = document.getElementById('dropdown-trigger');
+    const dropdownMenu = document.getElementById('dropdown-menu');
+
+    function toggleDropdown() {
+      dropdownMenu.classList.toggle('dropdown__menu--open');
+      // BROKEN: No focus management
+    }
+
+    function closeDropdown() {
+      dropdownMenu.classList.remove('dropdown__menu--open');
+      // BROKEN: No focus restoration
+    }
+
+    // BROKEN: Click-only, no keyboard support
+    dropdownTrigger.addEventListener('click', toggleDropdown);
+
+    // BROKEN: No keyboard event handlers
+    // BROKEN: No click-outside handler
+  </script>
+</body>
+</html>

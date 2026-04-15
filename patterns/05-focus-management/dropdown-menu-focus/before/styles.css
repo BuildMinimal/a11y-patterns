@@ -1,0 +1,159 @@
+/* before/styles.css */
+/* Pattern: Dropdown Menu Focus — Focus Management */
+/* This CSS is identical to after/styles.css. The accessibility issues are in the JavaScript. */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.6;
+  color: #1a1a1a;
+  margin: 0;
+  padding: 0;
+  background-color: #f9fafb;
+}
+
+main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+.content {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.other-content {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background-color: #1d4ed8;
+  color: #ffffff;
+}
+
+.btn:focus {
+  outline: 2px solid #1d4ed8;
+  outline-offset: 2px;
+}
+
+.link {
+  color: #1d4ed8;
+  text-decoration: underline;
+  margin-right: 1rem;
+}
+
+.link:focus {
+  outline: 2px solid #1d4ed8;
+  outline-offset: 2px;
+}
+
+/* Dropdown styles */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background-color: #ffffff;
+  color: #1a1a1a;
+  cursor: pointer;
+}
+
+.dropdown__trigger:focus {
+  outline: 2px solid #1d4ed8;
+  outline-offset: 2px;
+}
+
+.dropdown__icon {
+  transition: transform 0.15s ease;
+}
+
+.dropdown__menu {
+  position: absolute;
+  top: calc(100% + 0.25rem);
+  left: 0;
+  min-width: 200px;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  display: none;
+  z-index: 100;
+}
+
+.dropdown__menu--open {
+  display: block;
+}
+
+.dropdown__item {
+  display: block;
+  padding: 0.625rem 1rem;
+  color: #1a1a1a;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.dropdown__item:hover,
+.dropdown__item:focus {
+  background-color: #f3f4f6;
+  outline: none;
+}
+
+.dropdown__item--danger {
+  color: #dc2626;
+}
+
+.dropdown__item--danger:hover,
+.dropdown__item--danger:focus {
+  background-color: #fef2f2;
+}
+
+.dropdown__separator {
+  margin: 0.25rem 0;
+  border: none;
+  border-top: 1px solid #e5e7eb;
+}

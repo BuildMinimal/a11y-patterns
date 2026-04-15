@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toast Notifications — After (Fixed)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <h1>Toast Notifications — After</h1>
+    <p>This version demonstrates a toast notification with proper screen reader announcements.</p>
+
+    <div class="content">
+      <h2>Notification Demo</h2>
+      <p>Click the buttons below to trigger different toast notifications.</p>
+
+      <div class="actions">
+        <button id="show-success" class="btn btn--success">Show Success Toast</button>
+        <button id="show-error" class="btn btn--danger">Show Error Toast</button>
+        <button id="show-warning" class="btn btn--warning">Show Warning Toast</button>
+        <button id="show-info" class="btn btn--info">Show Info Toast</button>
+      </div>
+
+      <div class="form">
+        <h3>Test Form</h3>
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" placeholder="Enter username">
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" placeholder="Enter email">
+        </div>
+        <button id="submit-form" class="btn btn--primary">Submit Form</button>
+      </div>
+    </div>
+
+    <!-- FIXED: This toast container has aria-live region for screen reader announcements -->
+    <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+  </main>
+
+  <script>
+    // FIXED: Complete toast implementation with screen reader announcements
+    // 1. aria-live="polite" — Announces toast when user is idle
+    // 2. role="alert" — Indicates this is an alert message
+    // 3. aria-atomic="true" — Ensures complete message is read
+    // 4. Auto-dismiss — Toast automatically disappears after timeout
+    // 5. No focus stealing — Toast never steals focus from user
+    // 6. Manual dismiss option — User can dismiss toast with a button
+
+    const toastContainer = document.getElementById('toast-container');
+    const showSuccessBtn = document.getElementById('show-success');
+    const showErrorBtn = document.getElementById('show-error');
+    const showWarningBtn = document.getElementById('show-warning');
+    const showInfoBtn = document.getElementById('show-info');
+    const submitFormBtn = document.getElementById('submit-form');
+
+    const TOAST_DURATION = 5000; // 5 seconds
+
+    // FIXED: Show toast with proper ARIA attributes
+    function showToast(message, type = 'info') {
+      const toast = document.createElement('div');
+      toast.className = `toast toast--${type}`;
+      toast.setAttribute('role', 'alert');
+      toast.setAttribute('aria-live', 'polite');
+      toast.setAttribute('aria-atomic', 'true');
+
+      // Create toast content
+      const messageSpan = document.createElement('span');
+      messageSpan.textContent = message;
+      toast.appendChild(messageSpan);
+
+      // FIXED: Add dismiss button
+      const dismissBtn = document.createElement('button');
+      dismissBtn.className = 'toast__dismiss';
+      dismissBtn.setAttribute('aria-label', 'Dismiss notification');
+      dismissBtn.innerHTML = '&times;';
+      dismissBtn.addEventListener('click', () => {
+        dismissToast(toast);
+      });
+      toast.appendChild(dismissBtn);
+
+      toastContainer.appendChild(toast);
+
+      // FIXED: Auto-dismiss after timeout
+      const timeoutId = setTimeout(() => {
+        dismissToast(toast);
+      }, TOAST_DURATION);
+
+      // Store timeout ID for potential cancellation
+      toast.dataset.timeoutId = timeoutId;
+    }
+
+    // FIXED: Dismiss toast and remove from DOM
+    function dismissToast(toast) {
+      // Clear auto-dismiss timeout
+      if (toast.dataset.timeoutId) {
+        clearTimeout(parseInt(toast.dataset.timeoutId));
+      }
+
+      // Remove toast from DOM
+      toast.remove();
+    }
+
+    showSuccessBtn.addEventListener('click', () => {
+      showToast('Changes saved successfully!', 'success');
+    });
+
+    showErrorBtn.addEventListener('click', () => {
+      showToast('Failed to save changes. Please try again.', 'error');
+    });
+
+    showWarningBtn.addEventListener('click', () => {
+      showToast('Your session will expire in 5 minutes.', 'warning');
+    });
+
+    showInfoBtn.addEventListener('click', () => {
+      showToast('New message received from John.', 'info');
+    });
+
+    submitFormBtn.addEventListener('click', () => {
+      showToast('Form submitted successfully!', 'success');
+    });
+  </script>
+</body>
+</html>
