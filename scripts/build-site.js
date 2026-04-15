@@ -6,25 +6,33 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.join(__dirname, '..');
 
-// Pattern categories with their names
-const categories = {
-  '01-color-contrast': 'Color Contrast',
-  '02-missing-alt-text': 'Missing Alt Text',
-  '03-form-labels': 'Form Labels',
-  '04-empty-links-buttons': 'Empty Links & Buttons',
-  '05-focus-management': 'Focus Management',
-  '06-keyboard-navigation': 'Keyboard Navigation'
-};
+// Extract category name from README
+function extractCategoryName(readmePath) {
+  try {
+    const readme = fs.readFileSync(readmePath, 'utf-8');
+    const match = readme.match(/\*\*Category:\*\*\s*(.+)$/m);
+    if (match) {
+      return match[1].trim();
+    }
+    return '';
+  } catch (error) {
+    return '';
+  }
+}
 
-// WCAG criteria mapping
-const wcagCriteria = {
-  '01-color-contrast': '1.4.3, 1.4.11, 2.4.11',
-  '02-missing-alt-text': '1.1.1',
-  '03-form-labels': '1.3.1, 3.3.1, 3.3.2, 4.1.3',
-  '04-empty-links-buttons': '2.4.1, 2.4.4, 4.1.2',
-  '05-focus-management': '2.1.2, 2.4.3, 2.4.11, 4.1.3',
-  '06-keyboard-navigation': '2.1.1, 1.3.1'
-};
+// Extract WCAG criteria from README
+function extractWcagCriteria(readmePath) {
+  try {
+    const readme = fs.readFileSync(readmePath, 'utf-8');
+    const match = readme.match(/\*\*WCAG:\*\*\s*(.+?)\s+—/);
+    if (match) {
+      return match[1].trim();
+    }
+    return '';
+  } catch (error) {
+    return '';
+  }
+}
 
 // Extract WCAG level from README
 function extractWcagLevel(readmePath) {
@@ -92,7 +100,7 @@ function extractWhyItMatters(readmePath) {
   }
 }
 
-// Scan patterns directory
+// Scan patterns directory - auto-discovers all categories and patterns
 function scanPatterns() {
   const patternsDir = path.join(rootDir, 'patterns');
   const patterns = [];
@@ -109,9 +117,6 @@ function scanPatterns() {
     const category = categoryDir.name;
     const categoryPath = path.join(patternsDir, category);
 
-    // Check if it's a valid category
-    if (!categories[category]) continue;
-
     const patternDirs = fs.readdirSync(categoryPath, { withFileTypes: true });
 
     for (const patternDir of patternDirs) {
@@ -124,8 +129,10 @@ function scanPatterns() {
       // Skip if README doesn't exist
       if (!fs.existsSync(readmePath)) continue;
 
-      // Extract pattern info
+      // Extract pattern info from README
+      const categoryName = extractCategoryName(readmePath);
       const wcagLevel = extractWcagLevel(readmePath);
+      const wcagCriteria = extractWcagCriteria(readmePath);
       const description = extractDescription(readmePath);
       const keyRules = extractKeyRules(readmePath);
       const whyItMatters = extractWhyItMatters(readmePath);
@@ -158,11 +165,11 @@ function scanPatterns() {
       patterns.push({
         id: patternId,
         category: category,
-        categoryName: categories[category],
+        categoryName: categoryName || category.replace(/^\d+-/, '').replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
         title: title,
-        description: description || `${title} - ${categories[category]}`,
+        description: description || `${title} - ${categoryName || category}`,
         wcagLevel: wcagLevel,
-        wcagCriteria: wcagCriteria[category] || '',
+        wcagCriteria: wcagCriteria,
         path: `patterns/${category}/${patternId}`,
         keyRules: keyRules,
         whatItDemonstrates: description,
