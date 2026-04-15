@@ -1,0 +1,174 @@
+<!-- vue/Component.vue -->
+<!-- Pattern: 03-form-labels/multi-step-form -->
+<!-- 
+  BAD: No step indicators or progress indication
+  GOOD: Proper step indicators, progress bar, and ARIA announcements
+-->
+
+<script setup>
+// ❌ BEFORE: No step indicators or progress indication
+const Before = () => {
+  return {
+    template: `
+      <div class="form-card">
+        <h1 class="form-title">Checkout</h1>
+        <p class="form-subtitle">Complete your purchase in a few steps.</p>
+
+        <form class="checkout-form">
+          <!-- Step 1: Shipping -->
+          <div class="form-section">
+            <h2>Shipping Information</h2>
+            <div class="form-field">
+              <label for="name" class="form-label">Full Name</label>
+              <input type="text" id="name" name="name" placeholder="John Doe" />
+            </div>
+            <div class="form-field">
+              <label for="address" class="form-label">Address</label>
+              <input type="text" id="address" name="address" placeholder="123 Main St" />
+            </div>
+            <div class="form-field">
+              <label for="city" class="form-label">City</label>
+              <input type="text" id="city" name="city" placeholder="New York" />
+            </div>
+            <button type="button" class="next-button">Continue to Payment</button>
+          </div>
+
+          <!-- Step 2: Payment -->
+          <div class="form-section" style="display: none;">
+            <h2>Payment Information</h2>
+            <div class="form-field">
+              <label for="card-number" class="form-label">Card Number</label>
+              <input type="text" id="card-number" name="card-number" placeholder="1234 5678 9012" />
+            </div>
+            <div class="form-field">
+              <label for="expiry" class="form-label">Expiry Date</label>
+              <input type="text" id="expiry" name="expiry" placeholder="MM/YY" />
+            </div>
+            <div class="form-field">
+              <label for="cvv" class="form-label">CVV</label>
+              <input type="text" id="cvv" name="cvv" placeholder="123" />
+            </div>
+            <button type="button" class="next-button">Continue to Review</button>
+          </div>
+
+          <!-- Step 3: Review -->
+          <div class="form-section" style="display: none;">
+            <h2>Review Order</h2>
+            <div class="order-summary">
+              <div class="summary-item">
+                <span class="summary-label">Subtotal:</span>
+                <span class="summary-value">$99.99</span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-label">Shipping:</span>
+                <span class="summary-value">$9.99</span>
+              </div>
+              <div class="summary-item total">
+                <span class="summary-label">Total:</span>
+                <span class="summary-value">$109.98</span>
+              </div>
+            </div>
+            <button type="submit" class="submit-button">Place Order</button>
+          </div>
+        </form>
+      </div>
+    `,
+  };
+};
+
+// ✅ AFTER: Proper step indicators, progress bar, and ARIA announcements
+const After = () => {
+  return {
+    template: `
+      <div class="form-card">
+        <h1 class="form-title">Checkout</h1>
+        <p class="form-subtitle">Complete your purchase in a few steps.</p>
+
+        <!-- GOOD: Step indicators with progress bar -->
+        <div class="step-indicators" role="tablist" aria-label="Checkout steps">
+          <div class="step step-active" role="tab" aria-current="step" aria-selected="true">
+            <span class="step-number">1</span>
+            <span class="step-label">Shipping</span>
+          </div>
+          <div class="step" role="tab" aria-selected="false">
+            <span class="step-number">2</span>
+            <span class="step-label">Payment</span>
+          </div>
+          <div class="step" role="tab" aria-selected="false">
+            <span class="step-number">3</span>
+            <span class="step-label">Review</span>
+          </div>
+        </div>
+
+        <!-- GOOD: Progress bar showing overall completion -->
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: 33%;"></div>
+          <span class="progress-text">Step 1 of 3</span>
+        </div>
+
+        <form class="checkout-form">
+          <!-- Step 1: Shipping -->
+          <div class="form-section" role="tabpanel" aria-labelledby="step-1">
+            <h2 id="step-1">Shipping Information</h2>
+            <div class="form-field">
+              <label for="name" class="form-label">Full Name</label>
+              <input type="text" id="name" name="name" placeholder="John Doe" />
+            </div>
+            <div class="form-field">
+              <label for="address" class="form-label">Address</label>
+              <input type="text" id="address" name="address" placeholder="123 Main St" />
+            </div>
+            <div class="form-field">
+              <label for="city" class="form-label">City</label>
+              <input type="text" id="city" name="city" placeholder="New York" />
+            </div>
+            <button type="button" class="next-button" aria-live="polite">
+              Continue to Payment
+            </button>
+          </div>
+
+          <!-- Step 2: Payment -->
+          <div class="form-section" role="tabpanel" aria-labelledby="step-2" style="display: none;">
+            <h2 id="step-2">Payment Information</h2>
+            <div class="form-field">
+              <label for="card-number" class="form-label">Card Number</label>
+              <input type="text" id="card-number" name="card-number" placeholder="1234 5678 9012" />
+            </div>
+            <div class="form-field">
+              <label for="expiry" class="form-label">Expiry Date</label>
+              <input type="text" id="expiry" name="expiry" placeholder="MM/YY" />
+            </div>
+            <div class="form-field">
+              <label for="cvv" class="form-label">CVV</label>
+              <input type="text" id="cvv" name="cvv" placeholder="123" />
+            </div>
+            <button type="button" class="next-button" aria-live="polite">
+              Continue to Review
+            </button>
+          </div>
+
+          <!-- Step 3: Review -->
+          <div class="form-section" role="tabpanel" aria-labelledby="step-3" style="display: none;">
+            <h2 id="step-3">Review Order</h2>
+            <div class="order-summary">
+              <div class="summary-item">
+                <span class="summary-label">Subtotal:</span>
+                <span class="summary-value">$99.99</span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-label">Shipping:</span>
+                <span class="summary-value">$9.99</span>
+              </div>
+              <div class="summary-item total">
+                <span class="summary-label">Total:</span>
+                <span class="summary-value">$109.98</span>
+              </div>
+            </div>
+            <button type="submit" class="submit-button">Place Order</button>
+          </div>
+        </form>
+      </div>
+    `,
+  };
+};
+</script>

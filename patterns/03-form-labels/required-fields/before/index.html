@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Form - Required Fields Only by Color</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="form-card">
+      <h1 class="form-title">Create Account</h1>
+      <p class="form-subtitle">Join us today and get started.</p>
+
+      <form class="registration-form">
+        <!-- BAD: Required field indicated only by color -->
+        <div class="form-field">
+          <label for="name" class="label-required">Full Name</label>
+          <input type="text" id="name" name="name" placeholder="John Doe">
+        </div>
+
+        <!-- BAD: Required field indicated only by color -->
+        <div class="form-field">
+          <label for="email" class="label-required">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com">
+        </div>
+
+        <!-- Optional field (no color indicator) -->
+        <div class="form-field">
+          <label for="phone" class="label-optional">Phone Number</label>
+          <input type="tel" id="phone" name="phone" placeholder="+1 (555) 000-0000">
+        </div>
+
+        <!-- BAD: Required field indicated only by color -->
+        <div class="form-field">
+          <label for="password" class="label-required">Password</label>
+          <input type="password" id="password" name="password" placeholder="•••••••••">
+        </div>
+
+        <button type="submit" class="submit-button">Create Account</button>
+      </form>
+
+      <p class="form-footer">
+        Already have an account? <a href="#">Sign in</a>
+      </p>
+    </div>
+  </div>
+</body>
+</html>

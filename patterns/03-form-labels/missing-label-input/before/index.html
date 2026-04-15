@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Form - Missing Labels</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="form-card">
+      <h1 class="form-title">Sign In</h1>
+      <p class="form-subtitle">Welcome back! Please enter your details.</p>
+
+      <form class="login-form">
+        <!-- BAD: Label is not associated with input - no for/id connection -->
+        <div class="form-field">
+          <div class="form-label">Username</div>
+          <input type="text" name="username">
+        </div>
+
+        <!-- BAD: Label is not associated with input - no for/id connection -->
+        <div class="form-field">
+          <div class="form-label">Email</div>
+          <input type="email" name="email">
+        </div>
+
+        <!-- BAD: Label is not associated with input - no for/id connection -->
+        <div class="form-field">
+          <div class="form-label">Password</div>
+          <input type="password" name="password">
+        </div>
+
+        <button type="submit" class="submit-button">Sign In</button>
+      </form>
+
+      <p class="form-footer">
+        Don't have an account? <a href="#">Sign up</a>
+      </p>
+    </div>
+  </div>
+</body>
+</html>
