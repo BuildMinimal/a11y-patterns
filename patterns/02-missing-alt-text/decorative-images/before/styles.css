@@ -1,0 +1,121 @@
+/* styles.css — before/ and after/ share identical CSS
+ * Pattern: 02-missing-alt-text/decorative-images
+ *
+ * The accessibility failure in this pattern lives entirely in the HTML
+ * (missing alt attributes) — not in the CSS. Both before/ and after/
+ * use this exact same stylesheet.
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+  line-height: 1.6;
+  color: #1a1a1a;
+  background: #ffffff;
+}
+
+/* ─── Hero banner ─────────────────────────────────────────── */
+
+.hero {
+  overflow: hidden;
+}
+
+.hero__banner {
+  display: block;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* ─── Article layout ──────────────────────────────────────── */
+
+.article {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.article__title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 0.5rem;
+}
+
+.article__meta {
+  font-size: 0.875rem;
+  color: #4a5568;
+  margin-bottom: 2rem;
+}
+
+.article__body {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: #1a1a1a;
+}
+
+.article__body p {
+  margin: 0 0 1.5rem;
+}
+
+/* ─── Informative photo (always has meaningful alt text) ─── */
+
+.article__photo-wrap {
+  margin: 2rem 0;
+}
+
+.article__photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.article__photo-caption {
+  font-size: 0.875rem;
+  color: #4a5568;
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+/* ─── Decorative section divider ──────────────────────────── */
+
+.section-divider {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 2rem 0;
+}
+
+/* ─── Decorative end ornament ─────────────────────────────── */
+
+.ornament-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.ornament {
+  display: block;
+  width: 48px;
+  height: 48px;
+}
+
+/* ─── Focus styles ────────────────────────────────────────── */
+
+:focus-visible {
+  outline: 2px solid #1d4ed8;
+  outline-offset: 2px;
+}

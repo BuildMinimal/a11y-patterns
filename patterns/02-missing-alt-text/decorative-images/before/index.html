@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Decorative Images — Before (Broken)</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main>
+      <article>
+        <!--
+          BROKEN: Decorative banner image with NO alt attribute.
+
+          A screen reader encountering an <img> without alt="" will attempt to
+          derive a name from the src URL, announcing something like:
+            "image data colon image slash svg plus xml percent 3C svg..."
+          — or simply "unlabelled image" — which is meaningless noise.
+
+          axe-core violation: image-alt
+        -->
+        <div class="hero">
+          <img
+            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='200'%3E%3Crect width='1200' height='200' fill='%231d4ed8'/%3E%3Ccircle cx='200' cy='100' r='70' fill='rgba(255,255,255,0.08)'/%3E%3Ccircle cx='1000' cy='80' r='90' fill='rgba(255,255,255,0.06)'/%3E%3C/svg%3E"
+            class="hero__banner"
+          />
+        </div>
+
+        <div class="article">
+          <header>
+            <h1 class="article__title">Building Accessible Web Applications</h1>
+            <p class="article__meta">Published April 16, 2026 · 8 min read</p>
+          </header>
+
+          <div class="article__body">
+            <p>
+              Accessibility is not a feature — it is a fundamental quality of
+              well-engineered software. When we build applications that work for
+              everyone, we build better applications for all users.
+            </p>
+
+            <p>
+              The first step is understanding which users are affected and how
+              specific failures manifest. Low-contrast text, missing form labels,
+              and absent image alt text each produce distinct barriers for
+              distinct user groups.
+            </p>
+
+            <!--
+              Informative photo: HAS a meaningful alt attribute.
+              This image conveys content — the alt text describes what is shown.
+              Even in the broken before/ version, this image is handled correctly.
+              It exists here to show the contrast between decorative and informative.
+            -->
+            <div class="article__photo-wrap">
+              <img
+                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='360'%3E%3Crect width='800' height='360' fill='%23f3f4f6'/%3E%3Crect x='60' y='60' width='680' height='240' rx='8' fill='%23e2e8f0'/%3E%3Crect x='80' y='80' width='200' height='16' rx='4' fill='%234a5568'/%3E%3Crect x='80' y='108' width='560' height='8' rx='4' fill='%236b7280'/%3E%3Crect x='80' y='124' width='480' height='8' rx='4' fill='%236b7280'/%3E%3Crect x='80' y='140' width='520' height='8' rx='4' fill='%236b7280'/%3E%3C/svg%3E"
+                alt="A developer reviewing an accessibility audit report showing WCAG violations"
+                class="article__photo"
+              />
+              <p class="article__photo-caption">
+                Accessibility audits should be part of every release cycle.
+              </p>
+            </div>
+
+            <p>
+              Understanding WCAG success criteria gives developers a precise
+              vocabulary for describing and fixing accessibility failures. Each
+              criterion has a clear pass/fail condition that can be tested
+              automatically with tools like axe-core.
+            </p>
+          </div>
+
+          <!--
+            BROKEN: Decorative section divider with NO alt attribute.
+            This SVG wave is purely cosmetic — it has no informational content.
+            Without alt="", screen readers will announce it as an unlabelled image.
+
+            axe-core violation: image-alt
+          -->
+          <img
+            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 48'%3E%3Cpath d='M0 24 C200 0,400 48,600 24 S1000 0,1200 24 L1200 48 L0 48Z' fill='%23e0e7ff'/%3E%3C/svg%3E"
+            class="section-divider"
+          />
+
+          <div class="article__body">
+            <p>
+              The most common failure in the WebAIM Million annual report is
+              missing alt text — despite being one of the most well-known
+              requirements, it remains the most frequently failed.
+            </p>
+
+            <p>
+              Not all images require descriptive alt text. Decorative images —
+              those that add visual interest but convey no information — should
+              be hidden from assistive technology entirely using
+              <code>alt=""</code>.
+            </p>
+          </div>
+
+          <!--
+            BROKEN: Decorative end ornament with NO alt attribute.
+            This is a purely cosmetic visual divider. Screen readers should
+            never encounter it — but without alt="", they will.
+
+            axe-core violation: image-alt
+          -->
+          <div class="ornament-wrap">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Ccircle cx='24' cy='24' r='22' fill='none' stroke='%23dbeafe' stroke-width='3'/%3E%3Ccircle cx='24' cy='24' r='14' fill='none' stroke='%23bfdbfe' stroke-width='2'/%3E%3Ccircle cx='24' cy='24' r='5' fill='%23dbeafe'/%3E%3C/svg%3E"
+              class="ornament"
+            />
+          </div>
+        </div>
+      </article>
+    </main>
+  </body>
+</html>
