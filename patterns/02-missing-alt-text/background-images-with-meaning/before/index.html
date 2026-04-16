@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Article Editor — Before (Broken)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="page">
+    <h1 class="page-title">Article Editor</h1>
+
+    <div class="editor-card">
+      <!--
+        BROKEN: A toolbar of icon-only buttons.
+        Each button's visible label IS the CSS background image.
+        Unlike <img alt="Bold">, CSS background-image has no alt attribute.
+        Without aria-label or hidden text, these buttons have NO accessible name.
+
+        What a screen reader announces when tabbing through the toolbar:
+          "button … button … button … button … button … button … button"
+        Seven buttons. No label for any of them.
+
+        axe violations:
+          button-name × 7 — "Ensures buttons have discernible text"
+      -->
+      <div class="toolbar" role="toolbar" aria-label="Formatting">
+
+        <div class="toolbar-group">
+          <!-- Background image shows "B" — but no accessible name exists -->
+          <button type="button" class="toolbar-btn toolbar-btn--bold"></button>
+          <!-- Background image shows "I" — but no accessible name exists -->
+          <button type="button" class="toolbar-btn toolbar-btn--italic"></button>
+          <!-- Background image shows "U" with underline — but no accessible name exists -->
+          <button type="button" class="toolbar-btn toolbar-btn--underline"></button>
+        </div>
+
+        <div class="toolbar-group">
+          <!-- Background image shows a link icon — but no accessible name exists -->
+          <button type="button" class="toolbar-btn toolbar-btn--link"></button>
+          <!-- Background image shows a photo icon — but no accessible name exists -->
+          <button type="button" class="toolbar-btn toolbar-btn--image"></button>
+        </div>
+
+        <div class="toolbar-group">
+          <!-- Background image shows numbered list — but no accessible name exists -->
+          <button type="button" class="toolbar-btn toolbar-btn--ol"></button>
+          <!-- Background image shows bullet list — but no accessible name exists -->
+          <button type="button" class="toolbar-btn toolbar-btn--ul"></button>
+        </div>
+
+      </div>
+
+      <div class="editor-body">
+        <textarea
+          class="editor-area"
+          placeholder="Start writing your article here…"
+          aria-label="Article content"
+        ></textarea>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

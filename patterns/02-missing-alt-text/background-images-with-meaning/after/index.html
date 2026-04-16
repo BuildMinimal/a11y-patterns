@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Article Editor — After (Fixed)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="page">
+    <h1 class="page-title">Article Editor</h1>
+
+    <div class="editor-card">
+      <!--
+        FIXED: Every toolbar button now has an accessible name.
+        Two techniques are demonstrated side by side:
+
+        Technique A — aria-label (formatting group):
+          aria-label directly on the button element.
+          Recommended for icon-only controls: concise, no extra DOM nodes.
+
+        Technique B — visually hidden text (insert and list groups):
+          A <span class="sr-only"> inside the button, clipped off-screen.
+          Screen readers read the span text; sighted users see only the icon.
+          Useful when you need the label to participate in form submission,
+          or when your design system doesn't allow aria-label on components.
+
+        Both techniques produce identical screen reader output:
+          "Bold, button … Italic, button … Underline, button …"
+      -->
+      <div class="toolbar" role="toolbar" aria-label="Formatting">
+
+        <!--
+          Technique A: aria-label
+          The aria-label attribute overrides any other name calculation.
+          The background image remains the visual; aria-label is the accessible name.
+        -->
+        <div class="toolbar-group">
+          <button type="button" class="toolbar-btn toolbar-btn--bold" aria-label="Bold"></button>
+          <button type="button" class="toolbar-btn toolbar-btn--italic" aria-label="Italic"></button>
+          <button type="button" class="toolbar-btn toolbar-btn--underline" aria-label="Underline"></button>
+        </div>
+
+        <!--
+          Technique B: visually hidden <span> inside the button.
+          The button's accessible name comes from its text content — the .sr-only span.
+          Visually, only the background-image icon is seen; AT reads the span text.
+        -->
+        <div class="toolbar-group">
+          <button type="button" class="toolbar-btn toolbar-btn--link">
+            <span class="sr-only">Insert link</span>
+          </button>
+          <button type="button" class="toolbar-btn toolbar-btn--image">
+            <span class="sr-only">Insert image</span>
+          </button>
+        </div>
+
+        <div class="toolbar-group">
+          <button type="button" class="toolbar-btn toolbar-btn--ol">
+            <span class="sr-only">Ordered list</span>
+          </button>
+          <button type="button" class="toolbar-btn toolbar-btn--ul">
+            <span class="sr-only">Unordered list</span>
+          </button>
+        </div>
+
+      </div>
+
+      <div class="editor-body">
+        <textarea
+          class="editor-area"
+          placeholder="Start writing your article here…"
+          aria-label="Article content"
+        ></textarea>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

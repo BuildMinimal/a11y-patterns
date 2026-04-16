@@ -1,0 +1,185 @@
+/* styles.css — shared by before/ and after/ (the fix is in HTML attributes, not CSS) */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  line-height: 1.6;
+  color: #1a1a1a;
+  background: #f8fafc;
+}
+
+/* ── Page layout ── */
+
+.page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 1.5rem;
+}
+
+/* ── Editor card ── */
+
+.editor-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ── Toolbar ── */
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 12px;
+  background: #f1f5f9;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding-right: 10px;
+  margin-right: 8px;
+  border-right: 1px solid #cbd5e1;
+}
+
+.toolbar-group:last-child {
+  border-right: none;
+  padding-right: 0;
+  margin-right: 0;
+}
+
+/*
+  These buttons are the problem: each has a background-image that IS the label.
+  Unlike <img alt="...">, CSS background images have no alt attribute.
+  Without aria-label or hidden text, these buttons have NO accessible name.
+
+  The visual appearance is identical in before/ and after/ — only the
+  HTML attributes change to provide text alternatives.
+*/
+.toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 18px 18px;
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+}
+
+.toolbar-btn:hover {
+  background-color: #e2e8f0;
+}
+
+.toolbar-btn:active {
+  background-color: #cbd5e1;
+}
+
+/* Bold icon — letter B rendered as SVG */
+.toolbar-btn--bold {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext x='4' y='18' font-family='serif' font-size='18' font-weight='900' fill='%231a1a1a'%3EB%3C/text%3E%3C/svg%3E");
+}
+
+/* Italic icon — letter I */
+.toolbar-btn--italic {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext x='7' y='18' font-family='serif' font-size='18' font-style='italic' font-weight='700' fill='%231a1a1a'%3EI%3C/text%3E%3C/svg%3E");
+}
+
+/* Underline icon — letter U with underline */
+.toolbar-btn--underline {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext x='4' y='16' font-family='serif' font-size='16' text-decoration='underline' fill='%231a1a1a'%3EU%3C/text%3E%3Cline x1='4' y1='20' x2='20' y2='20' stroke='%231a1a1a' stroke-width='2'/%3E%3C/svg%3E");
+}
+
+/* Link icon — two chain links */
+.toolbar-btn--link {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='2' y='9' width='9' height='6' rx='3' fill='none' stroke='%231a1a1a' stroke-width='2'/%3E%3Crect x='13' y='9' width='9' height='6' rx='3' fill='none' stroke='%231a1a1a' stroke-width='2'/%3E%3Cline x1='11' y1='12' x2='13' y2='12' stroke='%231a1a1a' stroke-width='2'/%3E%3C/svg%3E");
+}
+
+/* Image icon — frame with mountain and sun */
+.toolbar-btn--image {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='3' y='4' width='18' height='16' rx='2' fill='none' stroke='%231a1a1a' stroke-width='2'/%3E%3Ccircle cx='8' cy='9' r='2' fill='%231a1a1a'/%3E%3Cpath d='M3,17 L8,12 L13,16 L16,13 L21,17' fill='none' stroke='%231a1a1a' stroke-width='1.5'/%3E%3C/svg%3E");
+}
+
+/* Ordered list icon */
+.toolbar-btn--ol {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext x='3' y='9' font-family='sans-serif' font-size='7' fill='%231a1a1a'%3E1.%3C/text%3E%3Ctext x='3' y='15' font-family='sans-serif' font-size='7' fill='%231a1a1a'%3E2.%3C/text%3E%3Ctext x='3' y='21' font-family='sans-serif' font-size='7' fill='%231a1a1a'%3E3.%3C/text%3E%3Cline x1='13' y1='8' x2='22' y2='8' stroke='%231a1a1a' stroke-width='2'/%3E%3Cline x1='13' y1='14' x2='22' y2='14' stroke='%231a1a1a' stroke-width='2'/%3E%3Cline x1='13' y1='20' x2='22' y2='20' stroke='%231a1a1a' stroke-width='2'/%3E%3C/svg%3E");
+}
+
+/* Unordered list icon */
+.toolbar-btn--ul {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='5' cy='8' r='2' fill='%231a1a1a'/%3E%3Ccircle cx='5' cy='14' r='2' fill='%231a1a1a'/%3E%3Ccircle cx='5' cy='20' r='2' fill='%231a1a1a'/%3E%3Cline x1='11' y1='8' x2='22' y2='8' stroke='%231a1a1a' stroke-width='2'/%3E%3Cline x1='11' y1='14' x2='22' y2='14' stroke='%231a1a1a' stroke-width='2'/%3E%3Cline x1='11' y1='20' x2='22' y2='20' stroke='%231a1a1a' stroke-width='2'/%3E%3C/svg%3E");
+}
+
+/* ── Editor body ── */
+
+.editor-body {
+  padding: 1.5rem;
+}
+
+.editor-area {
+  width: 100%;
+  min-height: 200px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1rem;
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: #1a1a1a;
+  resize: vertical;
+}
+
+.editor-area:focus {
+  outline: 2px solid #1d4ed8;
+  outline-offset: 1px;
+  border-color: transparent;
+}
+
+/* ── Visually hidden helper (used in after/ for sr-only technique) ── */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Focus ── */
+
+:focus-visible {
+  outline: 2px solid #1d4ed8;
+  outline-offset: 2px;
+}
