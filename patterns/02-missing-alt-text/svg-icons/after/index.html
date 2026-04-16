@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>System Alerts — After (Fixed)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="page">
+    <h1 class="page-title">System Alerts</h1>
+
+    <!--
+      Two SVG icon strategies are demonstrated here.
+
+      Strategy 1 — Informative standalone SVG (severity badge):
+        The SVG IS the content — it conveys severity type.
+        Fix: role="img" + aria-label + <title> (belt-and-suspenders)
+        Screen reader: "Error, image" / "Warning, image" / "Informational, image"
+
+      Strategy 2 — Decorative SVG inside a labelled button:
+        The button label (aria-label) IS the accessible name.
+        The SVG is decoration — it should be hidden from AT to prevent noise.
+        Fix: aria-hidden="true" focusable="false" on the SVG
+        Screen reader: "Dismiss critical alert, button"
+        (not "image × line × line Dismiss critical alert, button")
+    -->
+
+    <div class="alert-list">
+
+      <!-- ALERT ROW 1 — Error -->
+      <div class="alert-row alert-row--error">
+        <span class="alert-badge">
+          <!--
+            FIXED: Informative standalone SVG
+            role="img"   → tells AT this SVG conveys an image
+            aria-label   → provides the accessible name
+            <title>      → belt-and-suspenders for older AT and SVG viewers
+          -->
+          <svg
+            role="img"
+            aria-label="Error"
+            class="severity-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="20" height="20"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          >
+            <title>Error</title>
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+        </span>
+        <p class="alert-message">
+          <strong>Critical:</strong> Database connection failed on primary server.
+        </p>
+        <!--
+          FIXED: Icon-only button
+          aria-label on the <button> provides the accessible name.
+          aria-hidden="true" on the SVG prevents AT from reading SVG internals.
+          focusable="false" prevents SVG from entering the tab order in IE/Edge.
+        -->
+        <button
+          type="button"
+          class="btn-dismiss btn-dismiss--error"
+          aria-label="Dismiss critical alert"
+        >
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="16" height="16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- ALERT ROW 2 — Warning -->
+      <div class="alert-row alert-row--warning">
+        <span class="alert-badge">
+          <svg
+            role="img"
+            aria-label="Warning"
+            class="severity-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="20" height="20"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <title>Warning</title>
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </span>
+        <p class="alert-message">
+          <strong>Warning:</strong> Disk usage on server-02 is above 80%.
+        </p>
+        <button
+          type="button"
+          class="btn-dismiss btn-dismiss--warning"
+          aria-label="Dismiss warning alert"
+        >
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="16" height="16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- ALERT ROW 3 — Info -->
+      <div class="alert-row alert-row--info">
+        <span class="alert-badge">
+          <svg
+            role="img"
+            aria-label="Informational"
+            class="severity-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="20" height="20"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          >
+            <title>Informational</title>
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="16" x2="12" y2="12"/>
+            <line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
+        </span>
+        <p class="alert-message">
+          <strong>Informational:</strong> Scheduled maintenance window starts at 02:00 UTC.
+        </p>
+        <button
+          type="button"
+          class="btn-dismiss btn-dismiss--info"
+          aria-label="Dismiss informational alert"
+        >
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="16" height="16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+
+    <!--
+      Action buttons — text + decorative SVG icon.
+      aria-hidden="true" + focusable="false" on each SVG prevents AT from reading
+      SVG child nodes before the button text.
+      Screen reader: "Download Report, button" (clean, no SVG noise)
+    -->
+    <div class="action-bar">
+      <button type="button" class="btn-action">
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="16" height="16"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Download Report
+      </button>
+
+      <button type="button" class="btn-action">
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="16" height="16"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+        >
+          <circle cx="18" cy="5" r="3"/>
+          <circle cx="6" cy="12" r="3"/>
+          <circle cx="18" cy="19" r="3"/>
+          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+          <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+        </svg>
+        Share
+      </button>
+    </div>
+
+  </main>
+</body>
+</html>

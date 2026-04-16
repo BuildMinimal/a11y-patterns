@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>System Alerts — Before (Broken)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="page">
+    <h1 class="page-title">System Alerts</h1>
+
+    <!--
+      Two problems with inline SVG icons are shown here.
+
+      Problem 1 — Informative standalone SVG with no accessible name:
+        The severity badge on each row is an inline <svg role="img">.
+        role="img" tells AT "this element conveys an image".
+        But without aria-label or an associated <title>, it has no accessible name.
+        axe rule: image-alt × 3
+
+      Problem 2 — Icon-only button with SVG and no accessible name:
+        Each row has a Dismiss button containing only a × SVG icon.
+        The button has no aria-label and the SVG has no title.
+        axe rule: button-name × 3
+
+      A screen reader navigating this page encounters:
+        "image … Critical: Database connection failed … button"
+        "image … Warning: Disk usage above 80% … button"
+        "image … Informational: Maintenance at 02:00 … button"
+      The severity is announced as "image" (no name) and the action
+      is announced as "button" (no label). Neither is usable.
+    -->
+
+    <div class="alert-list">
+
+      <!-- ALERT ROW 1 — Error -->
+      <div class="alert-row alert-row--error">
+        <span class="alert-badge">
+          <!--
+            BROKEN: role="img" without aria-label or <title>
+            AT announces "image" — the severity type is completely lost
+          -->
+          <svg
+            role="img"
+            class="severity-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="20" height="20"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          >
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+        </span>
+        <p class="alert-message">
+          <strong>Critical:</strong> Database connection failed on primary server.
+        </p>
+        <!--
+          BROKEN: icon-only button with no accessible name
+          AT announces "button" — the action is unknown
+        -->
+        <button type="button" class="btn-dismiss btn-dismiss--error">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="16" height="16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- ALERT ROW 2 — Warning -->
+      <div class="alert-row alert-row--warning">
+        <span class="alert-badge">
+          <svg
+            role="img"
+            class="severity-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="20" height="20"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </span>
+        <p class="alert-message">
+          <strong>Warning:</strong> Disk usage on server-02 is above 80%.
+        </p>
+        <button type="button" class="btn-dismiss btn-dismiss--warning">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="16" height="16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- ALERT ROW 3 — Info -->
+      <div class="alert-row alert-row--info">
+        <span class="alert-badge">
+          <svg
+            role="img"
+            class="severity-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="20" height="20"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          >
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="16" x2="12" y2="12"/>
+            <line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
+        </span>
+        <p class="alert-message">
+          <strong>Informational:</strong> Scheduled maintenance window starts at 02:00 UTC.
+        </p>
+        <button type="button" class="btn-dismiss btn-dismiss--info">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="16" height="16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+
+    <!--
+      Action buttons below — text + SVG icon.
+      These have visible text so button-name does NOT fire.
+      But without aria-hidden on the SVG, some screen readers read
+      the SVG's internal structure (child nodes) before the button text.
+      This is shown in contrast to the after/ version where aria-hidden
+      suppresses that noise. Not an axe violation — a quality issue.
+    -->
+    <div class="action-bar">
+      <button type="button" class="btn-action">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="16" height="16"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Download Report
+      </button>
+
+      <button type="button" class="btn-action">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="16" height="16"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+        >
+          <circle cx="18" cy="5" r="3"/>
+          <circle cx="6" cy="12" r="3"/>
+          <circle cx="18" cy="19" r="3"/>
+          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+          <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+        </svg>
+        Share
+      </button>
+    </div>
+
+  </main>
+</body>
+</html>
