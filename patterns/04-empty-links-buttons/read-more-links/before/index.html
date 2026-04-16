@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A11y Weekly — Before (Broken)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main>
+    <header class="page-header">
+      <h1 class="page-title">A11y Weekly</h1>
+      <p class="page-subtitle">Latest articles on web accessibility</p>
+    </header>
+
+    <div class="article-grid">
+
+      <article class="article-card">
+        <img
+          src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='160'%3E%3Crect width='400' height='160' fill='%23dbeafe'/%3E%3Ctext x='200' y='88' text-anchor='middle' font-family='sans-serif' font-size='14' fill='%232563eb'%3EKeyboard Navigation%3C/text%3E%3C/svg%3E"
+          alt="Keyboard navigation illustration"
+          class="card-thumbnail"
+        />
+        <div class="card-body">
+          <span class="card-category">Keyboard</span>
+          <h2 class="card-title">Mastering Focus Management in Single-Page Apps</h2>
+          <p class="card-excerpt">
+            When routes change in an SPA, focus stays on the trigger element rather
+            than moving to the new content. Here's how to fix it.
+          </p>
+          <!--
+            BUG: "Read more" with no destination context.
+            Screen reader users hear "Read more, link" — but more about what?
+            With multiple "Read more" links on the page, navigation by links
+            (e.g. NVDA's links list) shows a list of identical "Read more" entries.
+            axe rule: link-name — "Ensures links have discernible text"
+            Note: axe passes because there IS text ("Read more") — this is a
+            WCAG 2.4.4 failure that axe cannot catch automatically.
+          -->
+          <a href="#article-1" class="read-more">
+            Read more <span class="read-more-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </article>
+
+      <article class="article-card">
+        <img
+          src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='160'%3E%3Crect width='400' height='160' fill='%23dcfce7'/%3E%3Ctext x='200' y='88' text-anchor='middle' font-family='sans-serif' font-size='14' fill='%2316a34a'%3EColour Contrast%3C/text%3E%3C/svg%3E"
+          alt="Colour contrast illustration"
+          class="card-thumbnail"
+        />
+        <div class="card-body">
+          <span class="card-category">Colour</span>
+          <h2 class="card-title">WCAG 3.0 Contrast: What Changes for Designers</h2>
+          <p class="card-excerpt">
+            The APCA model replaces the old AA/AAA ratio system. We break down
+            what the shift means for your design tokens and component library.
+          </p>
+          <a href="#article-2" class="read-more">
+            Read more <span class="read-more-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </article>
+
+      <article class="article-card">
+        <img
+          src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='160'%3E%3Crect width='400' height='160' fill='%23fef9c3'/%3E%3Ctext x='200' y='88' text-anchor='middle' font-family='sans-serif' font-size='14' fill='%23ca8a04'%3EForms%3C/text%3E%3C/svg%3E"
+          alt="Form accessibility illustration"
+          class="card-thumbnail"
+        />
+        <div class="card-body">
+          <span class="card-category">Forms</span>
+          <h2 class="card-title">Accessible Error Messages: Beyond Red Text</h2>
+          <p class="card-excerpt">
+            Colour alone does not communicate an error to users with colour
+            blindness. Combine icons, text, and ARIA live regions for resilience.
+          </p>
+          <a href="#article-3" class="read-more">
+            Read more <span class="read-more-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </main>
+</body>
+</html>

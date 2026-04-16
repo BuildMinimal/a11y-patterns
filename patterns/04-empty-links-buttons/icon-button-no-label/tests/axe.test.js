@@ -4,7 +4,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { pathToFileURL } from 'url';
 import path from 'path';
 
-const PATTERN_DIR = path.resolve('patterns/04-links-and-buttons/icon-button-no-label');
+const PATTERN_DIR = path.resolve('patterns/04-empty-links-buttons/icon-button-no-label');
 function fileUrl(relative) {
   return pathToFileURL(path.join(PATTERN_DIR, relative)).href;
 }
