@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Analytics Dashboard — After (Fixed)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="page">
+    <h1 class="page-title">Analytics Dashboard</h1>
+
+    <!--
+      Complex images require TWO layers of text alternative:
+        1. Brief alt  — the topic and purpose (what the chart is about)
+        2. Long desc  — the actual data (what the chart shows)
+
+      A brief alt alone ("Bar chart of quarterly revenue") tells the user
+      the chart exists and its subject, but conveys none of the data values,
+      trends, or comparisons that make the chart meaningful.
+
+      Two long description techniques are demonstrated:
+        Chart 1 — aria-describedby pointing to a visible <figcaption>
+        Chart 2 — aria-describedby pointing to a <details> data table
+    -->
+
+    <section class="chart-section">
+      <h2 class="section-heading">Quarterly Revenue by Product Category</h2>
+      <figure class="chart-figure">
+        <!--
+          FIXED: Two-layer approach
+          - alt        = brief: topic + direction of trend
+          - aria-describedby = points to paragraph with full data values
+
+          The alt is short enough for inline reading.
+          The full description is available in the figcaption below.
+        -->
+        <img
+          src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='380'%3E%3Crect width='600' height='380' fill='white'/%3E%3Ctext x='300' y='30' text-anchor='middle' font-family='sans-serif' font-size='14' font-weight='bold' fill='%231a1a1a'%3EQuarterly Revenue 2023 ($M)%3C/text%3E%3Cline x1='70' y1='50' x2='70' y2='330' stroke='%234a5568' stroke-width='1.5'/%3E%3Cline x1='70' y1='330' x2='570' y2='330' stroke='%234a5568' stroke-width='1.5'/%3E%3Crect x='90' y='151' width='80' height='179' fill='%231d4ed8'/%3E%3Crect x='210' y='138' width='80' height='192' fill='%231d4ed8'/%3E%3Crect x='330' y='104' width='80' height='226' fill='%231d4ed8'/%3E%3Crect x='450' y='73' width='80' height='257' fill='%231d4ed8'/%3E%3Ctext x='130' y='345' text-anchor='middle' font-family='sans-serif' font-size='12' fill='%234a5568'%3EQ1%3C/text%3E%3Ctext x='250' y='345' text-anchor='middle' font-family='sans-serif' font-size='12' fill='%234a5568'%3EQ2%3C/text%3E%3Ctext x='370' y='345' text-anchor='middle' font-family='sans-serif' font-size='12' fill='%234a5568'%3EQ3%3C/text%3E%3Ctext x='490' y='345' text-anchor='middle' font-family='sans-serif' font-size='12' fill='%234a5568'%3EQ4%3C/text%3E%3Ctext x='130' y='146' text-anchor='middle' font-family='sans-serif' font-size='11' fill='%231a1a1a'%3E4.3%3C/text%3E%3Ctext x='250' y='133' text-anchor='middle' font-family='sans-serif' font-size='11' fill='%231a1a1a'%3E4.6%3C/text%3E%3Ctext x='370' y='99' text-anchor='middle' font-family='sans-serif' font-size='11' fill='%231a1a1a'%3E5.4%3C/text%3E%3Ctext x='490' y='68' text-anchor='middle' font-family='sans-serif' font-size='11' fill='%231a1a1a'%3E6.1%3C/text%3E%3Ctext x='60' y='334' text-anchor='end' font-family='sans-serif' font-size='10' fill='%236b7280'%3E0%3C/text%3E%3Ctext x='60' y='292' text-anchor='end' font-family='sans-serif' font-size='10' fill='%236b7280'%3E1%3C/text%3E%3Ctext x='60' y='250' text-anchor='end' font-family='sans-serif' font-size='10' fill='%236b7280'%3E2%3C/text%3E%3Ctext x='60' y='208' text-anchor='end' font-family='sans-serif' font-size='10' fill='%236b7280'%3E3%3C/text%3E%3Ctext x='60' y='166' text-anchor='end' font-family='sans-serif' font-size='10' fill='%236b7280'%3E4%3C/text%3E%3Ctext x='60' y='124' text-anchor='end' font-family='sans-serif' font-size='10' fill='%236b7280'%3E5%3C/text%3E%3Ctext x='60' y='82' text-anchor='end' font-family='sans-serif' font-size='10' fill='%236b7280'%3E6%3C/text%3E%3C/svg%3E"
+          alt="Bar chart: quarterly revenue grew each quarter in 2023, from $4.3M in Q1 to $6.1M in Q4"
+          aria-describedby="revenue-chart-desc"
+          class="chart-img"
+          id="revenue-chart"
+        />
+
+        <!--
+          Technique 1: visible figcaption as the long description.
+          aria-describedby links the image to this element.
+          The description is visible to all users — it benefits everyone,
+          not just those using assistive technology.
+        -->
+        <figcaption class="chart-desc" id="revenue-chart-desc">
+          Total quarterly revenue increased steadily throughout 2023:
+          Q1 $4.3M, Q2 $4.6M (+7%), Q3 $5.4M (+17%), Q4 $6.1M (+13%).
+          Full-year revenue was $20.4M, up 42% compared to $14.3M in 2022.
+          The strongest growth occurred between Q2 and Q3, driven by new enterprise contracts.
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="chart-section">
+      <h2 class="section-heading">Monthly Active Users — H1 2023</h2>
+      <figure class="chart-figure">
+        <!--
+          FIXED: Two-layer approach
+          - alt        = brief: topic + headline finding
+          - aria-describedby = points to a <details> element with a data table
+
+          Technique 2: hidden data table inside <details>.
+          The table is collapsed by default (sighted users see the chart).
+          Screen reader users can expand "View full data as table" to access
+          all values in a structured, navigable format.
+          Either way, the long description is available to all users on demand.
+        -->
+        <img
+          src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='380'%3E%3Crect width='600' height='380' fill='white'/%3E%3Ctext x='300' y='30' text-anchor='middle' font-family='sans-serif' font-size='14' font-weight='bold' fill='%231a1a1a'%3EMonthly Active Users (thousands)%3C/text%3E%3Cline x1='70' y1='50' x2='70' y2='330' stroke='%234a5568' stroke-width='1.5'/%3E%3Cline x1='70' y1='330' x2='570' y2='330' stroke='%234a5568' stroke-width='1.5'/%3E%3Cpath d='M80,216 L168,197 L256,207 L344,177 L432,148 L520,119' fill='none' stroke='%231d4ed8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='80' cy='216' r='5' fill='%231d4ed8'/%3E%3Ccircle cx='168' cy='197' r='5' fill='%231d4ed8'/%3E%3Ccircle cx='256' cy='207' r='5' fill='%231d4ed8'/%3E%3Ccircle cx='344' cy='177' r='5' fill='%231d4ed8'/%3E%3Ccircle cx='432' cy='148' r='5' fill='%231d4ed8'/%3E%3Ccircle cx='520' cy='119' r='5' fill='%231d4ed8'/%3E%3Ctext x='80' y='345' text-anchor='middle' font-family='sans-serif' font-size='11' fill='%234a5568'%3EJan%3C/text%3E%3Ctext x='168' y='345' text-anchor='middle' font-family='sans-serif' font-size='11' fill='%234a5568'%3EFeb%3C/text%3E%3Ctext x='256' y='345' text-anchor='middle' font-family='sans-serif' font-size='11' fill='%234a5568'%3EMar%3C/text%3E%3Ctext x='344' y='345' text-anchor='middle' font-family='sans-serif' font-size='11' fill='%234a5568'%3EApr%3C/text%3E%3Ctext x='432' y='345' text-anchor='middle' font-family='sans-serif' font-size='11' fill='%234a5568'%3EMay%3C/text%3E%3Ctext x='520' y='345' text-anchor='middle' font-family='sans-serif' font-size='11' fill='%234a5568'%3EJun%3C/text%3E%3Ctext x='80' y='208' text-anchor='middle' font-family='sans-serif' font-size='10' fill='%231a1a1a'%3E12K%3C/text%3E%3Ctext x='168' y='189' text-anchor='middle' font-family='sans-serif' font-size='10' fill='%231a1a1a'%3E14K%3C/text%3E%3Ctext x='256' y='199' text-anchor='middle' font-family='sans-serif' font-size='10' fill='%231a1a1a'%3E13K%3C/text%3E%3Ctext x='344' y='169' text-anchor='middle' font-family='sans-serif' font-size='10' fill='%231a1a1a'%3E16K%3C/text%3E%3Ctext x='432' y='140' text-anchor='middle' font-family='sans-serif' font-size='10' fill='%231a1a1a'%3E19K%3C/text%3E%3Ctext x='520' y='111' text-anchor='middle' font-family='sans-serif' font-size='10' fill='%231a1a1a'%3E22K%3C/text%3E%3C/svg%3E"
+          alt="Line chart: monthly active users grew 83% in H1 2023, from 12,000 in January to 22,000 in June"
+          aria-describedby="engagement-chart-desc"
+          class="chart-img"
+          id="engagement-chart"
+        />
+
+        <!--
+          Technique 2: <details> with a data table.
+          The summary text is the collapsed state label.
+          The table provides all data values in a structured, accessible format.
+        -->
+        <details class="chart-details" id="engagement-chart-desc">
+          <summary>View monthly active users data as table</summary>
+          <div class="data-table-wrap">
+            <table class="data-table">
+              <caption class="sr-only">Monthly active users, H1 2023</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Month</th>
+                  <th scope="col">Active Users</th>
+                  <th scope="col">Month-over-Month Change</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>January</td><td>12,000</td><td>—</td></tr>
+                <tr><td>February</td><td>14,000</td><td>+17%</td></tr>
+                <tr><td>March</td><td>13,000</td><td>−7%</td></tr>
+                <tr><td>April</td><td>16,000</td><td>+23%</td></tr>
+                <tr><td>May</td><td>19,000</td><td>+19%</td></tr>
+                <tr><td>June</td><td>22,000</td><td>+16%</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+      </figure>
+    </section>
+
+  </main>
+</body>
+</html>
