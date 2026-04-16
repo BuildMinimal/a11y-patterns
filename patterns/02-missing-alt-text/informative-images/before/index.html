@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ProSound X1 Review — Before (Broken)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="page">
+    <h1 class="review-title">ProSound X1 Headphones: Full Review</h1>
+    <p class="review-meta">By Alex Morgan · April 16, 2026 · Hardware</p>
+
+    <!--
+      BROKEN: Informative product photo with no alt attribute.
+      This image shows the physical appearance of the product — a sighted user
+      can see it; a screen reader user gets nothing (or the src URL, which is noise).
+      axe rule: image-alt — "Ensures <img> elements have alternate text"
+    -->
+    <div class="product-hero">
+      <img
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400'%3E%3Crect width='800' height='400' fill='%23f8f9fa'/%3E%3Cpath d='M300 210 Q400 80 500 210' fill='none' stroke='%231a1a1a' stroke-width='20' stroke-linecap='round'/%3E%3Crect x='270' y='200' width='60' height='80' rx='20' fill='%231a1a1a'/%3E%3Crect x='470' y='200' width='60' height='80' rx='20' fill='%231a1a1a'/%3E%3Ctext x='400' y='360' text-anchor='middle' font-family='sans-serif' font-size='24' fill='%234a5568'%3EProSound X1%3C/text%3E%3C/svg%3E"
+        class="product-photo"
+      />
+      <!-- No alt attribute → axe image-alt violation -->
+    </div>
+
+    <div class="review-body">
+      <p>
+        The ProSound X1 is an over-ear wireless headphone with 40-hour battery
+        life, active noise cancellation, and memory-foam ear cushions. At $149
+        it sits in the sweet spot between budget and premium.
+      </p>
+      <p>
+        Build quality is excellent. The midnight-black finish resists smudges
+        and the stainless headband adjusts smoothly across head sizes.
+      </p>
+    </div>
+
+    <!--
+      BROKEN: Informative chart image with no alt attribute.
+      This bar chart conveys specific data — battery life in hours for three
+      competing products. Without alt text, this data is completely inaccessible
+      to screen reader users.
+    -->
+    <section class="chart-section">
+      <h2 class="section-heading">Battery Life Comparison</h2>
+      <img
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400'%3E%3Crect width='800' height='400' fill='white'/%3E%3Ctext x='400' y='40' text-anchor='middle' font-family='sans-serif' font-size='20' font-weight='bold' fill='%231a1a1a'%3EBattery Life (Hours)%3C/text%3E%3Cline x1='100' y1='60' x2='100' y2='320' stroke='%234a5568' stroke-width='2'/%3E%3Cline x1='100' y1='320' x2='700' y2='320' stroke='%234a5568' stroke-width='2'/%3E%3Crect x='180' y='128' width='120' height='192' fill='%231d4ed8'/%3E%3Ctext x='240' y='118' text-anchor='middle' font-family='sans-serif' font-size='16' fill='%231a1a1a'%3E40h%3C/text%3E%3Ctext x='240' y='350' text-anchor='middle' font-family='sans-serif' font-size='14' fill='%234a5568'%3EProSound X1%3C/text%3E%3Crect x='340' y='176' width='120' height='144' fill='%236b7280'/%3E%3Ctext x='400' y='166' text-anchor='middle' font-family='sans-serif' font-size='16' fill='%231a1a1a'%3E30h%3C/text%3E%3Ctext x='400' y='350' text-anchor='middle' font-family='sans-serif' font-size='14' fill='%234a5568'%3EBrand A%3C/text%3E%3Crect x='500' y='214' width='120' height='106' fill='%236b7280'/%3E%3Ctext x='560' y='204' text-anchor='middle' font-family='sans-serif' font-size='16' fill='%231a1a1a'%3E22h%3C/text%3E%3Ctext x='560' y='350' text-anchor='middle' font-family='sans-serif' font-size='14' fill='%234a5568'%3EBrand B%3C/text%3E%3C/svg%3E"
+        class="chart-img"
+      />
+      <!-- No alt attribute → screen reader user misses the chart data entirely -->
+    </section>
+
+    <div class="review-body">
+      <p>
+        The 40-hour battery is class-leading at this price point. Competitors
+        typically offer 22–30 hours. Charging takes 90 minutes via USB-C.
+      </p>
+    </div>
+
+    <!--
+      BROKEN: Informative diagram with no alt attribute.
+      This step-by-step pairing diagram conveys procedural information that
+      screen reader users need. Without alt text, they cannot follow the setup.
+    -->
+    <section class="diagram-section">
+      <h2 class="section-heading">How to Pair via Bluetooth</h2>
+      <img
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='280'%3E%3Crect width='800' height='280' fill='%23f8f9fa'/%3E%3Ctext x='400' y='40' text-anchor='middle' font-family='sans-serif' font-size='20' font-weight='bold' fill='%231a1a1a'%3EBluetooth Pairing Guide%3C/text%3E%3Crect x='60' y='65' width='190' height='160' rx='12' fill='white' stroke='%23e2e8f0' stroke-width='2'/%3E%3Ccircle cx='155' cy='120' r='30' fill='%231d4ed8'/%3E%3Ctext x='155' y='128' text-anchor='middle' font-family='sans-serif' font-size='24' font-weight='bold' fill='white'%3E1%3C/text%3E%3Ctext x='155' y='180' text-anchor='middle' font-family='sans-serif' font-size='13' fill='%231a1a1a'%3EHold power 3s%3C/text%3E%3Crect x='305' y='65' width='190' height='160' rx='12' fill='white' stroke='%23e2e8f0' stroke-width='2'/%3E%3Ccircle cx='400' cy='120' r='30' fill='%231d4ed8'/%3E%3Ctext x='400' y='128' text-anchor='middle' font-family='sans-serif' font-size='24' font-weight='bold' fill='white'%3E2%3C/text%3E%3Ctext x='400' y='180' text-anchor='middle' font-family='sans-serif' font-size='13' fill='%231a1a1a'%3ESelect device%3C/text%3E%3Crect x='550' y='65' width='190' height='160' rx='12' fill='white' stroke='%23e2e8f0' stroke-width='2'/%3E%3Ccircle cx='645' cy='120' r='30' fill='%2316a34a'/%3E%3Ctext x='645' y='128' text-anchor='middle' font-family='sans-serif' font-size='24' font-weight='bold' fill='white'%3E3%3C/text%3E%3Ctext x='645' y='180' text-anchor='middle' font-family='sans-serif' font-size='13' fill='%231a1a1a'%3EConfirm pairing%3C/text%3E%3C/svg%3E"
+        class="diagram-img"
+      />
+      <!-- No alt attribute → setup instructions are invisible to assistive technology -->
+    </section>
+
+    <div class="review-body">
+      <p>
+        Pairing is fast and reliable. The headphones remembered up to eight
+        previously connected devices and switched between them seamlessly.
+      </p>
+    </div>
+  </main>
+</body>
+</html>
