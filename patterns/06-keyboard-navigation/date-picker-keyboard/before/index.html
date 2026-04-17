@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Date Picker Keyboard Navigation — Before (Broken)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main>
+    <div class="form-card">
+      <h1 class="form-title">Book an Appointment</h1>
+      <p class="form-subtitle">Choose a date using the calendar below.</p>
+
+      <div class="field">
+        <label class="field-label" for="date-input">Appointment date</label>
+        <div class="datepicker-wrapper">
+          <input
+            type="text"
+            id="date-input"
+            class="date-input"
+            readonly
+            placeholder="DD/MM/YYYY"
+          />
+          <!--
+            BUG 1: Calendar toggle is a <div> — not keyboard-reachable.
+            BUG 2: No aria-haspopup or aria-expanded — state invisible to AT.
+          -->
+          <div class="calendar-toggle" onclick="toggleCalendar()" aria-hidden="true">
+            <span>📅</span>
+          </div>
+        </div>
+
+        <!--
+          BUG: The calendar grid uses <div> elements for every day.
+          Problems:
+            1. Day cells have no tabindex — Tab skips all of them.
+            2. No role="grid" or role="gridcell" — structure invisible to AT.
+            3. Arrow key navigation between days is absent.
+            4. No aria-selected, aria-current, or accessible names on cells.
+            5. Keyboard users cannot select any date.
+        -->
+        <div id="calendar" class="calendar" style="display:none;">
+          <div class="calendar-header">
+            <div class="cal-nav" onclick="prevMonth()">‹</div>
+            <div id="cal-heading" class="cal-heading">April 2026</div>
+            <div class="cal-nav" onclick="nextMonth()">›</div>
+          </div>
+          <div class="calendar-grid">
+            <div class="cal-day-names">
+              <div class="day-name">Su</div>
+              <div class="day-name">Mo</div>
+              <div class="day-name">Tu</div>
+              <div class="day-name">We</div>
+              <div class="day-name">Th</div>
+              <div class="day-name">Fr</div>
+              <div class="day-name">Sa</div>
+            </div>
+            <div id="cal-body" class="cal-body"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const MONTHS     = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const input      = document.getElementById('date-input');
+    const calendar   = document.getElementById('calendar');
+    const calHeading = document.getElementById('cal-heading');
+    const calBody    = document.getElementById('cal-body');
+
+    let year  = new Date().getFullYear();
+    let month = new Date().getMonth();
+
+    function toggleCalendar() {
+      const isOpen = calendar.style.display !== 'none';
+      calendar.style.display = isOpen ? 'none' : 'block';
+      if (!isOpen) buildGrid(year, month);
+    }
+
+    function prevMonth() {
+      month--;
+      if (month < 0) { month = 11; year--; }
+      buildGrid(year, month);
+    }
+
+    function nextMonth() {
+      month++;
+      if (month > 11) { month = 0; year++; }
+      buildGrid(year, month);
+    }
+
+    function buildGrid(y, m) {
+      calHeading.textContent = `${MONTHS[m]} ${y}`;
+      calBody.innerHTML = '';
+
+      const firstDay    = new Date(y, m, 1).getDay();
+      const daysInMonth = new Date(y, m + 1, 0).getDate();
+      let date = 1;
+
+      for (let row = 0; row < 6; row++) {
+        if (date > daysInMonth) break;
+        const week = document.createElement('div');
+        week.className = 'cal-week';
+
+        for (let col = 0; col < 7; col++) {
+          const cell = document.createElement('div');
+          if ((row === 0 && col < firstDay) || date > daysInMonth) {
+            cell.className = 'cal-cell empty';
+          } else {
+            cell.className = 'cal-cell';
+            cell.textContent = date;
+            const d = date;
+            // BUG: onclick only — keyboard users can't reach or activate these
+            cell.addEventListener('click', () => {
+              const dd = String(d).padStart(2, '0');
+              const mm = String(m + 1).padStart(2, '0');
+              input.value = `${dd}/${mm}/${y}`;
+              calendar.style.display = 'none';
+            });
+            date++;
+          }
+          week.appendChild(cell);
+        }
+        calBody.appendChild(week);
+      }
+    }
+
+    buildGrid(year, month);
+  </script>
+</body>
+</html>
