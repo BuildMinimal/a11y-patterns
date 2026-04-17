@@ -1,7 +1,8 @@
 ---
 title: Social Share Buttons — No Accessible Label
 category: 04-empty-links-buttons
-wcag: "4.1.2"
+wcag: "4.1.2 Name, Role, Value"
+wcag-shorthand: "4.1.2"
 wcag-level: "A"
 wcag-criterion: Name, Role, Value
 axe-rule: button-name

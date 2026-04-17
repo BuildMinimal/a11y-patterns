@@ -1,7 +1,8 @@
 ---
 title: Skip Navigation Link
 category: 04-empty-links-buttons
-wcag: "2.4.1"
+wcag: "2.4.1 Bypass Blocks"
+wcag-shorthand: "2.4.1"
 wcag-level: "A"
 wcag-criterion: Bypass Blocks
 axe-rule: bypass

@@ -1,7 +1,8 @@
 ---
 title: External Link — No New-Tab Indicator
 category: 04-empty-links-buttons
-wcag: "2.4.4"
+wcag: "2.4.4 Link Purpose (In Context)"
+wcag-shorthand: "2.4.4"
 wcag-level: "A"
 wcag-criterion: Link Purpose (In Context)
 axe-rule: link-name
@@ -21,9 +22,7 @@ The axe `link-name` rule only checks that a link has an accessible name. A link 
 ### Before — broken pattern
 
 ```html
-<a href="https://www.w3.org/TR/WCAG22/" target="_blank">
-  WCAG 2.2
-</a>
+<a href="https://www.w3.org/TR/WCAG22/" target="_blank"> WCAG 2.2 </a>
 ```
 
 Screen reader announces: **"WCAG 2.2, link"** — no indication a new tab will open.
@@ -39,7 +38,11 @@ Combine three changes:
 ### After — fixed pattern
 
 ```html
-<a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener noreferrer">
+<a
+  href="https://www.w3.org/TR/WCAG22/"
+  target="_blank"
+  rel="noopener noreferrer"
+>
   WCAG 2.2
   <svg class="ext-icon" aria-hidden="true" focusable="false" ...>...</svg>
   <span class="sr-only">(opens in new tab)</span>
@@ -73,8 +76,12 @@ The SVG is purely decorative — the `.sr-only` text already communicates the ne
 ## Alternative technique: `aria-label`
 
 ```html
-<a href="..." target="_blank" rel="noopener noreferrer"
-   aria-label="WCAG 2.2 (opens in new tab)">
+<a
+  href="..."
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="WCAG 2.2 (opens in new tab)"
+>
   WCAG 2.2
   <svg aria-hidden="true" focusable="false" ...>...</svg>
 </a>

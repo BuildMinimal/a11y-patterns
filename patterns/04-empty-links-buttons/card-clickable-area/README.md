@@ -1,7 +1,8 @@
 ---
 title: Card Clickable Area — div onclick Anti-Pattern
 category: 04-empty-links-buttons
-wcag: "4.1.2"
+wcag: "4.1.2 Name, Role, Value, Keyboard"
+wcag-shorthand: "4.1.2"
 wcag-level: "A"
 wcag-criterion: Name, Role, Value
 wcag-also: "2.1.1"
@@ -41,43 +42,49 @@ Place a real `<a>` element on the card title. Use a CSS `::after` pseudo-element
 ### After — fixed pattern
 
 ```html
-<article class="card">             <!-- position: relative -->
+<article class="card">
+  <!-- position: relative -->
   <img ... />
   <h2>
     <a href="#article-1" class="card-link">
       CSS Grid: Building Complex Layouts
-    </a>                           <!-- ::after covers the card -->
+    </a>
+    <!-- ::after covers the card -->
   </h2>
   <p>Stop fighting with float hacks...</p>
 </article>
 ```
 
 ```css
-.card        { position: relative; }
+.card {
+  position: relative;
+}
 .card-link::after {
   content: "";
   position: absolute;
-  inset: 0;      /* shorthand for top/right/bottom/left: 0 */
+  inset: 0; /* shorthand for top/right/bottom/left: 0 */
 }
 ```
 
 ## Why this technique works
 
-| Concern | Result |
-|---------|--------|
-| Keyboard access | `Tab` reaches the `<a>`; `Enter` activates it |
-| Screen reader | Announced as "CSS Grid: Building Complex Layouts, link" |
-| Right-click | "Open in new tab", "Copy link" work as expected |
-| Accessible name | Derived from the visible title text |
-| Role | Native `link` — no ARIA needed |
-| WCAG 4.1.2 | Name ✓, Role ✓, Value (href) ✓ |
+| Concern         | Result                                                  |
+| --------------- | ------------------------------------------------------- |
+| Keyboard access | `Tab` reaches the `<a>`; `Enter` activates it           |
+| Screen reader   | Announced as "CSS Grid: Building Complex Layouts, link" |
+| Right-click     | "Open in new tab", "Copy link" work as expected         |
+| Accessible name | Derived from the visible title text                     |
+| Role            | Native `link` — no ARIA needed                          |
+| WCAG 4.1.2      | Name ✓, Role ✓, Value (href) ✓                          |
 
 ## Focus ring on the card
 
 Because the `::after` overlay sits above the card's padding/border area, the default focus outline on the `<a>` may be clipped. Move the focus indicator to the card container using `:has()`:
 
 ```css
-.card-link:focus-visible   { outline: none; }
+.card-link:focus-visible {
+  outline: none;
+}
 .card:has(.card-link:focus-visible) {
   outline: 2px solid #2563eb;
   outline-offset: 2px;

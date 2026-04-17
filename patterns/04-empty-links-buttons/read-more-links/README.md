@@ -1,7 +1,8 @@
 ---
 title: Read More Links — No Destination Context
 category: 04-empty-links-buttons
-wcag: "2.4.4"
+wcag: "2.4.4 Link Purpose (In Context)"
+wcag-shorthand: "2.4.4"
 wcag-level: "A"
 wcag-criterion: Link Purpose (In Context)
 wcag-also: "2.4.9"
