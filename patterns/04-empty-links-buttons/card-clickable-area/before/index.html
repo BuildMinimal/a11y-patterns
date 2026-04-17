@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dev Blog — Before (Broken)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main>
+    <header class="page-header">
+      <h1 class="page-title">Dev Blog</h1>
+      <p class="page-subtitle">Articles on frontend development and accessibility</p>
+    </header>
+
+    <div class="card-grid">
+
+      <!--
+        BUG: The whole card is a <div> with onclick and cursor:pointer.
+        Problems:
+          1. Not keyboard accessible — Tab skips it entirely.
+          2. No semantic role — screen readers do not announce it as a link or button.
+          3. WCAG 4.1.2: name, role, and value cannot be programmatically determined.
+          4. onclick with no keyboard equivalent fails WCAG 2.1.1 (Keyboard).
+      -->
+      <div class="card" onclick="window.location='#article-1'" role="none">
+        <img
+          src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='150'%3E%3Crect width='400' height='150' fill='%23dbeafe'/%3E%3Ctext x='200' y='83' text-anchor='middle' font-family='sans-serif' font-size='14' fill='%232563eb'%3ECSs Grid%3C/text%3E%3C/svg%3E"
+          alt="CSS Grid illustration"
+          class="card-thumbnail"
+        />
+        <div class="card-body">
+          <span class="card-category">CSS</span>
+          <h2 class="card-title">CSS Grid: Building Complex Layouts Without a Framework</h2>
+          <p class="card-excerpt">Stop fighting with float hacks. Grid gives you two-dimensional layout control that was impossible five years ago.</p>
+        </div>
+      </div>
+
+      <div class="card" onclick="window.location='#article-2'" role="none">
+        <img
+          src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='150'%3E%3Crect width='400' height='150' fill='%23dcfce7'/%3E%3Ctext x='200' y='83' text-anchor='middle' font-family='sans-serif' font-size='14' fill='%2316a34a'%3EPerformance%3C/text%3E%3C/svg%3E"
+          alt="Performance illustration"
+          class="card-thumbnail"
+        />
+        <div class="card-body">
+          <span class="card-category">Performance</span>
+          <h2 class="card-title">Core Web Vitals: A Practical Optimisation Checklist</h2>
+          <p class="card-excerpt">LCP, CLS, INP — what they measure, how they affect ranking, and the ten changes that move the needle most.</p>
+        </div>
+      </div>
+
+      <div class="card" onclick="window.location='#article-3'" role="none">
+        <img
+          src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='150'%3E%3Crect width='400' height='150' fill='%23fef9c3'/%3E%3Ctext x='200' y='83' text-anchor='middle' font-family='sans-serif' font-size='14' fill='%23ca8a04'%3ETypeScript%3C/text%3E%3C/svg%3E"
+          alt="TypeScript illustration"
+          class="card-thumbnail"
+        />
+        <div class="card-body">
+          <span class="card-category">TypeScript</span>
+          <h2 class="card-title">Migrating a Legacy Codebase to TypeScript Incrementally</h2>
+          <p class="card-excerpt">You don't need to convert everything at once. A phased approach lets the team build confidence while keeping shipping.</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</body>
+</html>
