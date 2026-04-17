@@ -1,0 +1,139 @@
+/* styles.css — before/
+   Pattern: skip-navigation-link
+   No skip link and no landmark regions — axe bypass rule fires. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  line-height: 1.6;
+  color: #1a1a1a;
+  background: #f8fafc;
+}
+
+/* Site nav */
+.site-nav {
+  background: #1a1a1a;
+  padding: 0 2rem;
+}
+
+.nav-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  height: 56px;
+}
+
+.nav-logo {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-decoration: none;
+  margin-right: auto;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 0;
+}
+
+.nav-links a {
+  display: block;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #d1d5db;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nav-links a:hover {
+  color: #ffffff;
+}
+
+.nav-links a:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: -2px;
+}
+
+/* Page content */
+.page-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 2rem;
+}
+
+/* Sidebar nav (secondary navigation — adds more tab stops) */
+.sidebar {
+  order: 2;
+}
+
+.sidebar-heading {
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #4a5568;
+  margin-bottom: 0.75rem;
+}
+
+.sidebar-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.sidebar-links a {
+  display: block;
+  font-size: 0.875rem;
+  color: #2563eb;
+  text-decoration: none;
+  padding: 0.25rem 0;
+}
+
+.sidebar-links a:hover { text-decoration: underline; }
+.sidebar-links a:focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; }
+
+/* Main article */
+.article {
+  order: 1;
+}
+
+.article-title {
+  font-size: 1.625rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.article-meta {
+  font-size: 0.875rem;
+  color: #4a5568;
+  margin-bottom: 1.25rem;
+}
+
+.article-body p {
+  font-size: 1rem;
+  color: #1a1a1a;
+  line-height: 1.75;
+  margin-bottom: 1rem;
+}

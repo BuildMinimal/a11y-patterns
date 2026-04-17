@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A11y Docs — After (Fixed)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!--
+    FIX 1: Skip link is the FIRST focusable element.
+    Visually hidden off-screen by default; appears on :focus via CSS transform.
+    Keyboard users press Tab once to see it; Enter jumps to #main-content.
+  -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!--
+    FIX 2: <nav> with aria-label — screen readers can now navigate by landmarks.
+  -->
+  <nav class="site-nav" aria-label="Site navigation">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">A11y Docs</a>
+      <ul class="nav-links">
+        <li><a href="#">Getting Started</a></li>
+        <li><a href="#">WCAG Guidelines</a></li>
+        <li><a href="#">Patterns</a></li>
+        <li><a href="#">Testing</a></li>
+        <li><a href="#">Resources</a></li>
+        <li><a href="#">About</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page-content">
+
+    <nav class="sidebar" aria-label="Page contents">
+      <p class="sidebar-heading" aria-hidden="true">On this page</p>
+      <ul class="sidebar-links">
+        <li><a href="#">What is WCAG 2.4.1?</a></li>
+        <li><a href="#">Who benefits?</a></li>
+        <li><a href="#">Implementation</a></li>
+        <li><a href="#">Testing checklist</a></li>
+        <li><a href="#">Related patterns</a></li>
+      </ul>
+    </nav>
+
+    <!--
+      FIX 3: <main id="main-content" tabindex="-1">
+      tabindex="-1" allows the element to receive programmatic focus when the
+      skip link is activated, without making it a manual tab stop.
+      Some browsers (notably Safari) require tabindex="-1" on the target for
+      focus() to work; without it the viewport scrolls but focus stays on the link.
+    -->
+    <main class="article" id="main-content" tabindex="-1">
+      <h1 class="article-title">WCAG 2.4.1 — Bypass Blocks</h1>
+      <p class="article-meta">Category: Navigable · Level: A</p>
+      <div class="article-body">
+        <p>
+          A mechanism is available to bypass blocks of content that are repeated on multiple web pages.
+          For keyboard-only users, navigating past a large navigation menu on every page visit is
+          a significant burden. A skip link solves this in one Tab press.
+        </p>
+        <p>
+          Screen reader users have their own bypass mechanisms — heading navigation, landmark
+          regions, links list. But sighted keyboard users have none of these unless the page
+          explicitly provides a skip link.
+        </p>
+      </div>
+    </main>
+
+  </div>
+
+</body>
+</html>
