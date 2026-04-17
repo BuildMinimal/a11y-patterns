@@ -1,0 +1,115 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #f8fafc;
+  color: #1a1a1a;
+  padding: 2rem;
+}
+
+.page-header {
+  max-width: 860px;
+  margin: 0 auto 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.page-title { font-size: 1.75rem; font-weight: 700; }
+
+.toolbar { display: flex; align-items: center; gap: 0.75rem; }
+
+.sort-label { font-size: 0.875rem; font-weight: 500; color: #4a5568; }
+
+/* --- Custom select --- */
+.select-wrapper { position: relative; }
+
+/*
+  BUG: cursor:pointer makes it look clickable for mouse users,
+  but there is no tabindex, so keyboard users skip past it entirely.
+  There is also no focus ring — even if it were somehow focused, there
+  would be no visible indication.
+*/
+.select-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.875rem;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  color: #1a1a1a;
+  cursor: pointer;
+  min-width: 160px;
+  user-select: none;
+}
+
+.select-arrow { margin-left: auto; font-size: 0.75rem; color: #6b7280; }
+
+.select-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  overflow: hidden;
+}
+
+.select-menu.open { display: block; }
+
+.select-option {
+  padding: 0.625rem 0.875rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  color: #1a1a1a;
+}
+
+.select-option:hover { background: #f3f4f6; }
+
+.select-option--selected {
+  background: #dbeafe;
+  color: #1e40af;
+  font-weight: 500;
+}
+
+/* --- Article list --- */
+.article-list {
+  max-width: 860px;
+  margin: 0 auto;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.article-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+}
+
+.article-category {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #1e40af;
+  background: #dbeafe;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.article-title { font-size: 1.125rem; font-weight: 600; margin-bottom: 0.375rem; }
+
+.article-excerpt { font-size: 0.9375rem; color: #4a5568; line-height: 1.6; }

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Custom Select Dropdown — After (Fixed)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main>
+    <header class="page-header">
+      <h1 class="page-title">Articles</h1>
+      <div class="toolbar">
+        <!--
+          FIX: <label> with id so the trigger can reference it via aria-labelledby.
+          Screen reader announces: "Sort by: Most recent, collapsed, button"
+        -->
+        <label id="sort-label" class="sort-label">Sort by</label>
+        <div class="select-wrapper">
+          <!--
+            FIX: Native <button> gives keyboard access for free.
+            aria-haspopup="listbox" tells AT this opens a listbox widget.
+            aria-expanded="false|true" communicates open/closed state.
+            aria-labelledby combines "Sort by" + current value for full context.
+          -->
+          <button
+            type="button"
+            id="sort-trigger"
+            class="select-trigger"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+            aria-labelledby="sort-label sort-value"
+          >
+            <span id="sort-value" class="select-value">Most recent</span>
+            <span class="select-arrow" aria-hidden="true">▾</span>
+          </button>
+          <!--
+            FIX: role="listbox" on the container.
+            tabindex="-1" allows programmatic focus (from openDropdown()) without
+            entering the natural Tab order — the button is the Tab stop.
+            aria-activedescendant points to the keyboard-highlighted option.
+          -->
+          <ul
+            id="sort-listbox"
+            class="select-menu"
+            role="listbox"
+            aria-labelledby="sort-label"
+            tabindex="-1"
+          >
+            <!--
+              FIX: role="option" on each item.
+              aria-selected="true" on the currently selected option (only one at a time).
+              Each option has a unique id — required for aria-activedescendant.
+            -->
+            <li role="option" id="option-0" aria-selected="true"  class="select-option select-option--selected" data-value="Most recent">Most recent</li>
+            <li role="option" id="option-1" aria-selected="false" class="select-option" data-value="Most popular">Most popular</li>
+            <li role="option" id="option-2" aria-selected="false" class="select-option" data-value="Highest rated">Highest rated</li>
+            <li role="option" id="option-3" aria-selected="false" class="select-option" data-value="Alphabetical">Alphabetical</li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <ul class="article-list">
+      <li class="article-card">
+        <span class="article-category">Accessibility</span>
+        <h2 class="article-title">Building Accessible Forms</h2>
+        <p class="article-excerpt">Labels, errors, and input modes — the complete checklist for form accessibility that goes beyond just adding aria-label.</p>
+      </li>
+      <li class="article-card">
+        <span class="article-category">CSS</span>
+        <h2 class="article-title">CSS Grid for Complex Layouts</h2>
+        <p class="article-excerpt">Two-dimensional control without a framework. Grid makes the layouts that used to require JavaScript trivial to express in CSS.</p>
+      </li>
+      <li class="article-card">
+        <span class="article-category">TypeScript</span>
+        <h2 class="article-title">TypeScript Generics Explained</h2>
+        <p class="article-excerpt">Generics are the feature that makes TypeScript genuinely powerful. Here's how to read, write, and constrain them with confidence.</p>
+      </li>
+    </ul>
+  </main>
+
+  <script>
+    const trigger  = document.getElementById('sort-trigger');
+    const listbox  = document.getElementById('sort-listbox');
+    const valueDisplay = document.getElementById('sort-value');
+    const options  = Array.from(listbox.querySelectorAll('[role="option"]'));
+    let activeIndex = 0;
+
+    function openDropdown() {
+      trigger.setAttribute('aria-expanded', 'true');
+      listbox.classList.add('open');
+      // Highlight the currently selected option when opening
+      const selectedIdx = options.findIndex(o => o.getAttribute('aria-selected') === 'true');
+      setActive(selectedIdx >= 0 ? selectedIdx : 0);
+      listbox.focus();
+    }
+
+    function closeDropdown(returnFocus = true) {
+      trigger.setAttribute('aria-expanded', 'false');
+      listbox.classList.remove('open');
+      listbox.removeAttribute('aria-activedescendant');
+      options.forEach(o => o.classList.remove('select-option--active'));
+      if (returnFocus) trigger.focus();
+    }
+
+    function setActive(index) {
+      options.forEach(o => o.classList.remove('select-option--active'));
+      options[index].classList.add('select-option--active');
+      listbox.setAttribute('aria-activedescendant', options[index].id);
+      activeIndex = index;
+    }
+
+    function selectOption(index) {
+      valueDisplay.textContent = options[index].dataset.value;
+      options.forEach(o => {
+        o.setAttribute('aria-selected', 'false');
+        o.classList.remove('select-option--selected');
+      });
+      options[index].setAttribute('aria-selected', 'true');
+      options[index].classList.add('select-option--selected');
+      closeDropdown();
+    }
+
+    // Click toggles open/closed
+    trigger.addEventListener('click', () => {
+      if (trigger.getAttribute('aria-expanded') === 'true') {
+        closeDropdown();
+      } else {
+        openDropdown();
+      }
+    });
+
+    // Keyboard navigation within the listbox
+    listbox.addEventListener('keydown', (e) => {
+      switch (e.key) {
+        case 'ArrowDown':
+          e.preventDefault();
+          setActive(Math.min(activeIndex + 1, options.length - 1));
+          break;
+        case 'ArrowUp':
+          e.preventDefault();
+          setActive(Math.max(activeIndex - 1, 0));
+          break;
+        case 'Enter':
+        case ' ':
+          e.preventDefault();
+          selectOption(activeIndex);
+          break;
+        case 'Escape':
+          e.preventDefault();
+          closeDropdown();
+          break;
+        case 'Home':
+          e.preventDefault();
+          setActive(0);
+          break;
+        case 'End':
+          e.preventDefault();
+          setActive(options.length - 1);
+          break;
+      }
+    });
+
+    // Mouse click on an option
+    options.forEach((opt, i) => opt.addEventListener('click', () => selectOption(i)));
+
+    // Close on outside click — don't return focus to trigger (user clicked elsewhere)
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.select-wrapper')) {
+        if (trigger.getAttribute('aria-expanded') === 'true') closeDropdown(false);
+      }
+    });
+  </script>
+</body>
+</html>
