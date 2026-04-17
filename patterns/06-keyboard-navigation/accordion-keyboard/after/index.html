@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Accordion Keyboard Navigation — After (Fixed)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main>
+    <header class="page-header">
+      <h1 class="page-title">Accessibility FAQ</h1>
+      <p class="page-subtitle">Common questions about web accessibility</p>
+    </header>
+
+    <div class="accordion">
+
+      <div class="accordion-item">
+        <!--
+          FIX: Native <button> is keyboard-reachable by default.
+          aria-expanded communicates open/closed state to screen readers.
+          aria-controls links the button to its controlled panel by id.
+          id on the button lets the panel reference it via aria-labelledby.
+        -->
+        <h2 class="accordion-heading">
+          <button
+            id="trigger-1"
+            class="accordion-trigger"
+            aria-expanded="false"
+            aria-controls="panel-1"
+          >
+            <span class="accordion-title">What is WCAG and who maintains it?</span>
+            <span class="accordion-icon" aria-hidden="true">+</span>
+          </button>
+        </h2>
+        <!--
+          FIX: role="region" with aria-labelledby names the panel after its heading.
+          Screen readers announce "What is WCAG…, region" when entering.
+          hidden attribute removes it from the accessibility tree when closed.
+        -->
+        <div
+          id="panel-1"
+          class="accordion-panel"
+          role="region"
+          aria-labelledby="trigger-1"
+          hidden
+        >
+          <p>WCAG — the Web Content Accessibility Guidelines — is published by the W3C's Web Accessibility Initiative (WAI). The current version is WCAG 2.2, published October 2023. Version 3.0 is in development and will introduce a new conformance model.</p>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-heading">
+          <button
+            id="trigger-2"
+            class="accordion-trigger"
+            aria-expanded="false"
+            aria-controls="panel-2"
+          >
+            <span class="accordion-title">How do screen readers work?</span>
+            <span class="accordion-icon" aria-hidden="true">+</span>
+          </button>
+        </h2>
+        <div
+          id="panel-2"
+          class="accordion-panel"
+          role="region"
+          aria-labelledby="trigger-2"
+          hidden
+        >
+          <p>Screen readers convert on-screen text and interface elements into synthesised speech or braille output. They navigate the accessibility tree — a parallel representation of the DOM that exposes semantic meaning. Headings, landmarks, links, buttons, and form controls all appear; decorative divs do not.</p>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-heading">
+          <button
+            id="trigger-3"
+            class="accordion-trigger"
+            aria-expanded="false"
+            aria-controls="panel-3"
+          >
+            <span class="accordion-title">What is the difference between WCAG Level A and Level AA?</span>
+            <span class="accordion-icon" aria-hidden="true">+</span>
+          </button>
+        </h2>
+        <div
+          id="panel-3"
+          class="accordion-panel"
+          role="region"
+          aria-labelledby="trigger-3"
+          hidden
+        >
+          <p>Level A covers minimum requirements — failures block access entirely for some users. Level AA is the broadly-adopted target for public-facing websites and most legal standards, including the UK's PSBAR and the EU's EN 301 549. Level AAA sets a higher bar that not all content types can realistically meet.</p>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-heading">
+          <button
+            id="trigger-4"
+            class="accordion-trigger"
+            aria-expanded="false"
+            aria-controls="panel-4"
+          >
+            <span class="accordion-title">How do I start testing my site for accessibility?</span>
+            <span class="accordion-icon" aria-hidden="true">+</span>
+          </button>
+        </h2>
+        <div
+          id="panel-4"
+          class="accordion-panel"
+          role="region"
+          aria-labelledby="trigger-4"
+          hidden
+        >
+          <p>Start with automated tools — axe DevTools, WAVE, or Lighthouse — to catch the 30–40% of issues machines can identify. Then do keyboard-only testing: unplug your mouse and try to use the page with Tab, Enter, Arrow keys, and Escape. Finally test with a screen reader: NVDA (free, Windows) or VoiceOver (built-in, Mac/iOS).</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    const accordion = document.querySelector('.accordion');
+    const triggers  = Array.from(accordion.querySelectorAll('.accordion-trigger'));
+
+    // Toggle open/closed on click (Enter and Space fire click natively on <button>)
+    triggers.forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+        trigger.setAttribute('aria-expanded', String(!isExpanded));
+        const panel = document.getElementById(trigger.getAttribute('aria-controls'));
+        panel.hidden = isExpanded;
+      });
+    });
+
+    // Arrow key navigation between accordion headers (WAI-ARIA pattern)
+    accordion.addEventListener('keydown', (e) => {
+      const currentIndex = triggers.indexOf(document.activeElement);
+      if (currentIndex === -1) return; // keydown not on a trigger
+
+      switch (e.key) {
+        case 'ArrowDown':
+          e.preventDefault();
+          triggers[(currentIndex + 1) % triggers.length].focus();
+          break;
+        case 'ArrowUp':
+          e.preventDefault();
+          triggers[(currentIndex - 1 + triggers.length) % triggers.length].focus();
+          break;
+        case 'Home':
+          e.preventDefault();
+          triggers[0].focus();
+          break;
+        case 'End':
+          e.preventDefault();
+          triggers[triggers.length - 1].focus();
+          break;
+      }
+    });
+  </script>
+</body>
+</html>

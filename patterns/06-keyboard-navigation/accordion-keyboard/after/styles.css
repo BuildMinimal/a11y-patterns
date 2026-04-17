@@ -1,0 +1,80 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #f8fafc;
+  color: #1a1a1a;
+  padding: 2rem;
+}
+
+.page-header { max-width: 700px; margin: 0 auto 2rem; }
+.page-title { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.375rem; }
+.page-subtitle { font-size: 1rem; color: #4a5568; }
+
+/* --- Accordion --- */
+.accordion {
+  max-width: 700px;
+  margin: 0 auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.accordion-item + .accordion-item { border-top: 1px solid #e5e7eb; }
+
+/* FIX: Remove h2's default margin — it wraps the button for semantic heading structure */
+.accordion-heading { margin: 0; }
+
+/* FIX: Native <button> is keyboard-reachable; reset button styles to match the design */
+.accordion-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1rem 1.25rem;
+  background: #ffffff;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.accordion-trigger:hover { background: #f9fafb; }
+
+/* FIX: Visible focus ring for sighted keyboard users (WCAG 2.4.11) */
+.accordion-trigger:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: -2px;
+}
+
+/* FIX: Open state reflected visually via aria-expanded attribute */
+.accordion-trigger[aria-expanded="true"] { background: #eff6ff; }
+
+.accordion-title { font-size: 1rem; font-weight: 600; color: #1a1a1a; }
+
+.accordion-icon {
+  flex-shrink: 0;
+  margin-left: 1rem;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #6b7280;
+  transition: transform 0.2s;
+}
+
+.accordion-trigger[aria-expanded="true"] .accordion-icon { transform: rotate(45deg); }
+
+/* FIX: Panel shown/hidden via the HTML hidden attribute (set by JS).
+   The hidden attribute removes the panel from both visual rendering
+   and the accessibility tree — screen readers skip it when closed. */
+.accordion-panel {
+  padding: 0 1.25rem 1rem;
+  background: #ffffff;
+  border-top: 1px solid #e5e7eb;
+}
+
+.accordion-panel[hidden] { display: none; }
+
+.accordion-panel p {
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: #374151;
+}
