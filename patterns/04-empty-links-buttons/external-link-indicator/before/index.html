@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WCAG Resources — Before (Broken)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main>
+    <header class="page-header">
+      <h1 class="page-title">WCAG Resources</h1>
+      <p class="page-subtitle">Essential references for accessible web development</p>
+    </header>
+
+    <section class="resource-section">
+      <h2 class="section-heading">Official Specifications</h2>
+      <ul class="link-list">
+        <li class="link-item">
+          <div>
+            <!--
+              BUG: target="_blank" silently opens a new tab with no warning.
+              Screen reader users hear only "WCAG 2.2, link" and are unexpectedly
+              transported to a new context with their Back button disabled.
+              WCAG 2.4.4: users cannot determine from link text alone that
+              navigation behaviour will differ from a normal link.
+            -->
+            <a href="https://www.w3.org/TR/WCAG22/" target="_blank">
+              WCAG 2.2
+            </a>
+            <p class="link-description">Web Content Accessibility Guidelines — full specification</p>
+          </div>
+        </li>
+        <li class="link-item">
+          <div>
+            <a href="https://www.w3.org/WAI/ARIA/apg/" target="_blank">
+              ARIA Authoring Practices Guide
+            </a>
+            <p class="link-description">Design patterns and widgets for ARIA implementations</p>
+          </div>
+        </li>
+        <li class="link-item">
+          <div>
+            <a href="https://html.spec.whatwg.org/" target="_blank">
+              HTML Living Standard
+            </a>
+            <p class="link-description">The WHATWG HTML specification maintained as a living document</p>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <section class="resource-section">
+      <h2 class="section-heading">Testing Tools</h2>
+      <ul class="link-list">
+        <li class="link-item">
+          <div>
+            <a href="https://www.deque.com/axe/" target="_blank">
+              axe DevTools
+            </a>
+            <p class="link-description">Browser extension for automated accessibility testing</p>
+          </div>
+        </li>
+        <li class="link-item">
+          <div>
+            <a href="https://wave.webaim.org/" target="_blank">
+              WAVE
+            </a>
+            <p class="link-description">Web accessibility evaluation tool by WebAIM</p>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

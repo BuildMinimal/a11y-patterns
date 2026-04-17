@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WCAG Resources — After (Fixed)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main>
+    <header class="page-header">
+      <h1 class="page-title">WCAG Resources</h1>
+      <p class="page-subtitle">Essential references for accessible web development</p>
+    </header>
+
+    <section class="resource-section">
+      <h2 class="section-heading">Official Specifications</h2>
+      <ul class="link-list">
+        <li class="link-item">
+          <div>
+            <!--
+              FIX 1: rel="noopener noreferrer" — security best practice for target="_blank".
+              FIX 2: .sr-only span announces "(opens in new tab)" to screen reader users
+                     before they activate the link, so the context change is not a surprise.
+              FIX 3: Visible external-link icon (aria-hidden) gives sighted users the same cue.
+            -->
+            <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener noreferrer">
+              WCAG 2.2
+              <svg class="ext-icon" aria-hidden="true" focusable="false"
+                   xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                   fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+              <span class="sr-only">(opens in new tab)</span>
+            </a>
+            <p class="link-description">Web Content Accessibility Guidelines — full specification</p>
+          </div>
+        </li>
+        <li class="link-item">
+          <div>
+            <a href="https://www.w3.org/WAI/ARIA/apg/" target="_blank" rel="noopener noreferrer">
+              ARIA Authoring Practices Guide
+              <svg class="ext-icon" aria-hidden="true" focusable="false"
+                   xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                   fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+              <span class="sr-only">(opens in new tab)</span>
+            </a>
+            <p class="link-description">Design patterns and widgets for ARIA implementations</p>
+          </div>
+        </li>
+        <li class="link-item">
+          <div>
+            <a href="https://html.spec.whatwg.org/" target="_blank" rel="noopener noreferrer">
+              HTML Living Standard
+              <svg class="ext-icon" aria-hidden="true" focusable="false"
+                   xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                   fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+              <span class="sr-only">(opens in new tab)</span>
+            </a>
+            <p class="link-description">The WHATWG HTML specification maintained as a living document</p>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <section class="resource-section">
+      <h2 class="section-heading">Testing Tools</h2>
+      <ul class="link-list">
+        <li class="link-item">
+          <div>
+            <a href="https://www.deque.com/axe/" target="_blank" rel="noopener noreferrer">
+              axe DevTools
+              <svg class="ext-icon" aria-hidden="true" focusable="false"
+                   xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                   fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+              <span class="sr-only">(opens in new tab)</span>
+            </a>
+            <p class="link-description">Browser extension for automated accessibility testing</p>
+          </div>
+        </li>
+        <li class="link-item">
+          <div>
+            <a href="https://wave.webaim.org/" target="_blank" rel="noopener noreferrer">
+              WAVE
+              <svg class="ext-icon" aria-hidden="true" focusable="false"
+                   xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                   fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+              <span class="sr-only">(opens in new tab)</span>
+            </a>
+            <p class="link-description">Web accessibility evaluation tool by WebAIM</p>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
