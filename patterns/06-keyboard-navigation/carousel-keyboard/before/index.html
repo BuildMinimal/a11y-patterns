@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carousel Keyboard Navigation — Before (Broken)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main>
+    <h1 class="page-title">Featured Articles</h1>
+
+    <!--
+      BUG 1 (WCAG 2.1.1): Previous/Next controls are <div> elements — not
+      keyboard reachable. Tab skips them entirely.
+
+      BUG 2 (WCAG 2.2.2): The carousel auto-advances every 3 seconds with
+      no mechanism to pause it. Users who need more time to read cannot
+      stop the slide from changing.
+
+      BUG 3: No aria-label on the carousel, no live region, no slide counter.
+      Screen readers have no context about what is happening.
+    -->
+    <div class="carousel">
+      <div class="carousel-track">
+
+        <div class="carousel-slide active" data-slide="0">
+          <span class="slide-category">Accessibility</span>
+          <h2 class="slide-title">Building Accessible Forms</h2>
+          <p class="slide-excerpt">Labels, errors, and input modes — the complete checklist for form accessibility that goes beyond just adding aria-label.</p>
+        </div>
+
+        <div class="carousel-slide" data-slide="1">
+          <span class="slide-category slide-category--green">Performance</span>
+          <h2 class="slide-title">Core Web Vitals: A Practical Guide</h2>
+          <p class="slide-excerpt">LCP, CLS, INP — what they measure, how they affect your Google ranking, and the ten changes that move the needle most.</p>
+        </div>
+
+        <div class="carousel-slide" data-slide="2">
+          <span class="slide-category slide-category--yellow">CSS</span>
+          <h2 class="slide-title">CSS Grid for Complex Layouts</h2>
+          <p class="slide-excerpt">Two-dimensional control without a framework. Grid makes the layouts that used to require JavaScript trivial to express in CSS.</p>
+        </div>
+
+        <div class="carousel-slide" data-slide="3">
+          <span class="slide-category slide-category--purple">TypeScript</span>
+          <h2 class="slide-title">TypeScript Generics Explained</h2>
+          <p class="slide-excerpt">Generics are the feature that makes TypeScript genuinely powerful. Here's how to read, write, and constrain them with confidence.</p>
+        </div>
+
+      </div>
+
+      <!-- BUG: <div> controls are not keyboard-reachable, and there is no pause button -->
+      <div class="carousel-controls">
+        <div class="carousel-btn carousel-btn--prev" onclick="prevSlide()">‹</div>
+        <div class="carousel-dots">
+          <div class="dot active"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+        <div class="carousel-btn carousel-btn--next" onclick="nextSlide()">›</div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const slides   = Array.from(document.querySelectorAll('.carousel-slide'));
+    const dots     = Array.from(document.querySelectorAll('.dot'));
+    let current    = 0;
+
+    function showSlide(index) {
+      slides.forEach((s, i) => s.classList.toggle('active', i === index));
+      dots.forEach((d, i) => d.classList.toggle('active', i === index));
+      current = index;
+    }
+
+    function nextSlide() { showSlide((current + 1) % slides.length); }
+    function prevSlide() { showSlide((current - 1 + slides.length) % slides.length); }
+
+    // BUG: Auto-advances with no way to pause it
+    setInterval(nextSlide, 3000);
+  </script>
+</body>
+</html>

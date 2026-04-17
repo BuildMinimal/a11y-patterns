@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carousel Keyboard Navigation — After (Fixed)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main>
+    <h1 class="page-title">Featured Articles</h1>
+
+    <!--
+      FIX: aria-label names the carousel for screen readers.
+      aria-roledescription="carousel" gives AT context about what this widget is.
+    -->
+    <section class="carousel" aria-label="Featured articles" aria-roledescription="carousel">
+
+      <!--
+        FIX: A visually-hidden live region announces the current slide to screen readers
+        when the user navigates manually. It stays silent during auto-advance to avoid
+        constant interruptions — only updated by prevSlide()/nextSlide() when triggered
+        by user interaction or after pausing.
+      -->
+      <p id="slide-status" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+
+      <div class="carousel-track">
+
+        <!--
+          FIX: role="group" + aria-roledescription="slide" + aria-label="N of 4"
+          on each slide gives screen readers structured context.
+          hidden attribute removes inactive slides from the accessibility tree.
+        -->
+        <div
+          class="carousel-slide active"
+          role="group"
+          aria-roledescription="slide"
+          aria-label="1 of 4"
+        >
+          <span class="slide-category">Accessibility</span>
+          <h2 class="slide-title">Building Accessible Forms</h2>
+          <p class="slide-excerpt">Labels, errors, and input modes — the complete checklist for form accessibility that goes beyond just adding aria-label.</p>
+        </div>
+
+        <div
+          class="carousel-slide"
+          role="group"
+          aria-roledescription="slide"
+          aria-label="2 of 4"
+          hidden
+        >
+          <span class="slide-category slide-category--green">Performance</span>
+          <h2 class="slide-title">Core Web Vitals: A Practical Guide</h2>
+          <p class="slide-excerpt">LCP, CLS, INP — what they measure, how they affect your Google ranking, and the ten changes that move the needle most.</p>
+        </div>
+
+        <div
+          class="carousel-slide"
+          role="group"
+          aria-roledescription="slide"
+          aria-label="3 of 4"
+          hidden
+        >
+          <span class="slide-category slide-category--yellow">CSS</span>
+          <h2 class="slide-title">CSS Grid for Complex Layouts</h2>
+          <p class="slide-excerpt">Two-dimensional control without a framework. Grid makes the layouts that used to require JavaScript trivial to express in CSS.</p>
+        </div>
+
+        <div
+          class="carousel-slide"
+          role="group"
+          aria-roledescription="slide"
+          aria-label="4 of 4"
+          hidden
+        >
+          <span class="slide-category slide-category--purple">TypeScript</span>
+          <h2 class="slide-title">TypeScript Generics Explained</h2>
+          <p class="slide-excerpt">Generics are the feature that makes TypeScript genuinely powerful. Here's how to read, write, and constrain them with confidence.</p>
+        </div>
+
+      </div>
+
+      <div class="carousel-controls">
+        <!--
+          FIX (WCAG 2.1.1 + 2.2.2): All controls are native <button> elements.
+          Pause button is first in Tab order so keyboard users can immediately
+          stop auto-advance before the slide changes on them.
+          aria-label on every button replaces the icon with a meaningful name.
+        -->
+        <button id="pause-btn" class="carousel-pause" aria-label="Pause slideshow">
+          <span class="pause-icon" aria-hidden="true">⏸</span>
+        </button>
+        <button id="prev-btn" class="carousel-btn carousel-btn--prev" aria-label="Previous slide">
+          <span aria-hidden="true">‹</span>
+        </button>
+        <div class="carousel-dots" aria-hidden="true">
+          <div class="dot active"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+        <button id="next-btn" class="carousel-btn carousel-btn--next" aria-label="Next slide">
+          <span aria-hidden="true">›</span>
+        </button>
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    const carousel   = document.querySelector('.carousel');
+    const slides     = Array.from(document.querySelectorAll('.carousel-slide'));
+    const dots       = Array.from(document.querySelectorAll('.dot'));
+    const pauseBtn   = document.getElementById('pause-btn');
+    const prevBtn    = document.getElementById('prev-btn');
+    const nextBtn    = document.getElementById('next-btn');
+    const statusEl   = document.getElementById('slide-status');
+    const pauseIcon  = pauseBtn.querySelector('.pause-icon');
+
+    let current    = 0;
+    let intervalId = null;
+    let isPlaying  = false; // starts false; set true by startAutoAdvance()
+
+    function showSlide(index, announce = false) {
+      slides.forEach((s, i) => {
+        s.classList.toggle('active', i === index);
+        s.hidden = i !== index;
+      });
+      dots.forEach((d, i) => d.classList.toggle('active', i === index));
+      current = index;
+      // Only update the live region on manual navigation (avoids screen reader noise during auto-advance)
+      if (announce) {
+        statusEl.textContent = slides[index].getAttribute('aria-label');
+      }
+    }
+
+    function nextSlide(announce = false) {
+      showSlide((current + 1) % slides.length, announce);
+    }
+
+    function prevSlide(announce = false) {
+      showSlide((current - 1 + slides.length) % slides.length, announce);
+    }
+
+    function startAutoAdvance() {
+      if (intervalId) return;
+      intervalId = setInterval(() => nextSlide(false), 3000);
+      isPlaying  = true;
+      pauseBtn.setAttribute('aria-label', 'Pause slideshow');
+      pauseIcon.textContent = '⏸';
+    }
+
+    function stopAutoAdvance() {
+      clearInterval(intervalId);
+      intervalId = null;
+      isPlaying  = false;
+      pauseBtn.setAttribute('aria-label', 'Play slideshow');
+      pauseIcon.textContent = '▶';
+    }
+
+    // Pause button: toggle play/pause (WCAG 2.2.2 — keyboard mechanism)
+    pauseBtn.addEventListener('click', () => {
+      isPlaying ? stopAutoAdvance() : startAutoAdvance();
+    });
+
+    // Prev/Next: manual navigation always announces the new slide
+    prevBtn.addEventListener('click', () => prevSlide(true));
+    nextBtn.addEventListener('click', () => nextSlide(true));
+
+    // FIX (WCAG 2.2.2): Auto-pause when any carousel element receives focus.
+    // This protects keyboard users who need more time — the slide won't change
+    // while they are reading or interacting with the carousel via keyboard.
+    carousel.addEventListener('focusin', stopAutoAdvance);
+
+    // Resume only when focus leaves the carousel entirely
+    carousel.addEventListener('focusout', (e) => {
+      if (!carousel.contains(e.relatedTarget)) startAutoAdvance();
+    });
+
+    // Also pause on hover (pointer users)
+    carousel.addEventListener('mouseenter', stopAutoAdvance);
+    carousel.addEventListener('mouseleave', startAutoAdvance);
+
+    // Initialise
+    showSlide(0);
+    startAutoAdvance();
+  </script>
+</body>
+</html>
