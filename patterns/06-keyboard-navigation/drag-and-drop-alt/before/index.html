@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drag and Drop Alternative — Before (Broken)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main>
+    <header class="page-header">
+      <h1 class="page-title">Task Priority</h1>
+      <p class="page-subtitle">Drag tasks to reorder by priority</p>
+    </header>
+
+    <!--
+      BUG (WCAG 2.1.1): Reordering is only achievable via drag-and-drop.
+      Problems:
+        1. No keyboard alternative — keyboard users cannot change task order.
+        2. draggable="true" creates no keyboard-operable mechanism.
+        3. No aria-live region — screen reader users get no feedback on reorder.
+        4. No ARIA attributes communicate the draggable state to AT.
+    -->
+    <ul class="task-list" id="task-list">
+      <li class="task-item" draggable="true">
+        <span class="task-drag-handle" aria-hidden="true">⠿</span>
+        <span class="task-text">Review accessibility audit report</span>
+      </li>
+      <li class="task-item" draggable="true">
+        <span class="task-drag-handle" aria-hidden="true">⠿</span>
+        <span class="task-text">Fix keyboard navigation in dropdown</span>
+      </li>
+      <li class="task-item" draggable="true">
+        <span class="task-drag-handle" aria-hidden="true">⠿</span>
+        <span class="task-text">Write WCAG compliance documentation</span>
+      </li>
+      <li class="task-item" draggable="true">
+        <span class="task-drag-handle" aria-hidden="true">⠿</span>
+        <span class="task-text">Update colour contrast tokens</span>
+      </li>
+      <li class="task-item" draggable="true">
+        <span class="task-drag-handle" aria-hidden="true">⠿</span>
+        <span class="task-text">Test with NVDA screen reader</span>
+      </li>
+    </ul>
+  </main>
+
+  <script>
+    const list = document.getElementById('task-list');
+    let dragSrc = null;
+
+    list.querySelectorAll('.task-item').forEach(item => {
+      item.addEventListener('dragstart', () => {
+        dragSrc = item;
+        item.classList.add('dragging');
+      });
+      item.addEventListener('dragend', () => {
+        item.classList.remove('dragging');
+        dragSrc = null;
+      });
+      item.addEventListener('dragover', e => e.preventDefault());
+      item.addEventListener('drop', e => {
+        e.preventDefault();
+        if (dragSrc && dragSrc !== item) {
+          const items = Array.from(list.querySelectorAll('.task-item'));
+          const srcIdx = items.indexOf(dragSrc);
+          const dstIdx = items.indexOf(item);
+          list.insertBefore(dragSrc, srcIdx < dstIdx ? item.nextSibling : item);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

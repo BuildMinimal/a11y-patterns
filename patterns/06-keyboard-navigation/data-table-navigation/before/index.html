@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Table Navigation — Before (Broken)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main>
+    <header class="page-header">
+      <h1 class="page-title">Accessibility Tools</h1>
+      <p class="page-subtitle">Click column headers to sort</p>
+    </header>
+
+    <div class="table-wrapper">
+      <table class="data-table">
+        <caption class="sr-only">Accessibility tools reference</caption>
+        <thead>
+          <tr>
+            <!-- BROKEN: <span onclick> — not keyboard reachable, no aria-sort -->
+            <th>
+              <span class="sort-trigger" onclick="sortBy('name')">
+                Tool <span class="sort-icon" aria-hidden="true">↕</span>
+              </span>
+            </th>
+            <th>
+              <span class="sort-trigger" onclick="sortBy('category')">
+                Category <span class="sort-icon" aria-hidden="true">↕</span>
+              </span>
+            </th>
+            <th>
+              <span class="sort-trigger" onclick="sortBy('cost')">
+                Cost <span class="sort-icon" aria-hidden="true">↕</span>
+              </span>
+            </th>
+            <th>
+              <span class="sort-trigger" onclick="sortBy('year')">
+                Year <span class="sort-icon" aria-hidden="true">↕</span>
+              </span>
+            </th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+          <!-- Rows rendered by JS -->
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <script>
+    const tools = [
+      { name: 'NVDA',       category: 'Screen reader', cost: 'Free',       year: 2006 },
+      { name: 'axe-core',   category: 'Testing',       cost: 'Free',       year: 2015 },
+      { name: 'JAWS',       category: 'Screen reader', cost: 'Commercial', year: 1989 },
+      { name: 'VoiceOver',  category: 'Screen reader', cost: 'Built-in',   year: 2005 },
+      { name: 'Lighthouse', category: 'Testing',       cost: 'Built-in',   year: 2016 },
+    ];
+
+    let sortCol = null;
+    let sortAsc = true;
+
+    function sortBy(col) {
+      if (sortCol === col) sortAsc = !sortAsc;
+      else { sortCol = col; sortAsc = true; }
+      renderTable();
+    }
+
+    function renderTable() {
+      const sorted = sortCol
+        ? [...tools].sort((a, b) => {
+            const av = a[sortCol]; const bv = b[sortCol];
+            return sortAsc ? (av < bv ? -1 : av > bv ? 1 : 0) : (av > bv ? -1 : av < bv ? 1 : 0);
+          })
+        : [...tools];
+
+      const tbody = document.getElementById('table-body');
+      tbody.innerHTML = sorted.map(t => `
+        <tr>
+          <td>${t.name}</td>
+          <td>${t.category}</td>
+          <td>${t.cost}</td>
+          <td>${t.year}</td>
+        </tr>
+      `).join('');
+    }
+
+    renderTable();
+  </script>
+</body>
+</html>

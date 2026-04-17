@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drag and Drop Alternative — After (Fixed)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main>
+    <header class="page-header">
+      <h1 class="page-title">Task Priority</h1>
+      <p class="page-subtitle">Drag tasks to reorder, or use the arrow buttons</p>
+    </header>
+
+    <!--
+      FIX: aria-live region announces position changes to screen reader users.
+      Placed before the list so it is announced as soon as content changes.
+    -->
+    <p id="reorder-status" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+
+    <!--
+      FIX: aria-label names the list for AT. The list is rendered by JS
+      so ARIA attributes and button controls are added programmatically.
+    -->
+    <ul
+      id="task-list"
+      class="task-list"
+      aria-label="Task priority list — use arrow buttons to reorder"
+    ></ul>
+  </main>
+
+  <script>
+    const list     = document.getElementById('task-list');
+    const statusEl = document.getElementById('reorder-status');
+
+    let tasks = [
+      { id: 1, text: 'Review accessibility audit report' },
+      { id: 2, text: 'Fix keyboard navigation in dropdown' },
+      { id: 3, text: 'Write WCAG compliance documentation' },
+      { id: 4, text: 'Update colour contrast tokens' },
+      { id: 5, text: 'Test with NVDA screen reader' },
+    ];
+
+    // --- Render ---
+
+    function render() {
+      list.innerHTML = '';
+      tasks.forEach((task, index) => {
+        const li = document.createElement('li');
+        li.className = 'task-item';
+        li.setAttribute('draggable', 'true');
+        li.setAttribute('data-index', index);
+        li.setAttribute('data-task-id', task.id);
+
+        li.innerHTML = `
+          <span class="task-drag-handle" aria-hidden="true">⠿</span>
+          <span class="task-position" aria-hidden="true">${index + 1}</span>
+          <span class="task-text">${task.text}</span>
+          <!--
+            FIX: role="group" with aria-label groups the two controls per item.
+            Each button has a descriptive aria-label including the task name.
+            disabled attribute removes the button from Tab order at the boundaries.
+          -->
+          <div class="task-controls" role="group" aria-label="Reorder ${task.text}">
+            <button
+              class="task-btn task-btn--up"
+              aria-label="Move '${task.text}' up"
+              ${index === 0 ? 'disabled' : ''}
+            >
+              <span aria-hidden="true">↑</span>
+            </button>
+            <button
+              class="task-btn task-btn--down"
+              aria-label="Move '${task.text}' down"
+              ${index === tasks.length - 1 ? 'disabled' : ''}
+            >
+              <span aria-hidden="true">↓</span>
+            </button>
+          </div>
+        `;
+
+        li.querySelector('.task-btn--up').addEventListener('click', () => move(index, -1));
+        li.querySelector('.task-btn--down').addEventListener('click', () => move(index, 1));
+
+        list.appendChild(li);
+      });
+
+      wireDragDrop();
+    }
+
+    // --- Keyboard move ---
+
+    function move(fromIndex, direction) {
+      const toIndex = fromIndex + direction;
+      if (toIndex < 0 || toIndex >= tasks.length) return;
+
+      // Swap tasks
+      [tasks[fromIndex], tasks[toIndex]] = [tasks[toIndex], tasks[fromIndex]];
+      render();
+
+      // Announce the new position
+      const moved = tasks[toIndex];
+      statusEl.textContent = `${moved.text} moved to position ${toIndex + 1} of ${tasks.length}.`;
+
+      // FIX: Return focus to the moved item's same button direction so the user
+      // can keep pressing it to move further without re-navigating.
+      const preferredClass = direction > 0 ? '.task-btn--down' : '.task-btn--up';
+      const fallbackClass  = direction > 0 ? '.task-btn--up'   : '.task-btn--down';
+      const targetItem     = list.querySelector(`[data-index="${toIndex}"]`);
+      const preferred      = targetItem?.querySelector(preferredClass);
+      const fallback       = targetItem?.querySelector(fallbackClass);
+      (preferred && !preferred.disabled ? preferred : fallback)?.focus();
+    }
+
+    // --- Drag-and-drop (keeps mouse working) ---
+
+    function wireDragDrop() {
+      let dragSrc = null;
+      list.querySelectorAll('.task-item').forEach(item => {
+        item.addEventListener('dragstart', () => {
+          dragSrc = item;
+          item.classList.add('dragging');
+        });
+        item.addEventListener('dragend', () => {
+          item.classList.remove('dragging');
+          dragSrc = null;
+        });
+        item.addEventListener('dragover', e => e.preventDefault());
+        item.addEventListener('drop', e => {
+          e.preventDefault();
+          if (!dragSrc || dragSrc === item) return;
+          const srcIdx = parseInt(dragSrc.dataset.index);
+          const dstIdx = parseInt(item.dataset.index);
+          if (srcIdx === dstIdx) return;
+          // Re-order tasks array to match drop position
+          const moved = tasks.splice(srcIdx, 1)[0];
+          tasks.splice(dstIdx, 0, moved);
+          render();
+          statusEl.textContent = `${moved.text} moved to position ${dstIdx + 1} of ${tasks.length}.`;
+        });
+      });
+    }
+
+    render();
+  </script>
+</body>
+</html>

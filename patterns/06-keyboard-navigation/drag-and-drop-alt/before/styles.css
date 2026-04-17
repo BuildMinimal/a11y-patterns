@@ -1,0 +1,51 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #f8fafc;
+  color: #1a1a1a;
+  padding: 2rem;
+}
+
+.page-header { max-width: 600px; margin: 0 auto 1.5rem; }
+.page-title    { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.25rem; }
+.page-subtitle { font-size: 0.9375rem; color: #4a5568; }
+
+/* --- Task list --- */
+.task-list {
+  max-width: 600px;
+  margin: 0 auto;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/*
+  BUG: cursor:grab makes this look draggable for mouse users.
+  But draggable="true" creates NO keyboard mechanism — Tab produces no
+  focusable element here, and there are no Up/Down buttons.
+*/
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.875rem 1rem;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: grab;
+  user-select: none;
+}
+
+.task-item:hover { border-color: #d1d5db; background: #f9fafb; }
+
+.task-item.dragging {
+  opacity: 0.5;
+  cursor: grabbing;
+  border-style: dashed;
+}
+
+.task-drag-handle { font-size: 1.1rem; color: #9ca3af; flex-shrink: 0; }
+
+.task-text { font-size: 0.9375rem; font-weight: 500; color: #374151; }

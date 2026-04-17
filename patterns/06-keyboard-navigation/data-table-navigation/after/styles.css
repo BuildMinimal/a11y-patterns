@@ -1,0 +1,100 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #f8fafc;
+  color: #1a1a1a;
+  padding: 2rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.page-header { max-width: 800px; margin: 0 auto 1.5rem; }
+.page-title    { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.25rem; }
+.page-subtitle { font-size: 0.9375rem; color: #4a5568; }
+
+.table-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.data-table thead {
+  background: #f9fafb;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.data-table th {
+  padding: 0;
+  text-align: left;
+  font-weight: 600;
+  color: #374151;
+  white-space: nowrap;
+}
+
+/* FIX: <button> inside <th> — keyboard-reachable sort trigger */
+.sort-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: none;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  text-align: left;
+}
+
+.sort-btn:hover { background: #f3f4f6; color: #111827; }
+
+/* FIX: Visible focus ring on sort button (WCAG 2.4.11) */
+.sort-btn:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: -2px;
+}
+
+/* Sort direction indicator changes with aria-sort state */
+.sort-icon { font-size: 0.75rem; color: #9ca3af; }
+[aria-sort="ascending"]  .sort-icon,
+[aria-sort="descending"] .sort-icon { color: #2563eb; }
+
+/* FIX: Visual indicator of current sort direction on <th> */
+[aria-sort="ascending"]  { background: #eff6ff; }
+[aria-sort="descending"] { background: #eff6ff; }
+
+.data-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #f3f4f6;
+  color: #374151;
+}
+
+.data-table tbody tr:last-child td { border-bottom: none; }
+.data-table tbody tr:hover { background: #fafafa; }
+
+/* FIX: Visible focus ring on data cells (WCAG 2.4.11) */
+.data-table td:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: -2px;
+  background: #eff6ff;
+}
