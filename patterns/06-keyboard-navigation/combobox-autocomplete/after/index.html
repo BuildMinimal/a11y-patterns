@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Combobox Autocomplete — After (Fixed)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main>
+    <header class="page-header">
+      <h1 class="page-title">Framework Finder</h1>
+      <p class="page-subtitle">Type to search — use arrow keys to pick a suggestion</p>
+    </header>
+
+    <div class="field">
+      <label class="field-label" id="fw-label" for="fw-input">Framework</label>
+      <div class="combobox-wrapper">
+        <!--
+          FIX: role="combobox" announces the widget type.
+          FIX: aria-expanded communicates whether the suggestion list is open.
+          FIX: aria-controls links the input to its popup listbox.
+          FIX: aria-autocomplete="list" — the user types and a filtered list appears.
+          FIX: aria-activedescendant points to the currently highlighted option.
+        -->
+        <input
+          type="text"
+          id="fw-input"
+          class="combobox-input"
+          role="combobox"
+          aria-autocomplete="list"
+          aria-expanded="false"
+          aria-controls="fw-listbox"
+          aria-activedescendant=""
+          aria-labelledby="fw-label"
+          placeholder="e.g. React, Vue, Svelte…"
+          autocomplete="off"
+        />
+
+        <!--
+          FIX: role="listbox" marks the popup as a list of selectable options.
+          FIX: aria-label names the popup for screen readers.
+          Each option gets role="option", a unique id, and aria-selected.
+        -->
+        <ul
+          id="fw-listbox"
+          class="listbox"
+          role="listbox"
+          aria-label="Framework suggestions"
+          hidden
+        ></ul>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const ITEMS = [
+      'Angular', 'Astro', 'Backbone', 'Ember',
+      'Next.js', 'Nuxt', 'Preact', 'React',
+      'Remix', 'Solid', 'Svelte', 'Vue',
+    ];
+
+    const input   = document.getElementById('fw-input');
+    const listbox = document.getElementById('fw-listbox');
+
+    let matches    = [];  // currently visible options
+    let activeIdx  = -1;  // index into matches (-1 = none)
+
+    // --- Open / close ---
+
+    function openListbox(items) {
+      matches   = items;
+      activeIdx = -1;
+
+      listbox.innerHTML = matches
+        .map((item, i) => `
+          <li
+            role="option"
+            id="fw-opt-${i}"
+            class="option"
+            aria-selected="false"
+            data-value="${item}"
+          >${item}</li>
+        `)
+        .join('');
+
+      listbox.hidden = false;
+      input.setAttribute('aria-expanded', 'true');
+      input.setAttribute('aria-activedescendant', '');
+    }
+
+    function closeListbox() {
+      listbox.hidden = true;
+      listbox.innerHTML = '';
+      input.setAttribute('aria-expanded', 'false');
+      input.setAttribute('aria-activedescendant', '');
+      matches   = [];
+      activeIdx = -1;
+    }
+
+    // --- Active option (roving highlight via aria-activedescendant) ---
+
+    function setActive(idx) {
+      // Clear previous
+      listbox.querySelectorAll('.option--active').forEach(el => {
+        el.classList.remove('option--active');
+      });
+
+      activeIdx = idx;
+      if (idx < 0 || idx >= matches.length) {
+        input.setAttribute('aria-activedescendant', '');
+        return;
+      }
+
+      const optEl = document.getElementById(`fw-opt-${idx}`);
+      if (!optEl) return;
+      optEl.classList.add('option--active');
+      input.setAttribute('aria-activedescendant', `fw-opt-${idx}`);
+
+      // Scroll into view within the listbox if needed
+      optEl.scrollIntoView({ block: 'nearest' });
+    }
+
+    // --- Select an option ---
+
+    function selectOption(value) {
+      input.value = value;
+      // Mark the selected option aria-selected="true", others false
+      listbox.querySelectorAll('[role="option"]').forEach(el => {
+        el.setAttribute('aria-selected', el.dataset.value === value ? 'true' : 'false');
+      });
+      closeListbox();
+      input.focus();
+    }
+
+    // --- Input event: filter and open ---
+
+    input.addEventListener('input', () => {
+      const query = input.value.trim().toLowerCase();
+      if (!query) { closeListbox(); return; }
+
+      const filtered = ITEMS.filter(item => item.toLowerCase().startsWith(query));
+      if (!filtered.length) { closeListbox(); return; }
+
+      openListbox(filtered);
+    });
+
+    // --- Keyboard navigation ---
+
+    input.addEventListener('keydown', e => {
+      const isOpen = !listbox.hidden;
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (!isOpen) {
+          // Open with full list if input is empty, else re-filter
+          const query   = input.value.trim().toLowerCase();
+          const filtered = query
+            ? ITEMS.filter(item => item.toLowerCase().startsWith(query))
+            : ITEMS;
+          if (filtered.length) openListbox(filtered);
+          setActive(0);
+        } else {
+          setActive(Math.min(activeIdx + 1, matches.length - 1));
+        }
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (isOpen) setActive(Math.max(activeIdx - 1, 0));
+      } else if (e.key === 'Enter') {
+        if (isOpen && activeIdx >= 0) {
+          e.preventDefault();
+          selectOption(matches[activeIdx]);
+        }
+      } else if (e.key === 'Escape') {
+        if (isOpen) {
+          e.preventDefault();
+          closeListbox();
+        }
+      } else if (e.key === 'Home' && isOpen) {
+        e.preventDefault();
+        setActive(0);
+      } else if (e.key === 'End' && isOpen) {
+        e.preventDefault();
+        setActive(matches.length - 1);
+      }
+    });
+
+    // --- Mouse click on option ---
+
+    listbox.addEventListener('click', e => {
+      const opt = e.target.closest('[role="option"]');
+      if (opt) selectOption(opt.dataset.value);
+    });
+
+    // --- Close on outside click ---
+
+    document.addEventListener('mousedown', e => {
+      if (!e.target.closest('.combobox-wrapper')) closeListbox();
+    });
+
+    // --- Close on blur (unless moving to listbox) ---
+
+    input.addEventListener('blur', e => {
+      // Delay so a click on an option fires before we close
+      setTimeout(() => {
+        if (document.activeElement !== input) closeListbox();
+      }, 150);
+    });
+  </script>
+</body>
+</html>

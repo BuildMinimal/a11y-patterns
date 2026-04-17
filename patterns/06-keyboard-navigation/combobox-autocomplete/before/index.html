@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Combobox Autocomplete — Before (Broken)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main>
+    <header class="page-header">
+      <h1 class="page-title">Framework Finder</h1>
+      <p class="page-subtitle">Type to search for a JavaScript framework</p>
+    </header>
+
+    <div class="field">
+      <label class="field-label" for="fw-input">Framework</label>
+      <div class="combobox-wrapper">
+        <!--
+          BROKEN: plain <input> with no role, no aria-expanded, no aria-controls.
+          Keyboard users can type but cannot navigate or select suggestions.
+        -->
+        <input
+          type="text"
+          id="fw-input"
+          class="combobox-input"
+          placeholder="e.g. React, Vue, Svelte…"
+          autocomplete="off"
+        />
+        <!-- BROKEN: suggestion list is a <div> of <div>s — not keyboard reachable -->
+        <div id="suggestions" class="suggestions" hidden></div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const ITEMS = [
+      'Angular', 'Astro', 'Backbone', 'Ember',
+      'Next.js', 'Nuxt', 'Preact', 'React',
+      'Remix', 'Solid', 'Svelte', 'Vue',
+    ];
+
+    const input       = document.getElementById('fw-input');
+    const suggestions = document.getElementById('suggestions');
+
+    input.addEventListener('input', () => {
+      const query = input.value.trim().toLowerCase();
+      if (!query) { suggestions.hidden = true; suggestions.innerHTML = ''; return; }
+
+      const matches = ITEMS.filter(item => item.toLowerCase().startsWith(query));
+      if (!matches.length) { suggestions.hidden = true; suggestions.innerHTML = ''; return; }
+
+      suggestions.innerHTML = matches
+        .map(item => `<div class="suggestion-item" onclick="select('${item}')">${item}</div>`)
+        .join('');
+      suggestions.hidden = false;
+    });
+
+    function select(value) {
+      input.value = value;
+      suggestions.hidden = true;
+      suggestions.innerHTML = '';
+    }
+
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.combobox-wrapper')) {
+        suggestions.hidden = true;
+      }
+    });
+  </script>
+</body>
+</html>
